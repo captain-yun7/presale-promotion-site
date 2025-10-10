@@ -26,7 +26,8 @@ export default function RootLayout({
         />
         <script
           type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY || 'YOUR_KAKAO_MAP_APP_KEY'}&libraries=services,clusterer&autoload=false`}
+          src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || 'YOUR_NAVER_MAP_CLIENT_ID'}`}
+          async
         ></script>
       </head>
       <body className="font-noto">{children}</body>

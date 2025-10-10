@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { useState, useEffect, useRef } from "react";
 
 const categories = [
   {
@@ -63,11 +62,101 @@ const commuteDestinations = [
 export default function Location() {
   const [selectedCategory, setSelectedCategory] = useState("transportation");
   const [selectedDestination, setSelectedDestination] = useState(0);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const naverMapRef = useRef<any>(null);
+  const markersRef = useRef<any[]>([]);
 
   const currentCategory = categories.find((cat) => cat.id === selectedCategory);
 
   // 염창역 위치 (중심점)
   const centerPosition = { lat: 37.5477, lng: 126.8747 };
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    const initializeMap = () => {
+      if (typeof window === "undefined" || !(window as any).naver) {
+        setTimeout(initializeMap, 100);
+        return;
+      }
+
+      const naver = (window as any).naver;
+
+      // 지도 초기화
+      const mapOptions = {
+        center: new naver.maps.LatLng(centerPosition.lat, centerPosition.lng),
+        zoom: 15,
+        zoomControl: true,
+        zoomControlOptions: {
+          position: naver.maps.Position.TOP_RIGHT,
+        },
+      };
+
+      const map = new naver.maps.Map(mapRef.current, mapOptions);
+      naverMapRef.current = map;
+
+      // 메인 마커 (염창역 더채움)
+      new naver.maps.Marker({
+        position: new naver.maps.LatLng(centerPosition.lat, centerPosition.lng),
+        map: map,
+        title: "염창역 더채움",
+        icon: {
+          content: `<div style="
+            background: #d4af37;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            white-space: nowrap;
+          ">🏢 염창역 더채움</div>`,
+          anchor: new naver.maps.Point(60, 30),
+        },
+      });
+    };
+
+    initializeMap();
+  }, []);
+
+  // 카테고리별 마커 업데이트
+  useEffect(() => {
+    if (!naverMapRef.current || !currentCategory) return;
+
+    const naver = (window as any).naver;
+    if (!naver) return;
+
+    // 기존 마커 제거
+    markersRef.current.forEach((marker) => marker.setMap(null));
+    markersRef.current = [];
+
+    // 새 마커 생성
+    currentCategory.items.forEach((item) => {
+      const marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(item.coords.lat, item.coords.lng),
+        map: naverMapRef.current,
+        title: item.name,
+      });
+
+      // 정보창
+      const infoWindow = new naver.maps.InfoWindow({
+        content: `<div style="padding: 10px; font-size: 12px;">
+          <strong>${item.name}</strong><br/>
+          <span style="color: #d4af37;">${item.distance}</span>
+        </div>`,
+      });
+
+      naver.maps.Event.addListener(marker, "click", () => {
+        if (infoWindow.getMap()) {
+          infoWindow.close();
+        } else {
+          infoWindow.open(naverMapRef.current, marker);
+        }
+      });
+
+      markersRef.current.push(marker);
+    });
+  }, [selectedCategory, currentCategory]);
 
   return (
     <section id="location" className="section-padding bg-white">
@@ -100,37 +189,10 @@ export default function Location() {
           transition={{ duration: 0.8 }}
         >
           <div className="relative aspect-video">
-            <Map
-              center={centerPosition}
-              style={{ width: "100%", height: "100%" }}
-              level={4}
-            >
-              {/* 프로젝트 위치 마커 */}
-              <MapMarker
-                position={centerPosition}
-                image={{
-                  src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-                  size: {
-                    width: 24,
-                    height: 35,
-                  },
-                }}
-              >
-                <div style={{ padding: "5px", color: "#000" }}>염창역 더채움</div>
-              </MapMarker>
-
-              {/* 카테고리별 마커 */}
-              {currentCategory?.items.map((item, index) => (
-                <MapMarker
-                  key={index}
-                  position={item.coords}
-                  title={item.name}
-                />
-              ))}
-            </Map>
+            <div ref={mapRef} style={{ width: "100%", height: "100%" }} />
 
             {/* Map Overlay Info */}
-            <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl max-w-sm">
+            <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl max-w-sm z-10">
               <h3 className="text-2xl font-bold text-luxury-charcoal mb-2">
                 염창역 더채움
               </h3>
