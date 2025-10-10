@@ -1,41 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-
-const slides = [
-  {
-    id: 1,
-    title: "프리미엄 라이프스타일의 시작",
-    subtitle: "당신만을 위한 특별한 공간",
-    description: "최상의 입지와 최고의 품격을 갖춘 프리미엄 레지던스",
-    image: "/images/hero-1.jpg",
-  },
-  {
-    id: 2,
-    title: "완벽한 교통 인프라",
-    subtitle: "도심 속 편리함",
-    description: "역세권의 프리미엄, 출퇴근이 즐거워지는 공간",
-    image: "/images/hero-2.jpg",
-  },
-  {
-    id: 3,
-    title: "최첨단 설계와 디자인",
-    subtitle: "미래를 담은 주거공간",
-    description: "스마트한 생활을 위한 최신 시스템",
-    image: "/images/hero-3.jpg",
-  },
-];
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 export default function HeroSection() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    if (videoRef.current) {
+      videoRef.current.play().catch((err) => {
+        console.log("Auto-play prevented:", err);
+      });
+    }
   }, []);
+
+  const scrollToNext = () => {
+    const element = document.getElementById("value-proposition");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const scrollToContact = () => {
     const element = document.getElementById("contact");
@@ -46,92 +31,148 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-screen min-h-[600px] overflow-hidden">
-      {/* Background Slides */}
-      {slides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? "opacity-100" : "opacity-0"
-          }`}
+      {/* Fullscreen Video Background */}
+      <div className="absolute inset-0">
+        <video
+          ref={videoRef}
+          className="w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          onLoadedData={() => setIsVideoLoaded(true)}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60 z-10" />
-          <div className="relative w-full h-full bg-gradient-to-r from-primary to-accent">
-            {/* Placeholder for actual images */}
-            <div className="absolute inset-0 flex items-center justify-center text-white text-6xl font-bold opacity-20">
-              {slide.title}
-            </div>
-          </div>
-        </div>
-      ))}
+          <source src="/ref_data/hero-video-1.mp4" type="video/mp4" />
+        </video>
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+      </div>
 
       {/* Content */}
       <div className="relative z-20 h-full flex items-center">
-        <div className="container-custom">
-          <div className="max-w-3xl">
-            <div
-              key={currentSlide}
-              className="animate-fadeIn"
+        <div className="container-custom w-full">
+          <div className="max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p className="text-secondary text-lg md:text-xl mb-4 font-medium">
-                {slides[currentSlide].subtitle}
-              </p>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-                {slides[currentSlide].title}
-              </h1>
-              <p className="text-lg md:text-xl text-gray-200 mb-8">
-                {slides[currentSlide].description}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
+              <motion.p
+                className="text-luxury-gold text-lg md:text-xl mb-4 font-medium tracking-wide"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                PREMIUM RESIDENCE
+              </motion.p>
+
+              <motion.h1
+                className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                염창역 더채움
+              </motion.h1>
+
+              <motion.p
+                className="text-xl md:text-2xl text-gray-100 mb-12 leading-relaxed max-w-2xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                프리미엄 라이프스타일의 시작
+                <br />
+                <span className="text-luxury-gold font-semibold">더블역세권</span>의 특별한 가치
+              </motion.p>
+
+              {/* Interactive CTAs */}
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1 }}
+              >
+                <motion.button
                   onClick={scrollToContact}
-                  className="bg-secondary text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-accent transition-all transform hover:scale-105"
+                  className="group relative bg-luxury-gold text-luxury-charcoal px-10 py-5 rounded-full font-bold text-lg overflow-hidden shadow-2xl"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  상담 신청하기
-                </button>
-                <button
-                  onClick={() => {
-                    const element = document.getElementById("complex-info");
-                    if (element) element.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-primary transition-all"
+                  <span className="relative z-10">상담 신청하기</span>
+                  <motion.div
+                    className="absolute inset-0 bg-white"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 text-luxury-charcoal font-bold">
+                    상담 신청하기
+                  </span>
+                </motion.button>
+
+                <motion.button
+                  onClick={scrollToNext}
+                  className="border-2 border-white text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-luxury-charcoal transition-all backdrop-blur-sm"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   자세히 보기
-                </button>
-              </div>
-            </div>
+                </motion.button>
+              </motion.div>
+
+              {/* Key Features */}
+              <motion.div
+                className="mt-16 flex flex-wrap gap-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
+              >
+                {[
+                  { icon: "🚇", text: "2·9호선 더블역세권" },
+                  { icon: "🏢", text: "프리미엄 브랜드" },
+                  { icon: "🌳", text: "한강 10분 거리" },
+                ].map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    className="flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 1.4 + index * 0.1 }}
+                  >
+                    <span className="text-2xl">{feature.icon}</span>
+                    <span className="text-white font-semibold">{feature.text}</span>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </div>
 
-      {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === currentSlide
-                ? "bg-secondary w-8"
-                : "bg-white/50 hover:bg-white/80"
-            }`}
-          />
-        ))}
-      </div>
-
       {/* Scroll Down Indicator */}
-      <div className="absolute bottom-8 right-8 z-20 animate-bounce hidden md:block">
-        <svg
-          className="w-8 h-8 text-white"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-        </svg>
-      </div>
+      <motion.div
+        className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer"
+        onClick={scrollToNext}
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-white text-sm tracking-wider">SCROLL DOWN</span>
+          <svg
+            className="w-6 h-6 text-luxury-gold"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </div>
+      </motion.div>
     </section>
   );
 }
