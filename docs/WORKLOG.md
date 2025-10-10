@@ -600,10 +600,167 @@ presale-promotion-site/
 
 ---
 
-**작업자**: AI Assistant  
-**작업일**: 2025-10-10  
-**총 작업 시간**: 약 2시간  
-**변경 파일 수**: 10개 (신규 2, 대폭 수정 5, 일부 수정 3)  
-**추가 코드 라인**: 약 1,200줄  
+**작업자**: AI Assistant
+**작업일**: 2025-10-10
+**총 작업 시간**: 약 2시간
+**변경 파일 수**: 10개 (신규 2, 대폭 수정 5, 일부 수정 3)
+**추가 코드 라인**: 약 1,200줄
+
+---
+
+## 작업 업데이트 (2025-10-10) - Phase 2
+
+### 15. 네이버맵 API 통합 및 빌드 오류 수정
+**완료 시간**: 2025-10-10
+**핵심 요약**: 카카오맵에서 네이버맵 API로 전환, TypeScript 타입 오류 해결 및 성공적인 빌드 완료
+
+#### 🗺️ 네이버맵 API 전환
+**배경**:
+- 사용자 요구사항: 카카오맵이 아닌 네이버맵 API 사용 지시
+- 참조 프로젝트: `/home/k8s-admin/motnt-ad-place/` 프로젝트의 구현 방식을 따름
+
+**상세 내용**:
+1. **패키지 설치**:
+   - `@types/navermaps` (v3.9.1) 추가
+   - React 래퍼가 아닌 순수 JavaScript API 사용 (React 19 호환성 문제 해결)
+
+2. **TypeScript 타입 선언 파일 생성**:
+   - `types/naver-maps.d.ts` 신규 작성
+   - `window.naver` 전역 인터페이스 선언
+   - `@types/navermaps` 참조
+
+3. **Next.js Script 컴포넌트 활용**:
+   - `strategy="afterInteractive"` 옵션으로 맵 스크립트 로딩
+   - 환경변수: `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID`
+   - onLoad 콜백으로 맵 초기화
+
+4. **Location 컴포넌트 재구현**:
+   - 카카오맵 코드 제거, 네이버맵 API로 전면 교체
+   - 초기화 함수: `window.naver` 체크 및 setTimeout 재시도 로직
+   - 로딩/에러 상태 관리 (사용자 친화적 UI)
+   - 커스텀 마커: 메인 위치 (염창역 더채움) - gold 배경 배지 스타일
+   - 카테고리별 마커: 교통, 교육, 쇼핑, 공원/문화 (각 4개 항목)
+   - InfoWindow: 마커 클릭 시 시설명 및 거리 표시
+   - Zoom 컨트롤: 커스텀 +/- 버튼
+
+**기술적 특징**:
+```typescript
+// Script 컴포넌트로 네이버맵 로딩
+<Script
+  src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}`}
+  strategy="afterInteractive"
+  onLoad={initializeMap}
+  onError={() => setMapLoadError(true)}
+/>
+
+// 초기화 함수 (window.naver 준비 대기)
+const initializeMap = useCallback(() => {
+  if (!window.naver || !window.naver.maps) {
+    setTimeout(initializeMap, 100);
+    return;
+  }
+
+  const map = new window.naver.maps.Map('naver-map', mapOptions);
+  // ...
+}, []);
+```
+
+**파일**:
+- `types/naver-maps.d.ts:1` (신규)
+- `components/Location.tsx:1` (대폭 수정)
+- `package.json:15` (@types/navermaps 추가)
+
+---
+
+#### 🔧 TypeScript 빌드 오류 수정
+**발생한 오류**:
+1. **중복 window.naver 선언 오류**:
+   ```
+   Type error: Subsequent property declarations must have the same type.
+   Property 'naver' must be of type 'typeof naver', but here has type 'any'.
+   ```
+   - 원인: `types/naver-maps.d.ts`와 `Location.tsx`에 중복 선언
+   - 해결: `Location.tsx`의 로컬 declare 블록 제거
+
+2. **InfoWindow content 필수 프로퍼티 누락**:
+   ```
+   Property 'content' is missing in type '...' but required in type 'InfoWindowOptions'.
+   ```
+   - 원인: 사용하지 않는 `infoWindowRef` 초기화 시 content 미지정
+   - 해결: 미사용 `infoWindowRef` 전체 제거, 개별 마커의 InfoWindow만 유지
+
+**해결 과정**:
+- `Location.tsx:63-67` - 중복 declare 블록 삭제
+- `Location.tsx:70` - `infoWindowRef` 선언 제거
+- `Location.tsx:101-112` - InfoWindow 초기화 코드 삭제
+
+**결과**: ✅ 빌드 성공
+
+```bash
+✓ Compiled successfully in 3.2s
+✓ Generating static pages (4/4)
+Route (app)                                 Size  First Load JS
+┌ ○ /                                     154 kB         256 kB
+└ ○ /_not-found                            994 B         103 kB
+```
+
+---
+
+#### 📝 환경 설정 가이드
+**필수 환경 변수**:
+```env
+# .env.local 파일에 추가 필요
+NEXT_PUBLIC_NAVER_MAP_CLIENT_ID=your_client_id_here
+```
+
+**네이버 클라우드 플랫폼 설정**:
+1. https://www.ncloud.com/ 접속 및 로그인
+2. Services > AI·NAVER API > Maps
+3. Application 등록 및 Client ID 발급
+4. Web Dynamic Map 서비스 활성화
+
+---
+
+#### 🎯 개선 효과
+1. **기술적 개선**:
+   - ✅ React 19 호환성 확보 (순수 JS API 사용)
+   - ✅ TypeScript 타입 안정성 확보 (@types/navermaps)
+   - ✅ 참조 프로젝트 패턴 적용으로 일관성 유지
+
+2. **사용자 경험**:
+   - ✅ 로딩 상태 표시 (애니메이션 스피너)
+   - ✅ 에러 상태 표시 (API 키 확인 안내)
+   - ✅ 인터랙티브 맵 (줌 컨트롤, 마커 클릭)
+
+3. **유지보수성**:
+   - ✅ 환경변수 분리 (보안)
+   - ✅ 타입 선언 파일 별도 관리
+   - ✅ 기존 프로젝트 패턴 준수
+
+---
+
+### 변경된 파일 목록 (Phase 2)
+
+#### 신규 작성
+- `types/naver-maps.d.ts` (9줄) - 네이버맵 타입 선언
+
+#### 대폭 수정
+- `components/Location.tsx` (281줄 → 409줄)
+  - 카카오맵 → 네이버맵 전환
+  - Script 컴포넌트 추가
+  - 로딩/에러 상태 UI 추가
+
+#### 일부 수정
+- `package.json` - @types/navermaps 추가
+- `app/layout.tsx` - 카카오맵 스크립트 제거 (Location으로 이동)
+
+---
+
+**작업자**: AI Assistant
+**작업일**: 2025-10-10
+**작업 시간**: 약 30분
+**변경 파일 수**: 4개 (신규 1, 대폭 수정 1, 일부 수정 2)
+**해결한 오류**: 2개 (TypeScript 타입 오류)
+**빌드 상태**: ✅ 성공
 
 ---

@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import Script from "next/script";
 
 const categories = [
   {
@@ -62,8 +63,10 @@ const commuteDestinations = [
 export default function Location() {
   const [selectedCategory, setSelectedCategory] = useState("transportation");
   const [selectedDestination, setSelectedDestination] = useState(0);
-  const mapRef = useRef<HTMLDivElement>(null);
-  const naverMapRef = useRef<any>(null);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [mapLoadError, setMapLoadError] = useState(false);
+
+  const mapRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
 
   const currentCategory = categories.find((cat) => cat.id === selectedCategory);
@@ -71,33 +74,31 @@ export default function Location() {
   // 염창역 위치 (중심점)
   const centerPosition = { lat: 37.5477, lng: 126.8747 };
 
-  useEffect(() => {
-    if (!mapRef.current) return;
+  // 지도 초기화
+  const initializeMap = useCallback(() => {
+    if (!window.naver || !window.naver.maps) {
+      console.error('네이버맵이 로드되지 않았습니다.');
+      setTimeout(initializeMap, 100);
+      return;
+    }
 
-    const initializeMap = () => {
-      if (typeof window === "undefined" || !(window as any).naver) {
-        setTimeout(initializeMap, 100);
-        return;
-      }
-
-      const naver = (window as any).naver;
-
-      // 지도 초기화
+    try {
       const mapOptions = {
-        center: new naver.maps.LatLng(centerPosition.lat, centerPosition.lng),
+        center: new window.naver.maps.LatLng(centerPosition.lat, centerPosition.lng),
         zoom: 15,
-        zoomControl: true,
-        zoomControlOptions: {
-          position: naver.maps.Position.TOP_RIGHT,
-        },
+        zoomControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        logoControl: false,
+        mapDataControl: false,
       };
 
-      const map = new naver.maps.Map(mapRef.current, mapOptions);
-      naverMapRef.current = map;
+      const map = new window.naver.maps.Map('naver-map', mapOptions);
+      mapRef.current = map;
 
       // 메인 마커 (염창역 더채움)
-      new naver.maps.Marker({
-        position: new naver.maps.LatLng(centerPosition.lat, centerPosition.lng),
+      new window.naver.maps.Marker({
+        position: new window.naver.maps.LatLng(centerPosition.lat, centerPosition.lng),
         map: map,
         title: "염창역 더채움",
         icon: {
@@ -111,19 +112,22 @@ export default function Location() {
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             white-space: nowrap;
           ">🏢 염창역 더채움</div>`,
-          anchor: new naver.maps.Point(60, 30),
+          anchor: new window.naver.maps.Point(60, 30),
         },
       });
-    };
 
-    initializeMap();
+      setIsMapLoaded(true);
+    } catch (error) {
+      console.error('네이버맵 초기화 실패:', error);
+      setMapLoadError(true);
+    }
   }, []);
 
   // 카테고리별 마커 업데이트
   useEffect(() => {
-    if (!naverMapRef.current || !currentCategory) return;
+    if (!isMapLoaded || !mapRef.current || !currentCategory) return;
 
-    const naver = (window as any).naver;
+    const naver = window.naver;
     if (!naver) return;
 
     // 기존 마커 제거
@@ -134,7 +138,7 @@ export default function Location() {
     currentCategory.items.forEach((item) => {
       const marker = new naver.maps.Marker({
         position: new naver.maps.LatLng(item.coords.lat, item.coords.lng),
-        map: naverMapRef.current,
+        map: mapRef.current,
         title: item.name,
       });
 
@@ -150,193 +154,251 @@ export default function Location() {
         if (infoWindow.getMap()) {
           infoWindow.close();
         } else {
-          infoWindow.open(naverMapRef.current, marker);
+          infoWindow.open(mapRef.current, marker);
         }
       });
 
       markersRef.current.push(marker);
     });
-  }, [selectedCategory, currentCategory]);
+  }, [selectedCategory, currentCategory, isMapLoaded]);
 
   return (
-    <section id="location" className="section-padding bg-white">
-      <div className="container-custom">
-        {/* Section Title */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
-            LOCATION INTELLIGENCE
-          </p>
-          <h2 className="text-4xl md:text-6xl font-bold text-luxury-charcoal mb-6">
-            입지 분석
-          </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            완벽한 교통망과 생활 인프라가 갖춰진 프리미엄 입지
-          </p>
-        </motion.div>
-
-        {/* Interactive Map */}
-        <motion.div
-          className="bg-white rounded-3xl shadow-2xl overflow-hidden mb-16"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="relative aspect-video">
-            <div ref={mapRef} style={{ width: "100%", height: "100%" }} />
-
-            {/* Map Overlay Info */}
-            <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl max-w-sm z-10">
-              <h3 className="text-2xl font-bold text-luxury-charcoal mb-2">
-                염창역 더채움
-              </h3>
-              <p className="text-gray-600 mb-4">서울특별시 강서구 염창동</p>
-              <div className="flex items-center gap-2 text-luxury-gold font-semibold">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fillRule="evenodd"
-                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>2·9호선 더블역세권</span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Category Tabs */}
-        <motion.div
-          className="flex justify-center mb-12 flex-wrap gap-4"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          {categories.map((category) => (
-            <motion.button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-6 py-4 rounded-full font-bold transition-all flex items-center gap-3 text-lg ${
-                selectedCategory === category.id
-                  ? "bg-luxury-gold text-white shadow-xl scale-105"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200 shadow"
-              }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="text-2xl">{category.icon}</span>
-              <span>{category.name}</span>
-            </motion.button>
-          ))}
-        </motion.div>
-
-        {/* Location Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          {currentCategory?.items.map((item, index) => (
-            <motion.div
-              key={index}
-              className="bg-luxury-cream rounded-2xl p-6 hover:shadow-xl transition-all duration-300 group cursor-pointer"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
-            >
-              <div className="flex items-start justify-between mb-4">
-                <h3 className="font-bold text-xl text-luxury-charcoal group-hover:text-luxury-gold transition-colors">
-                  {item.name}
-                </h3>
-                <svg
-                  className="w-6 h-6 text-luxury-gold"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-              </div>
-              <p className="text-luxury-gold font-bold text-2xl">{item.distance}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Commute Simulator */}
-        <motion.div
-          className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 rounded-3xl p-12 shadow-2xl"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-5xl font-bold text-white mb-4">
-              출퇴근 시뮬레이터
-            </h3>
-            <p className="text-gray-200 text-lg">
-              주요 업무지구까지 얼마나 걸릴까요?
+    <>
+      <Script
+        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}`}
+        strategy="afterInteractive"
+        onLoad={initializeMap}
+        onError={() => setMapLoadError(true)}
+      />
+      <section id="location" className="section-padding bg-white">
+        <div className="container-custom">
+          {/* Section Title */}
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
+              LOCATION INTELLIGENCE
             </p>
-          </div>
+            <h2 className="text-4xl md:text-6xl font-bold text-luxury-charcoal mb-6">
+              입지 분석
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              완벽한 교통망과 생활 인프라가 갖춰진 프리미엄 입지
+            </p>
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-            {commuteDestinations.map((dest, index) => (
+          {/* Interactive Map */}
+          <motion.div
+            className="bg-white rounded-3xl shadow-2xl overflow-hidden mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="relative aspect-video">
+              <div id="naver-map" style={{ width: "100%", height: "100%" }} className="rounded-lg" />
+
+              {/* Loading State */}
+              {!isMapLoaded && !mapLoadError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-luxury-gold mx-auto mb-2"></div>
+                    <p className="text-sm text-gray-600">지도를 불러오는 중...</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Error State */}
+              {mapLoadError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-red-50">
+                  <div className="text-center text-red-600">
+                    <p className="text-sm mb-1">지도를 불러올 수 없습니다</p>
+                    <p className="text-xs text-red-500">네이버맵 API 키를 확인해주세요</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Map Overlay Info */}
+              {isMapLoaded && (
+                <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl max-w-sm z-10">
+                  <h3 className="text-2xl font-bold text-luxury-charcoal mb-2">
+                    염창역 더채움
+                  </h3>
+                  <p className="text-gray-600 mb-4">서울특별시 강서구 염창동</p>
+                  <div className="flex items-center gap-2 text-luxury-gold font-semibold">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        fillRule="evenodd"
+                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span>2·9호선 더블역세권</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Zoom Controls */}
+              {isMapLoaded && (
+                <div className="absolute top-6 right-6 bg-white rounded-lg shadow-md p-2 space-y-1 z-10">
+                  <button
+                    onClick={() => {
+                      if (mapRef.current) {
+                        mapRef.current.setZoom(mapRef.current.getZoom() + 1);
+                      }
+                    }}
+                    className="block w-8 h-8 text-lg bg-white border border-gray-300 rounded hover:bg-gray-50"
+                    title="확대"
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (mapRef.current) {
+                        mapRef.current.setZoom(mapRef.current.getZoom() - 1);
+                      }
+                    }}
+                    className="block w-8 h-8 text-lg bg-white border border-gray-300 rounded hover:bg-gray-50"
+                    title="축소"
+                  >
+                    -
+                  </button>
+                </div>
+              )}
+            </div>
+          </motion.div>
+
+          {/* Category Tabs */}
+          <motion.div
+            className="flex justify-center mb-12 flex-wrap gap-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            {categories.map((category) => (
               <motion.button
-                key={index}
-                onClick={() => setSelectedDestination(index)}
-                className={`p-6 rounded-2xl font-bold transition-all ${
-                  selectedDestination === index
-                    ? "bg-luxury-gold text-luxury-charcoal shadow-xl"
-                    : "bg-white/10 text-white hover:bg-white/20"
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-6 py-4 rounded-full font-bold transition-all flex items-center gap-3 text-lg ${
+                  selectedCategory === category.id
+                    ? "bg-luxury-gold text-white shadow-xl scale-105"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 shadow"
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="text-4xl mb-3">{dest.icon}</div>
-                <div className="text-sm mb-2">{dest.name}</div>
-                <div className="text-2xl font-bold">{dest.time}분</div>
+                <span className="text-2xl">{category.icon}</span>
+                <span>{category.name}</span>
               </motion.button>
+            ))}
+          </motion.div>
+
+          {/* Location Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+            {currentCategory?.items.map((item, index) => (
+              <motion.div
+                key={index}
+                className="bg-luxury-cream rounded-2xl p-6 hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <h3 className="font-bold text-xl text-luxury-charcoal group-hover:text-luxury-gold transition-colors">
+                    {item.name}
+                  </h3>
+                  <svg
+                    className="w-6 h-6 text-luxury-gold"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </div>
+                <p className="text-luxury-gold font-bold text-2xl">{item.distance}</p>
+              </motion.div>
             ))}
           </div>
 
+          {/* Commute Simulator */}
           <motion.div
-            className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center"
-            key={selectedDestination}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
+            className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 rounded-3xl p-12 shadow-2xl"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            <p className="text-white text-2xl mb-4">
-              <span className="text-luxury-gold font-bold text-4xl">
-                {commuteDestinations[selectedDestination].name}
-              </span>
-              까지
-            </p>
-            <p className="text-white text-lg mb-2">평균 소요 시간</p>
-            <p className="text-luxury-gold text-7xl font-bold mb-4">
-              {commuteDestinations[selectedDestination].time}
-              <span className="text-4xl">분</span>
-            </p>
-            <p className="text-gray-200">지하철 환승 1회 이내</p>
+            <div className="text-center mb-12">
+              <h3 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                출퇴근 시뮬레이터
+              </h3>
+              <p className="text-gray-200 text-lg">
+                주요 업무지구까지 얼마나 걸릴까요?
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+              {commuteDestinations.map((dest, index) => (
+                <motion.button
+                  key={index}
+                  onClick={() => setSelectedDestination(index)}
+                  className={`p-6 rounded-2xl font-bold transition-all ${
+                    selectedDestination === index
+                      ? "bg-luxury-gold text-luxury-charcoal shadow-xl"
+                      : "bg-white/10 text-white hover:bg-white/20"
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <div className="text-4xl mb-3">{dest.icon}</div>
+                  <div className="text-sm mb-2">{dest.name}</div>
+                  <div className="text-2xl font-bold">{dest.time}분</div>
+                </motion.button>
+              ))}
+            </div>
+
+            <motion.div
+              className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center"
+              key={selectedDestination}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-white text-2xl mb-4">
+                <span className="text-luxury-gold font-bold text-4xl">
+                  {commuteDestinations[selectedDestination].name}
+                </span>
+                까지
+              </p>
+              <p className="text-white text-lg mb-2">평균 소요 시간</p>
+              <p className="text-luxury-gold text-7xl font-bold mb-4">
+                {commuteDestinations[selectedDestination].time}
+                <span className="text-4xl">분</span>
+              </p>
+              <p className="text-gray-200">지하철 환승 1회 이내</p>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 }
