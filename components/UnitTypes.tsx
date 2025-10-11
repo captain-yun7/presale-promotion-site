@@ -57,12 +57,12 @@ export default function UnitTypes() {
       <div className="container-custom">
         {/* Section Title */}
         <div className="text-center mb-16">
-          <p className="text-secondary text-lg mb-3 font-medium">Unit Types</p>
+          <p className="text-luxury-gold text-lg mb-3 font-medium">투룸값에 쓰리룸 산다!</p>
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             세대 정보
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            다양한 평형과 최적화된 공간 설계로 완벽한 주거 환경을 제공합니다
+            파격 할인으로 안전마진 2억, 실거주와 투자 모두 최적의 쓰리룸 아파텔
           </p>
         </div>
 
@@ -181,10 +181,15 @@ export default function UnitTypes() {
             </div>
 
             {/* Additional Info */}
-            <div className="mt-6 p-6 bg-blue-50 rounded-xl">
+            <div className="mt-6 p-6 bg-luxury-cream rounded-xl border-2 border-luxury-gold">
+              <p className="text-sm font-semibold text-luxury-charcoal mb-2">
+                💰 투룸 가격에 쓰리룸 특가!
+              </p>
               <p className="text-sm text-gray-600 leading-relaxed">
-                ※ 상기 평면도 및 이미지는 소비자의 이해를 돕기 위한 것으로 실제와 다를 수 있습니다.
-                <br />※ 자세한 내용은 분양 카탈로그 및 분양계약서를 참조하시기 바랍니다.
+                ✅ 삼성 비스포크 가전 풀옵션<br />
+                ✅ 현대 리바트 가구 포함<br />
+                ✅ 1:1 주차 가능<br />
+                ✅ 전 호실 일조량 GOOD (막힘없는 뷰)
               </p>
             </div>
           </div>

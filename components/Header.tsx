@@ -46,7 +46,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => scrollToSection("complex-info")}
-              className={`font-medium transition-colors ${
+              className={`font-semibold text-xl transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -56,7 +56,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => scrollToSection("unit-types")}
-              className={`font-medium transition-colors ${
+              className={`font-semibold text-xl transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -66,7 +66,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => scrollToSection("location")}
-              className={`font-medium transition-colors ${
+              className={`font-semibold text-xl transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -76,7 +76,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => scrollToSection("schedule")}
-              className={`font-medium transition-colors ${
+              className={`font-semibold text-xl transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -84,12 +84,13 @@ export default function Header() {
             >
               분양안내
             </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="bg-secondary text-white px-6 py-2 rounded-full font-medium hover:bg-accent transition-colors"
+            <a
+              href="tel:1611-1000"
+              className="bg-luxury-gold text-luxury-charcoal px-6 py-3 rounded-full font-black text-xl hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
             >
-              상담신청
-            </button>
+              <span className="text-2xl">📞</span>
+              <span>1611-1000</span>
+            </a>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -122,34 +123,34 @@ export default function Header() {
           <nav className="md:hidden bg-white shadow-lg rounded-lg p-4 mb-4">
             <button
               onClick={() => scrollToSection("complex-info")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-medium"
+              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-xl"
             >
               단지정보
             </button>
             <button
               onClick={() => scrollToSection("unit-types")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-medium"
+              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-xl"
             >
               세대정보
             </button>
             <button
               onClick={() => scrollToSection("location")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-medium"
+              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-xl"
             >
               입지환경
             </button>
             <button
               onClick={() => scrollToSection("schedule")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-medium"
+              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-xl"
             >
               분양안내
             </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="block w-full text-center mt-3 bg-secondary text-white px-6 py-3 rounded-full font-medium hover:bg-accent"
+            <a
+              href="tel:1611-1000"
+              className="block w-full text-center mt-3 bg-luxury-gold text-luxury-charcoal px-6 py-3 rounded-full font-bold text-xl hover:bg-luxury-gold/90"
             >
-              상담신청
-            </button>
+              📞 1611-1000
+            </a>
           </nav>
         )}
       </div>

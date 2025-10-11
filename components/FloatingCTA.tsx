@@ -1,263 +1,297 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 export default function FloatingCTA() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [showReservationModal, setShowReservationModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    privacyAgree: false,
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+    if (!formData.name || !formData.phone) {
+      alert("모든 필수 항목을 입력해주세요.");
+      return;
+    }
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!formData.privacyAgree) {
+      alert("개인정보 수집 및 이용에 동의해주세요.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // TODO: Supabase 연동
+      alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n담당자가 빠른 시일 내에 연락드리겠습니다.`);
+
+      // 폼 초기화
+      setFormData({
+        name: "",
+        phone: "",
+        privacyAgree: false,
+      });
+      setIsOpen(false);
+    } catch {
+      alert('상담 신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const handlePhoneCall = () => {
+    window.location.href = "tel:1588-0000";
   };
 
   const openKakaoTalk = () => {
-    // 실제 카카오톡 채널 URL로 변경 필요
     window.open("https://pf.kakao.com/_your_channel_id", "_blank");
-  };
-
-  const callPhone = () => {
-    window.location.href = "tel:1588-0000";
   };
 
   return (
     <>
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-3">
-        {/* Main Reservation Button */}
-        <motion.button
-          onClick={() => setShowReservationModal(true)}
-          className="group relative bg-luxury-gold hover:bg-luxury-gold/90 text-white rounded-full shadow-2xl transition-all flex items-center gap-3 px-6 py-4 overflow-hidden"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+      {/* 모바일 버전 - 하단 고정 */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-[1000]">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full bg-luxury-gold text-luxury-charcoal py-5 text-xl font-black shadow-2xl hover:bg-luxury-gold/90 transition-all"
         >
-          <motion.div
-            animate={{ rotate: [0, 10, -10, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
-          </motion.div>
-          <span className="font-bold text-lg whitespace-nowrap">상담 예약</span>
-        </motion.button>
-
-        {/* KakaoTalk Button */}
-        <motion.button
-          onClick={openKakaoTalk}
-          className="group bg-[#FEE500] hover:bg-[#FAE100] text-[#3C1E1E] rounded-full shadow-xl transition-all flex items-center justify-center w-14 h-14"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          title="카카오톡 상담"
+          무료상담신청 {isOpen ? '▼' : '▲'}
+        </button>
+        <div
+          className={`
+            bg-white shadow-2xl transition-all duration-300 ease-in-out overflow-hidden
+            ${isOpen ? 'h-[380px]' : 'h-0'}
+          `}
         >
-          <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 3C6.486 3 2 6.262 2 10.333c0 2.47 1.592 4.651 4 5.985V20l3.358-2.013c.87.12 1.766.18 2.642.18 5.514 0 10-3.262 10-7.333C22 6.262 17.514 3 12 3z" />
-          </svg>
-        </motion.button>
-
-        {/* Phone Button */}
-        <motion.button
-          onClick={callPhone}
-          className="group bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-xl transition-all flex items-center justify-center w-14 h-14"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          title="전화 상담"
-        >
-          <motion.div
-            animate={{ rotate: [0, 20, -20, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-              />
-            </svg>
-          </motion.div>
-        </motion.button>
-
-        {/* Scroll to Top Button */}
-        <AnimatePresence>
-          {isVisible && (
-            <motion.button
-              onClick={scrollToTop}
-              className="group bg-white hover:bg-gray-100 text-luxury-charcoal rounded-full shadow-xl transition-all flex items-center justify-center w-14 h-14"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3 }}
-              title="맨 위로"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 10l7-7m0 0l7 7m-7-7v18"
+          <div className="p-6 h-full overflow-y-auto">
+            <h3 className="text-lg font-bold text-luxury-charcoal mb-4">
+              빠른 상담 신청
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="이름"
+                  required
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
                 />
-              </svg>
-            </motion.button>
-          )}
-        </AnimatePresence>
+              </div>
+
+              <div>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="전화번호 (숫자만 입력)"
+                  required
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+                />
+              </div>
+
+              <div className="flex items-start gap-2 py-2">
+                <input
+                  type="checkbox"
+                  id="mobilePrivacyAgree"
+                  name="privacyAgree"
+                  checked={formData.privacyAgree}
+                  onChange={handleChange}
+                  className="mt-1 w-4 h-4 text-luxury-gold border-gray-300 rounded focus:ring-luxury-gold"
+                />
+                <label htmlFor="mobilePrivacyAgree" className="text-xs text-gray-700">
+                  개인정보 수집 및 이용에 동의합니다
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full py-3 rounded-xl transition-colors font-bold text-sm ${
+                  isSubmitting
+                    ? 'bg-gray-400 cursor-not-allowed text-gray-200'
+                    : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90'
+                }`}
+              >
+                {isSubmitting ? '처리 중...' : '상담 신청하기'}
+              </button>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={handlePhoneCall}
+                  className="py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-bold text-sm"
+                >
+                  📞 전화상담
+                </button>
+                <button
+                  type="button"
+                  onClick={openKakaoTalk}
+                  className="py-3 bg-[#FEE500] text-[#3C1E1E] rounded-xl hover:bg-[#FAE100] transition-colors font-bold text-sm"
+                >
+                  💬 카톡상담
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
 
-      {/* Reservation Modal */}
-      <AnimatePresence>
-        {showReservationModal && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowReservationModal(false)}
-            />
-
-            {/* Modal */}
-            <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <motion.div
-                className="bg-white rounded-3xl p-8 md:p-12 max-w-md w-full shadow-2xl"
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                onClick={(e) => e.stopPropagation()}
+      {/* 데스크탑 버전 - 오른쪽 고정 */}
+      <div className="hidden md:block fixed right-0 top-1/2 -translate-y-1/2 z-[1000]">
+        <div className="flex items-center relative">
+          {/* 클릭 유도 화살표 애니메이션 */}
+          {!isOpen && (
+            <div className="absolute -left-24 top-1/2 -translate-y-1/2 z-10">
+              <svg
+                className="w-24 h-20 animate-bounce"
+                viewBox="0 0 120 80"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                {/* Close Button */}
-                <button
-                  onClick={() => setShowReservationModal(false)}
-                  className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+                {/* 꼬불꼬불한 화살표 몸통 */}
+                <path
+                  d="M 10 40 Q 30 20, 50 35 T 90 40 L 105 40"
+                  stroke="#d4af37"
+                  strokeWidth="4"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* 화살촉 */}
+                <path
+                  d="M 105 40 L 95 33 M 105 40 L 95 47"
+                  stroke="#d4af37"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          )}
 
-                <div className="text-center mb-8">
-                  <div className="text-6xl mb-4">📞</div>
-                  <h3 className="text-3xl font-bold text-luxury-charcoal mb-2">
-                    상담 예약
-                  </h3>
-                  <p className="text-gray-600">
-                    간편하게 상담 예약을 진행하세요
-                  </p>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="bg-luxury-gold text-luxury-charcoal font-black
+              transition-all duration-300 shadow-2xl hover:bg-luxury-gold/90
+              rounded-l-2xl relative"
+            style={{
+              writingMode: 'vertical-rl',
+              fontSize: '1.5rem',
+              fontWeight: '900',
+              whiteSpace: 'nowrap',
+              lineHeight: '1',
+              padding: '15px 18px',
+              height: 'auto'
+            }}
+          >
+            무료상담신청
+          </button>
+
+          <div
+            className={`
+              bg-white shadow-2xl transition-all duration-300 ease-in-out overflow-hidden
+              ${isOpen ? 'w-[280px] opacity-100' : 'w-0 opacity-0'}
+            `}
+          >
+            <div className="p-6 w-[280px]">
+              <h3 className="text-xl font-bold text-luxury-charcoal mb-4">
+                빠른 상담 신청
+              </h3>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="이름"
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+                  />
                 </div>
 
-                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      이름
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors"
-                      placeholder="홍길동"
-                    />
-                  </div>
+                <div>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="전화번호 (숫자만 입력)"
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+                  />
+                </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      연락처
-                    </label>
-                    <input
-                      type="tel"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors"
-                      placeholder="010-1234-5678"
-                    />
-                  </div>
+                <div className="flex items-start gap-2 py-2">
+                  <input
+                    type="checkbox"
+                    id="desktopPrivacyAgree"
+                    name="privacyAgree"
+                    checked={formData.privacyAgree}
+                    onChange={handleChange}
+                    className="mt-1 w-4 h-4 text-luxury-gold border-gray-300 rounded focus:ring-luxury-gold"
+                  />
+                  <label htmlFor="desktopPrivacyAgree" className="text-xs text-gray-700">
+                    개인정보 수집 및 이용에 동의합니다
+                  </label>
+                </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      희망 상담 시간
-                    </label>
-                    <select className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors">
-                      <option>오전 (09:00 - 12:00)</option>
-                      <option>오후 (12:00 - 18:00)</option>
-                      <option>저녁 (18:00 - 21:00)</option>
-                    </select>
-                  </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full py-3 rounded-xl transition-colors font-bold text-sm ${
+                    isSubmitting
+                      ? 'bg-gray-400 cursor-not-allowed text-gray-200'
+                      : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90 shadow-lg'
+                  }`}
+                >
+                  {isSubmitting ? '처리 중...' : '상담 신청하기'}
+                </button>
+              </form>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      문의사항 (선택)
-                    </label>
-                    <textarea
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors resize-none"
-                      rows={3}
-                      placeholder="궁금하신 사항을 자유롭게 작성해주세요"
-                    />
-                  </div>
+              {/* 추가 상담 버튼 */}
+              <div className="mt-4 space-y-2">
+                <button
+                  onClick={handlePhoneCall}
+                  className="w-full py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-bold text-sm flex items-center justify-center gap-2"
+                >
+                  <span>📞</span>
+                  <span>전화상담 1588-0000</span>
+                </button>
+                <button
+                  onClick={openKakaoTalk}
+                  className="w-full py-3 bg-[#FEE500] text-[#3C1E1E] rounded-xl hover:bg-[#FAE100] transition-colors font-bold text-sm flex items-center justify-center gap-2"
+                >
+                  <span>💬</span>
+                  <span>카카오톡 상담</span>
+                </button>
+              </div>
 
-                  <motion.button
-                    type="submit"
-                    className="w-full bg-luxury-gold hover:bg-luxury-gold/90 text-white py-4 rounded-xl font-bold text-lg shadow-lg"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    예약 신청하기
-                  </motion.button>
-
-                  <p className="text-xs text-gray-500 text-center">
-                    개인정보는 상담 목적으로만 사용되며, 안전하게 보관됩니다.
-                  </p>
-                </form>
-              </motion.div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+              <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
+                개인정보는 상담 목적으로만 사용되며<br />
+                안전하게 보관됩니다
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

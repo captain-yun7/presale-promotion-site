@@ -64,7 +64,7 @@ export default function HeroSection() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                PREMIUM RESIDENCE
+                투룸값에 쓰리룸 산다!
               </motion.p>
 
               <motion.h1
@@ -73,7 +73,7 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
-                염창역 더채움
+                염창역 <span className="text-luxury-gold">더채움</span>
               </motion.h1>
 
               <motion.p
@@ -82,13 +82,13 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                프리미엄 라이프스타일의 시작
+                한강벨트라인 황금노선
                 <br />
-                <span className="text-luxury-gold font-semibold">더블역세권</span>의 특별한 가치
+                <span className="text-luxury-gold font-semibold">9호선 급행 초역세권</span> 쓰리룸 아파텔
               </motion.p>
 
               {/* Interactive CTAs */}
-              <motion.div
+              {/* <motion.div
                 className="flex flex-col sm:flex-row gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -120,7 +120,7 @@ export default function HeroSection() {
                 >
                   자세히 보기
                 </motion.button>
-              </motion.div>
+              </motion.div> */}
 
               {/* Key Features */}
               <motion.div
@@ -130,8 +130,8 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 1.2 }}
               >
                 {[
-                  { icon: "🚇", text: "2·9호선 더블역세권" },
-                  { icon: "🏢", text: "프리미엄 브랜드" },
+                  { icon: "🚇", text: "9호선 급행 초역세권" },
+                  { icon: "✅", text: "4無 (주택수·대출·자금조달·실거주의무)" },
                   { icon: "🌳", text: "한강 10분 거리" },
                 ].map((feature, index) => (
                   <motion.div

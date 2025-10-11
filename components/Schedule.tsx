@@ -103,46 +103,54 @@ export default function Schedule() {
           <h3 className="text-2xl md:text-3xl font-bold text-primary mb-8 text-center">
             분양가격 안내
           </h3>
+          <div className="bg-luxury-gold/10 border-2 border-luxury-gold rounded-2xl p-6 mb-6 text-center">
+            <p className="text-2xl font-bold text-luxury-charcoal mb-2">
+              💰 투룸 가격에 쓰리룸 특가!
+            </p>
+            <p className="text-lg text-gray-700">
+              파격 할인으로 <span className="text-luxury-gold font-bold">안전마진 2억</span> 확보
+            </p>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="bg-primary text-white">
                   <th className="px-6 py-4 text-left rounded-tl-lg">타입</th>
-                  <th className="px-6 py-4 text-center">공급면적</th>
-                  <th className="px-6 py-4 text-center">세대수</th>
-                  <th className="px-6 py-4 text-right rounded-tr-lg">분양가격</th>
+                  <th className="px-6 py-4 text-center">구조</th>
+                  <th className="px-6 py-4 text-center">옵션</th>
+                  <th className="px-6 py-4 text-right rounded-tr-lg">분양문의</th>
                 </tr>
               </thead>
               <tbody className="bg-white">
                 <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4 font-bold text-primary">59A</td>
-                  <td className="px-6 py-4 text-center">59㎡ (17평형)</td>
-                  <td className="px-6 py-4 text-center">400세대</td>
-                  <td className="px-6 py-4 text-right font-bold text-secondary">
-                    5억 2천만원대
+                  <td className="px-6 py-4 font-bold text-primary">쓰리룸 A</td>
+                  <td className="px-6 py-4 text-center">3Room / 2Bath</td>
+                  <td className="px-6 py-4 text-center text-sm">비스포크+리바트</td>
+                  <td className="px-6 py-4 text-right font-bold text-luxury-gold">
+                    상담 시 안내
                   </td>
                 </tr>
                 <tr className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-6 py-4 font-bold text-primary">84A</td>
-                  <td className="px-6 py-4 text-center">84㎡ (25평형)</td>
-                  <td className="px-6 py-4 text-center">500세대</td>
-                  <td className="px-6 py-4 text-right font-bold text-secondary">
-                    7억 8천만원대
+                  <td className="px-6 py-4 font-bold text-primary">쓰리룸 B</td>
+                  <td className="px-6 py-4 text-center">3Room / 2Bath</td>
+                  <td className="px-6 py-4 text-center text-sm">비스포크+리바트</td>
+                  <td className="px-6 py-4 text-right font-bold text-luxury-gold">
+                    상담 시 안내
                   </td>
                 </tr>
                 <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-4 font-bold text-primary">114A</td>
-                  <td className="px-6 py-4 text-center">114㎡ (34평형)</td>
-                  <td className="px-6 py-4 text-center">300세대</td>
-                  <td className="px-6 py-4 text-right font-bold text-secondary">
-                    11억 5천만원대
+                  <td className="px-6 py-4 font-bold text-primary">쓰리룸 C</td>
+                  <td className="px-6 py-4 text-center">3Room / 2Bath</td>
+                  <td className="px-6 py-4 text-center text-sm">비스포크+리바트</td>
+                  <td className="px-6 py-4 text-right font-bold text-luxury-gold">
+                    상담 시 안내
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p className="text-sm text-gray-500 mt-6 text-center">
-            ※ 상기 금액은 부가가치세 포함 금액이며, 세대별 층수, 향 등에 따라 차이가 있을 수 있습니다.
+            ※ 자세한 분양가 및 프로모션은 전화 또는 모델하우스 방문 상담 시 안내드립니다.
           </p>
         </div>
 
