@@ -254,9 +254,15 @@ export default function SocialProofHub() {
                       whileHover={{ scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
-                      <span className="text-2xl">
-                        {item.status === "upcoming" ? "📍" : "📅"}
-                      </span>
+                      {item.status === "upcoming" ? (
+                        <svg className="w-8 h-8 text-luxury-charcoal" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                      ) : (
+                        <svg className="w-8 h-8 text-luxury-charcoal" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                        </svg>
+                      )}
                     </motion.div>
                   </div>
 

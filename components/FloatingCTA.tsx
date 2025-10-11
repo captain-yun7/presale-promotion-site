@@ -135,16 +135,22 @@ export default function FloatingCTA() {
                 <button
                   type="button"
                   onClick={handlePhoneCall}
-                  className="py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-bold text-sm"
+                  className="py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-bold text-sm flex items-center justify-center gap-2"
                 >
-                  📞 전화상담
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                  </svg>
+                  전화상담
                 </button>
                 <button
                   type="button"
                   onClick={openKakaoTalk}
-                  className="py-3 bg-[#FEE500] text-[#3C1E1E] rounded-xl hover:bg-[#FAE100] transition-colors font-bold text-sm"
+                  className="py-3 bg-[#FEE500] text-[#3C1E1E] rounded-xl hover:bg-[#FAE100] transition-colors font-bold text-sm flex items-center justify-center gap-2"
                 >
-                  💬 카톡상담
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 3c-4.97 0-9 3.14-9 7s4.03 7 9 7c.83 0 1.64-.09 2.42-.27l3.58 2.14v-3.2c1.78-1.45 3-3.5 3-5.67 0-3.86-4.03-7-9-7zm-3 9.5c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm3 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm3 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z"/>
+                  </svg>
+                  카톡상담
                 </button>
               </div>
             </form>

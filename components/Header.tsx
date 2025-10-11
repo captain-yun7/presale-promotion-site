@@ -133,7 +133,9 @@ export default function Header() {
               href="tel:1611-1000"
               className="bg-luxury-gold text-luxury-charcoal px-6 py-3 rounded-full font-black text-xl hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
             >
-              <span className="text-2xl">📞</span>
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+              </svg>
               <span>1611-1000</span>
             </a>
             <div className="relative">
@@ -226,7 +228,9 @@ export default function Header() {
                       href="tel:1588-0000"
                       className="w-full py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-bold text-sm flex items-center justify-center gap-2"
                     >
-                      <span>📞</span>
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                      </svg>
                       <span>전화상담 1588-0000</span>
                     </a>
                   </div>
@@ -294,9 +298,12 @@ export default function Header() {
             </button>
             <a
               href="tel:1611-1000"
-              className="block w-full text-center mt-3 bg-luxury-gold text-luxury-charcoal px-6 py-3 rounded-full font-bold text-xl hover:bg-luxury-gold/90"
+              className="block w-full text-center mt-3 bg-luxury-gold text-luxury-charcoal px-6 py-3 rounded-full font-bold text-xl hover:bg-luxury-gold/90 flex items-center justify-center gap-2"
             >
-              📞 1611-1000
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+              </svg>
+              1611-1000
             </a>
           </nav>
         )}

@@ -104,9 +104,14 @@ export default function Schedule() {
             분양가격 안내
           </h3>
           <div className="bg-luxury-gold/10 border-2 border-luxury-gold rounded-2xl p-6 mb-6 text-center">
-            <p className="text-2xl font-bold text-luxury-charcoal mb-2">
-              💰 투룸 가격에 쓰리룸 특가!
-            </p>
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <svg className="w-8 h-8 text-luxury-gold" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/>
+              </svg>
+              <p className="text-2xl font-bold text-luxury-charcoal">
+                투룸 가격에 쓰리룸 특가!
+              </p>
+            </div>
             <p className="text-lg text-gray-700">
               파격 할인으로 <span className="text-luxury-gold font-bold">안전마진 2억</span> 확보
             </p>
@@ -165,12 +170,20 @@ export default function Schedule() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
             <div className="bg-white/10 backdrop-blur rounded-xl p-6">
-              <div className="text-3xl mb-2">📞</div>
+              <div className="text-luxury-gold mb-2">
+                <svg className="w-12 h-12 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+              </div>
               <p className="font-bold text-xl mb-1">전화 상담</p>
               <p className="text-secondary text-2xl font-bold">1588-0000</p>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-xl p-6">
-              <div className="text-3xl mb-2">🏢</div>
+              <div className="text-luxury-gold mb-2">
+                <svg className="w-12 h-12 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+                </svg>
+              </div>
               <p className="font-bold text-xl mb-1">견본주택</p>
               <p className="text-gray-100">평일 10:00 - 18:00</p>
             </div>
