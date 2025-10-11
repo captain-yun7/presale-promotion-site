@@ -130,9 +130,30 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 1.2 }}
               >
                 {[
-                  { icon: "🚇", text: "9호선 급행 초역세권" },
-                  { icon: "✅", text: "4無 (주택수·대출·자금조달·실거주의무)" },
-                  { icon: "🌳", text: "한강 10분 거리" },
+                  {
+                    icon: (
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                      </svg>
+                    ),
+                    text: "9호선 급행 초역세권"
+                  },
+                  {
+                    icon: (
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      </svg>
+                    ),
+                    text: "4無 (주택수·대출·자금조달·실거주의무)"
+                  },
+                  {
+                    icon: (
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                      </svg>
+                    ),
+                    text: "한강 10분 거리"
+                  },
                 ].map((feature, index) => (
                   <motion.div
                     key={index}
@@ -141,7 +162,7 @@ export default function HeroSection() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 1.4 + index * 0.1 }}
                   >
-                    <span className="text-2xl">{feature.icon}</span>
+                    <span className="text-luxury-gold">{feature.icon}</span>
                     <span className="text-white font-semibold">{feature.text}</span>
                   </motion.div>
                 ))}

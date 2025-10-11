@@ -2,16 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-
-const interestData = [
-  { area: "영등포", value: 320 },
-  { area: "강서구", value: 450 },
-  { area: "양천구", value: 280 },
-  { area: "구로구", value: 190 },
-  { area: "강남구", value: 240 },
-  { area: "마포구", value: 210 },
-];
 
 const qnaData = [
   {
@@ -104,65 +94,6 @@ export default function SocialProofHub() {
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             실시간 관심도와 고객 문의사항을 확인하세요
           </p>
-        </motion.div>
-
-        {/* Interest Heatmap */}
-        <motion.div
-          className="bg-white rounded-3xl p-12 shadow-xl mb-16"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold text-luxury-charcoal mb-4">
-              지역별 실시간 관심도
-            </h3>
-            <p className="text-gray-600 text-lg">
-              어느 지역에서 가장 많은 관심을 보이고 있을까요?
-            </p>
-          </div>
-
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={interestData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis
-                dataKey="area"
-                stroke="#6b7280"
-                style={{ fontSize: "14px", fontWeight: "600" }}
-              />
-              <YAxis
-                stroke="#6b7280"
-                style={{ fontSize: "14px", fontWeight: "600" }}
-              />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#fff",
-                  border: "2px solid #d4af37",
-                  borderRadius: "12px",
-                  padding: "12px",
-                }}
-                labelStyle={{ fontWeight: "bold", color: "#2c2c2c" }}
-              />
-              <Bar dataKey="value" fill="#d4af37" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-
-          <div className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
-            {interestData.map((item, index) => (
-              <motion.div
-                key={index}
-                className="bg-luxury-cream rounded-xl p-4 text-center"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <p className="text-gray-600 mb-1">{item.area}</p>
-                <p className="text-2xl font-bold text-luxury-gold">{item.value}명</p>
-              </motion.div>
-            ))}
-          </div>
         </motion.div>
 
         {/* Q&A Section */}

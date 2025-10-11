@@ -75,12 +75,60 @@ const categories = [
 ];
 
 const commuteDestinations = [
-  { name: "여의도", time: 12, icon: "🏢" },
-  { name: "강남", time: 25, icon: "🏙️" },
-  { name: "신촌/홍대", time: 15, icon: "🎨" },
-  { name: "서울역", time: 20, icon: "🚄" },
-  { name: "판교", time: 35, icon: "💼" },
-  { name: "김포공항", time: 18, icon: "✈️" },
+  {
+    name: "여의도",
+    time: 12,
+    icon: (
+      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+      </svg>
+    )
+  },
+  {
+    name: "강남",
+    time: 25,
+    icon: (
+      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm6 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>
+      </svg>
+    )
+  },
+  {
+    name: "신촌/홍대",
+    time: 15,
+    icon: (
+      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/>
+      </svg>
+    )
+  },
+  {
+    name: "서울역",
+    time: 20,
+    icon: (
+      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M4 15.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V5c0-3.5-3.58-4-8-4s-8 .5-8 4v10.5zm8 1.5c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm6-7H6V5h12v5z"/>
+      </svg>
+    )
+  },
+  {
+    name: "판교",
+    time: 35,
+    icon: (
+      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M14 6V4h-4v2h4zM4 8v11h16V8H4zm16-2c1.11 0 2 .89 2 2v11c0 1.11-.89 2-2 2H4c-1.11 0-2-.89-2-2l.01-11c0-1.11.88-2 1.99-2h4V4c0-1.11.89-2 2-2h4c1.11 0 2 .89 2 2v2h4z"/>
+      </svg>
+    )
+  },
+  {
+    name: "김포공항",
+    time: 18,
+    icon: (
+      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+      </svg>
+    )
+  },
 ];
 
 export default function Location() {
@@ -88,8 +136,10 @@ export default function Location() {
   const [selectedDestination, setSelectedDestination] = useState(0);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [mapLoadError, setMapLoadError] = useState(false);
+  const [isMiniMapOpen, setIsMiniMapOpen] = useState(false);
 
   const mapRef = useRef<any>(null);
+  const miniMapRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
 
   const currentCategory = categories.find((cat) => cat.id === selectedCategory);
@@ -99,8 +149,22 @@ export default function Location() {
     .filter(cat => cat.id !== 'all')
     .flatMap(cat => cat.items.map(item => ({ ...item, categoryColor: cat.color, categoryIcon: cat.icon })));
 
-  // 염창역 위치 (중심점)
-  const centerPosition = { lat: 37.5477, lng: 126.8747 };
+  // 실제 분양 위치 - 서울시 강서구 염창동 262-5
+  const projectLocation = { lat: 37.5475, lng: 126.8752 };
+
+  // 홍보관 위치 - 서울시 영등포구 선유로 54길14, 1층
+  const showroomLocation = { lat: 37.5359389, lng: 126.8999939 };
+
+  // 지도 중심점 (홍보관과 분양 위치의 중심)
+  const centerLat = (projectLocation.lat + showroomLocation.lat) / 2;
+  const centerLng = (projectLocation.lng + showroomLocation.lng) / 2;
+  const centerPosition = { lat: centerLat, lng: centerLng };
+
+  // 당산역 2호선 1번 출구 위치
+  const dangsanLine2Exit1 = { lat: 37.5343144, lng: 126.9019119 };
+
+  // 당산역 9호선 13번 출구 위치
+  const dangsanLine9Exit13 = { lat: 37.5342924, lng: 126.9014797 };
 
   // 지도 초기화
   const initializeMap = useCallback(() => {
@@ -113,22 +177,24 @@ export default function Location() {
     try {
       const mapOptions = {
         center: new window.naver.maps.LatLng(centerPosition.lat, centerPosition.lng),
-        zoom: 15,
+        zoom: 14,
         zoomControl: false,
         mapTypeControl: false,
         scaleControl: false,
         logoControl: false,
         mapDataControl: false,
+        minZoom: 10,
+        maxZoom: 20,
       };
 
       const map = new window.naver.maps.Map('naver-map', mapOptions);
       mapRef.current = map;
 
-      // 메인 마커 (염창역 더채움) - 펄스 애니메이션 포함
+      // 실제 분양 위치 마커 - 펄스 애니메이션 포함
       new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(centerPosition.lat, centerPosition.lng),
+        position: new window.naver.maps.LatLng(projectLocation.lat, projectLocation.lng),
         map: map,
-        title: "염창역 더채움",
+        title: "염창역 더채움 (분양위치)",
         icon: {
           content: `
             <style>
@@ -172,6 +238,180 @@ export default function Location() {
         },
       });
 
+      // 홍보관 마커 - 펄스 애니메이션 포함 (동일한 크기와 효과)
+      new window.naver.maps.Marker({
+        position: new window.naver.maps.LatLng(showroomLocation.lat, showroomLocation.lng),
+        map: map,
+        title: "홍보관 (상담)",
+        icon: {
+          content: `
+            <style>
+              @keyframes pulse-showroom {
+                0%, 100% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.1); opacity: 0.8; }
+              }
+              .showroom-marker {
+                animation: pulse-showroom 2s ease-in-out infinite;
+              }
+            </style>
+            <div class="showroom-marker" style="
+              background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+              color: white;
+              padding: 12px 20px;
+              border-radius: 25px;
+              font-weight: 900;
+              font-size: 16px;
+              box-shadow: 0 8px 16px rgba(59,130,246,0.4), 0 0 0 3px rgba(59,130,246,0.2);
+              white-space: nowrap;
+              border: 2px solid white;
+              position: relative;
+            ">
+              <span style="font-size: 20px; margin-right: 6px;">📍</span>
+              <span style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">홍보관</span>
+              <div style="
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 8px solid #3B82F6;
+                filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+              "></div>
+            </div>
+          `,
+          anchor: new window.naver.maps.Point(60, 50),
+        },
+      });
+
+      // 당산역 2호선 1번 출구 마커
+      new window.naver.maps.Marker({
+        position: new window.naver.maps.LatLng(dangsanLine2Exit1.lat, dangsanLine2Exit1.lng),
+        map: map,
+        title: "당산역 2호선 1번 출구",
+        icon: {
+          content: `
+            <div style="
+              background: #00A84D;
+              color: white;
+              width: 32px;
+              height: 32px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 18px;
+              box-shadow: 0 4px 8px rgba(0,168,77,0.3);
+              border: 2px solid white;
+            ">
+              🚇
+            </div>
+          `,
+          anchor: new window.naver.maps.Point(16, 16),
+        },
+      });
+
+      // 당산역 9호선 13번 출구 마커
+      new window.naver.maps.Marker({
+        position: new window.naver.maps.LatLng(dangsanLine9Exit13.lat, dangsanLine9Exit13.lng),
+        map: map,
+        title: "당산역 9호선 13번 출구",
+        icon: {
+          content: `
+            <div style="
+              background: #BDB092;
+              color: white;
+              width: 32px;
+              height: 32px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 18px;
+              box-shadow: 0 4px 8px rgba(189,176,146,0.3);
+              border: 2px solid white;
+            ">
+              🚇
+            </div>
+          `,
+          anchor: new window.naver.maps.Point(16, 16),
+        },
+      });
+
+      // 2호선 1번 출구에서 홍보관까지 도보 경로 (초록색 - 2호선 색상)
+      // 네이버 길찾기 API의 실제 경로 좌표 사용
+      const path2Line = [
+        new window.naver.maps.LatLng(37.5343144, 126.9019119), // 당산역 1번 출구
+        new window.naver.maps.LatLng(37.5343576, 126.9018911), // 양평로
+        new window.naver.maps.LatLng(37.5343363, 126.9017781), // 왼쪽 방향
+        new window.naver.maps.LatLng(37.5343214, 126.9016809), // KFC 당산역점
+        new window.naver.maps.LatLng(37.5343203, 126.9016515),
+        new window.naver.maps.LatLng(37.5343258, 126.9014839),
+        new window.naver.maps.LatLng(37.5343645, 126.9013014),
+        new window.naver.maps.LatLng(37.5343884, 126.9012084),
+        new window.naver.maps.LatLng(37.5344384, 126.9011106),
+        new window.naver.maps.LatLng(37.5345347, 126.9009118),
+        new window.naver.maps.LatLng(37.5346471, 126.9006789),
+        new window.naver.maps.LatLng(37.5347845, 126.9003971),
+        new window.naver.maps.LatLng(37.5348326, 126.9002937),
+        new window.naver.maps.LatLng(37.5348808, 126.9002016),
+        new window.naver.maps.LatLng(37.5349191, 126.9001096), // 횡단보도
+        new window.naver.maps.LatLng(37.5349378, 126.9000676), // GS25 당산역점
+        new window.naver.maps.LatLng(37.5352147, 126.9002714), // 선유로54길
+        new window.naver.maps.LatLng(37.5352807, 126.9003207),
+        new window.naver.maps.LatLng(37.5355594, 126.9005267),
+        new window.naver.maps.LatLng(37.5356381, 126.9005826),
+        new window.naver.maps.LatLng(37.5358924, 126.9000849), // 왼쪽 방향
+        new window.naver.maps.LatLng(showroomLocation.lat, showroomLocation.lng)  // 홍보관
+      ];
+
+      new window.naver.maps.Polyline({
+        map: map,
+        path: path2Line,
+        strokeColor: '#EF4444',
+        strokeOpacity: 0.9,
+        strokeWeight: 6,
+        strokeStyle: 'solid',
+        strokeLineCap: 'round',
+        strokeLineJoin: 'round'
+      });
+
+      // 9호선 13번 출구에서 홍보관까지 도보 경로 (빨간색)
+      // 네이버 길찾기 API의 실제 경로 좌표 사용
+      const path9Line = [
+        new window.naver.maps.LatLng(37.5342924, 126.9014797), // 당산역 13번 출구
+        new window.naver.maps.LatLng(37.5343258, 126.9014839), // 양평로
+        new window.naver.maps.LatLng(37.5343645, 126.9013014), // 왼쪽 방향
+        new window.naver.maps.LatLng(37.5343884, 126.9012084),
+        new window.naver.maps.LatLng(37.5344384, 126.9011106),
+        new window.naver.maps.LatLng(37.5345347, 126.9009118),
+        new window.naver.maps.LatLng(37.5346471, 126.9006789),
+        new window.naver.maps.LatLng(37.5347845, 126.9003971),
+        new window.naver.maps.LatLng(37.5348326, 126.9002937),
+        new window.naver.maps.LatLng(37.5348808, 126.9002016),
+        new window.naver.maps.LatLng(37.5349191, 126.9001096), // 횡단보도
+        new window.naver.maps.LatLng(37.5349378, 126.9000676), // GS25 당산역점
+        new window.naver.maps.LatLng(37.5352147, 126.9002714), // 선유로54길
+        new window.naver.maps.LatLng(37.5352807, 126.9003207),
+        new window.naver.maps.LatLng(37.5355594, 126.9005267),
+        new window.naver.maps.LatLng(37.5356381, 126.9005826),
+        new window.naver.maps.LatLng(37.5358924, 126.9000849), // 왼쪽 방향
+        new window.naver.maps.LatLng(showroomLocation.lat, showroomLocation.lng)  // 홍보관
+      ];
+
+      new window.naver.maps.Polyline({
+        map: map,
+        path: path9Line,
+        strokeColor: '#EF4444',
+        strokeOpacity: 0.9,
+        strokeWeight: 6,
+        strokeStyle: 'solid',
+        strokeLineCap: 'round',
+        strokeLineJoin: 'round'
+      });
+
       setIsMapLoaded(true);
     } catch (error) {
       console.error('네이버맵 초기화 실패:', error);
@@ -179,74 +419,127 @@ export default function Location() {
     }
   }, []);
 
-  // 카테고리별 마커 업데이트
-  useEffect(() => {
-    if (!isMapLoaded || !mapRef.current || !currentCategory) return;
+  // 카테고리별 마커는 표시하지 않음 (홍보관, 분양위치, 지하철역만 표시)
 
-    const naver = window.naver;
-    if (!naver) return;
+  // 미니맵 초기화
+  const initializeMiniMap = useCallback(() => {
+    if (!window.naver || !window.naver.maps || !isMapLoaded) return;
 
-    // 기존 마커 제거
-    markersRef.current.forEach((marker) => marker.setMap(null));
-    markersRef.current = [];
+    try {
+      // 두 지점의 중심 좌표 계산
+      const centerLat = (projectLocation.lat + showroomLocation.lat) / 2;
+      const centerLng = (projectLocation.lng + showroomLocation.lng) / 2;
 
-    // 전체 카테고리일 경우 모든 항목 표시, 아니면 선택된 카테고리만
-    const itemsToShow = selectedCategory === 'all' ? allItems : currentCategory.items;
+      const miniMapOptions = {
+        center: new window.naver.maps.LatLng(centerLat, centerLng),
+        zoom: 13,
+        zoomControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        logoControl: false,
+        mapDataControl: false,
+        draggable: true,
+        scrollWheel: true,
+      };
 
-    // 새 마커 생성 (카테고리별 색상 적용)
-    itemsToShow.forEach((item: any) => {
-      const categoryColor = selectedCategory === 'all' ? item.categoryColor : (currentCategory.color || '#d4af37');
-      const categoryIcon = selectedCategory === 'all' ? item.categoryIcon : currentCategory.icon;
+      const miniMap = new window.naver.maps.Map('mini-map', miniMapOptions);
+      miniMapRef.current = miniMap;
 
-      const marker = new naver.maps.Marker({
-        position: new naver.maps.LatLng(item.coords.lat, item.coords.lng),
-        map: mapRef.current,
-        title: item.name,
+      // 미니맵에 분양 위치 마커 (텍스트 포함)
+      new window.naver.maps.Marker({
+        position: new window.naver.maps.LatLng(projectLocation.lat, projectLocation.lng),
+        map: miniMap,
+        title: "염창역 더채움 (분양위치)",
         icon: {
           content: `
             <div style="
-              background: ${categoryColor};
+              background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
               color: white;
-              width: 36px;
-              height: 36px;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 20px;
-              box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-              border: 3px solid white;
-              cursor: pointer;
-              transition: transform 0.2s;
-            " onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
-              ${categoryIcon}
+              padding: 8px 14px;
+              border-radius: 20px;
+              font-weight: 900;
+              font-size: 13px;
+              box-shadow: 0 6px 12px rgba(212,175,55,0.5);
+              white-space: nowrap;
+              border: 2px solid white;
+              position: relative;
+            ">
+              <span style="font-size: 16px; margin-right: 4px;">🏢</span>
+              <span style="text-shadow: 0 1px 2px rgba(0,0,0,0.2);">분양위치</span>
+              <div style="
+                position: absolute;
+                bottom: -6px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 6px solid #d4af37;
+              "></div>
             </div>
           `,
-          anchor: new naver.maps.Point(18, 18),
+          anchor: new window.naver.maps.Point(55, 35),
         },
       });
 
-      // 정보창
-      const infoWindow = new naver.maps.InfoWindow({
-        content: `<div style="padding: 12px; font-size: 13px; min-width: 150px;">
-          <strong style="color: ${categoryColor}; font-size: 15px;">${item.name}</strong><br/>
-          <span style="color: #666; font-weight: 600; margin-top: 4px; display: inline-block;">${item.distance}</span>
-        </div>`,
-        borderWidth: 2,
-        borderColor: categoryColor,
+      // 미니맵에 홍보관 마커 (텍스트 포함)
+      new window.naver.maps.Marker({
+        position: new window.naver.maps.LatLng(showroomLocation.lat, showroomLocation.lng),
+        map: miniMap,
+        title: "홍보관 (상담)",
+        icon: {
+          content: `
+            <div style="
+              background: #3B82F6;
+              color: white;
+              padding: 8px 14px;
+              border-radius: 20px;
+              font-weight: 900;
+              font-size: 13px;
+              box-shadow: 0 6px 12px rgba(59,130,246,0.5);
+              white-space: nowrap;
+              border: 2px solid white;
+              position: relative;
+            ">
+              <span style="font-size: 16px; margin-right: 4px;">📍</span>
+              <span style="text-shadow: 0 1px 2px rgba(0,0,0,0.2);">홍보관</span>
+              <div style="
+                position: absolute;
+                bottom: -6px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 6px solid #3B82F6;
+              "></div>
+            </div>
+          `,
+          anchor: new window.naver.maps.Point(50, 35),
+        },
       });
+    } catch (error) {
+      console.error('미니맵 초기화 실패:', error);
+    }
+  }, [isMapLoaded, projectLocation.lat, projectLocation.lng, showroomLocation.lat, showroomLocation.lng]);
 
-      naver.maps.Event.addListener(marker, "click", () => {
-        if (infoWindow.getMap()) {
-          infoWindow.close();
-        } else {
-          infoWindow.open(mapRef.current, marker);
-        }
-      });
-
-      markersRef.current.push(marker);
-    });
-  }, [selectedCategory, currentCategory, isMapLoaded, allItems]);
+  // 미니맵이 열릴 때 초기화
+  useEffect(() => {
+    if (isMiniMapOpen) {
+      // 기존 미니맵이 있으면 제거
+      if (miniMapRef.current) {
+        miniMapRef.current.destroy();
+        miniMapRef.current = null;
+      }
+      // DOM이 완전히 렌더링된 후 초기화
+      const timer = setTimeout(() => {
+        initializeMiniMap();
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [isMiniMapOpen, initializeMiniMap]);
 
   return (
     <>
@@ -256,6 +549,77 @@ export default function Location() {
         onLoad={initializeMap}
         onError={() => setMapLoadError(true)}
       />
+
+      {/* Sticky 미니맵 */}
+      <motion.div
+        className="fixed bottom-6 right-6 z-50"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {/* 토글 버튼 */}
+        {!isMiniMapOpen && (
+          <motion.div
+            className="flex flex-col items-center gap-2"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="text-sm font-bold text-luxury-charcoal bg-white px-3 py-1 rounded-full shadow-md">
+              오시는 길
+            </span>
+            <motion.button
+              onClick={() => setIsMiniMapOpen(true)}
+              className="bg-luxury-gold text-white p-4 rounded-full shadow-2xl hover:bg-opacity-90 transition-all"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+              </svg>
+            </motion.button>
+          </motion.div>
+        )}
+
+        {/* 미니맵 패널 */}
+        {isMiniMapOpen && (
+          <motion.div
+            className="bg-white rounded-2xl shadow-2xl overflow-hidden"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="bg-luxury-gold text-white p-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🗺️</span>
+                <span className="font-bold text-sm">오시는 길</span>
+              </div>
+              <button
+                onClick={() => setIsMiniMapOpen(false)}
+                className="hover:bg-white/20 p-1 rounded transition-all"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div id="mini-map" style={{ width: "320px", height: "240px" }} />
+            <div className="p-3 bg-gray-50 text-xs text-gray-600 space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-sm">🏢</span>
+                <span className="font-semibold">염창역 더채움</span>
+              </div>
+              <div className="text-[10px]">서울시 강서구 염창동 262-5</div>
+              <div className="flex items-center gap-2 pt-1 border-t border-gray-200">
+                <span className="text-sm">📍</span>
+                <span className="font-semibold">홍보관</span>
+              </div>
+              <div className="text-[10px]">서울시 영등포구 선유로54길14, 1층</div>
+            </div>
+          </motion.div>
+        )}
+      </motion.div>
+
       <section id="location" className="section-padding bg-white">
         <div className="container-custom">
           {/* Section Title */}
@@ -275,32 +639,6 @@ export default function Location() {
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               완벽한 교통망과 생활 인프라가 갖춰진 프리미엄 입지
             </p>
-          </motion.div>
-
-          {/* Category Tabs - 지도 위로 이동 */}
-          <motion.div
-            className="flex justify-center mb-8 flex-wrap gap-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-6 py-4 rounded-full font-bold transition-all flex items-center gap-3 text-lg ${
-                  selectedCategory === category.id
-                    ? "bg-luxury-gold text-white shadow-xl scale-105"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 shadow"
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="text-2xl">{category.icon}</span>
-                <span>{category.name}</span>
-              </motion.button>
-            ))}
           </motion.div>
 
           {/* Interactive Map */}
@@ -334,25 +672,6 @@ export default function Location() {
                 </div>
               )}
 
-              {/* Map Overlay Info */}
-              {isMapLoaded && (
-                <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl max-w-sm z-10">
-                  <h3 className="text-2xl font-bold text-luxury-charcoal mb-2">
-                    염창역 더채움
-                  </h3>
-                  <p className="text-gray-600 mb-4">서울특별시 강서구 염창동</p>
-                  <div className="flex items-center gap-2 text-luxury-gold font-semibold">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path
-                        fillRule="evenodd"
-                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    <span>2·9호선 더블역세권</span>
-                  </div>
-                </div>
-              )}
 
               {/* Zoom Controls */}
               {isMapLoaded && (
@@ -384,47 +703,6 @@ export default function Location() {
             </div>
           </motion.div>
 
-          {/* Location Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-            {(selectedCategory === 'all' ? allItems : currentCategory?.items || []).map((item: any, index: number) => (
-              <motion.div
-                key={index}
-                className="bg-luxury-cream rounded-2xl p-6 hover:shadow-xl transition-all duration-300 group cursor-pointer"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="font-bold text-xl text-luxury-charcoal group-hover:text-luxury-gold transition-colors">
-                    {item.name}
-                  </h3>
-                  <svg
-                    className="w-6 h-6 text-luxury-gold"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                </div>
-                <p className="text-luxury-gold font-bold text-2xl">{item.distance}</p>
-              </motion.div>
-            ))}
-          </div>
-
           {/* Commute Simulator */}
           <motion.div
             className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 rounded-3xl p-12 shadow-2xl"
@@ -455,7 +733,7 @@ export default function Location() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <div className="text-4xl mb-3">{dest.icon}</div>
+                  <div className="mb-3 text-luxury-gold">{dest.icon}</div>
                   <div className="text-sm mb-2">{dest.name}</div>
                   <div className="text-2xl font-bold">{dest.time}분</div>
                 </motion.button>

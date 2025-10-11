@@ -3,32 +3,57 @@
 export default function ComplexInfo() {
   const features = [
     {
-      icon: "🚇",
+      icon: (
+        <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+          <path d="M4 12h16M12 2v20"/>
+        </svg>
+      ),
       title: "9호선 급행 초역세권",
       description: "염창역 도보 3분, 한강벨트라인 황금노선 접근성",
     },
     {
-      icon: "👁️",
+      icon: (
+        <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+        </svg>
+      ),
       title: "전 세대 먹방 없이 시원한 뷰",
       description: "막힘없는 전호실 일조량 GOOD, 탁 트인 조망",
     },
     {
-      icon: "🏥",
+      icon: (
+        <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/>
+        </svg>
+      ),
       title: "의료 인프라 대한민국 2위",
       description: "인근 대학병원 3개, 의료시설 밀집 지역",
     },
     {
-      icon: "🏫",
+      icon: (
+        <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+        </svg>
+      ),
       title: "제2의 목동 학군",
       description: "목동에 뒤쳐지지 않는 우수한 교육 환경",
     },
     {
-      icon: "✨",
+      icon: (
+        <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      ),
       title: "삼성 비스포크 + 현대 리바트 풀옵션",
       description: "프리미엄 가전·가구 완비, 입주 즉시 생활 가능",
     },
     {
-      icon: "🏗️",
+      icon: (
+        <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm7 16h-2v-6H7v6H5v-8.5l7-6.3 7 6.3V19z"/>
+        </svg>
+      ),
       title: "염창&가양 개발 호재",
       description: "사업비 4조 규모 업무시설 착공 (코엑스 약 2배 규모)",
     },
@@ -74,7 +99,7 @@ export default function ComplexInfo() {
               key={index}
               className="bg-white rounded-xl p-8 shadow-md hover:shadow-xl transition-shadow duration-300"
             >
-              <div className="text-5xl mb-4">{feature.icon}</div>
+              <div className="text-luxury-gold mb-4">{feature.icon}</div>
               <h3 className="text-xl font-bold text-primary mb-3">
                 {feature.title}
               </h3>
