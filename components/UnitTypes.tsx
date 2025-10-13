@@ -6,45 +6,87 @@ import Image from "next/image";
 const unitTypes = [
   {
     id: 1,
-    type: "59A",
-    area: "59㎡",
-    pyeong: "17평형",
-    rooms: "2",
-    bathrooms: "1",
-    features: ["남향 배치", "3Bay 구조", "알파룸"],
-    images: [
-      "/images/unit-59a-1.jpg",
-      "/images/unit-59a-2.jpg",
-      "/images/unit-59a-3.jpg",
-    ],
+    type: "61A",
+    area: "전용 46.07㎡",
+    supply: "공급 58.32㎡",
+    pyeong: "17.64평",
+    floorPlan: "/ref_data/평면도A.png",
+    specs: {
+      exclusive: "46.07㎡ (13.94평)",
+      common: "12.25㎡ (3.71평)",
+      service: "4.31㎡ (1.30평)",
+      other: "62.63㎡ (18.95평)",
+      ratio: "73.56%"
+    },
+    features: [
+      "3ROOM+욕실+발코니+창고대",
+      "공간활용 특화 공간 분리 구조",
+      "3구 하이브리드, 경비실전화, 현관비밀번호, ADT캡스, 세대기가, 세대비상벨, 3in 1 전화망 에어컨, HAZZS칫솔꽂이, 신발세탁기",
+      "비스포크 알림 냉장고, 3in 1 전화망 에어컨, 에어드레서"
+    ]
   },
   {
     id: 2,
-    type: "84A",
-    area: "84㎡",
-    pyeong: "25평형",
-    rooms: "3",
-    bathrooms: "2",
-    features: ["남동향 배치", "4Bay 구조", "드레스룸", "팬트리"],
-    images: [
-      "/images/unit-84a-1.jpg",
-      "/images/unit-84a-2.jpg",
-      "/images/unit-84a-3.jpg",
-    ],
+    type: "61B",
+    area: "전용 46.21㎡",
+    supply: "공급 58.47㎡",
+    pyeong: "17.69평",
+    floorPlan: "/ref_data/평면도B.png",
+    specs: {
+      exclusive: "46.21㎡ (13.98평)",
+      common: "12.26㎡ (3.05평)",
+      service: "4.32㎡ (1.31평)",
+      other: "62.79㎡ (18.99평)",
+      ratio: "73.59%"
+    },
+    features: [
+      "3ROOM+욕실+발코니+창고대",
+      "공간활용 특화 공간 분리 구조",
+      "3구 하이브리드, 경비실전화, 현관비밀번호, ADT캡스, 세대기가, 세대비상벨, 3in 1 전화망 에어컨, HAZZS칫솔꽂이, 신발세탁기",
+      "비스포크 알림 냉장고, 3in 1 전화망 에어컨, 에어드레서"
+    ]
   },
   {
     id: 3,
-    type: "114A",
-    area: "114㎡",
-    pyeong: "34평형",
-    rooms: "4",
-    bathrooms: "2",
-    features: ["남향 배치", "5Bay 구조", "대형 거실", "드레스룸", "팬트리"],
-    images: [
-      "/images/unit-114a-1.jpg",
-      "/images/unit-114a-2.jpg",
-      "/images/unit-114a-3.jpg",
-    ],
+    type: "61C",
+    area: "전용 61.87㎡",
+    supply: "공급 77.84㎡",
+    pyeong: "23.56평",
+    floorPlan: "/ref_data/평면도C.png",
+    specs: {
+      exclusive: "61.87㎡ (18.72평)",
+      common: "15.97㎡ (4.83평)",
+      service: "5.78㎡ (1.75평)",
+      other: "83.62㎡ (25.30평)",
+      ratio: "73.99%"
+    },
+    features: [
+      "3ROOM+욕실+발코니+창고대",
+      "공간활용 특화 공간 분리 구조",
+      "3구 하이브리드, 경비실전화, 현관비밀번호, ADT캡스, 세대기가, 세대비상벨, 3in 1 전화망 에어컨, HAZZS칫솔꽂이, 신발세탁기",
+      "비스포크 알림 냉장고, 3in 1 전화망 에어컨, 에어드레서"
+    ]
+  },
+  {
+    id: 4,
+    type: "61D",
+    area: "전용 62.01㎡",
+    supply: "공급 78.00㎡",
+    pyeong: "23.56평",
+    floorPlan: "/ref_data/평면도D.png",
+    specs: {
+      exclusive: "62.01㎡ (18.76평)",
+      common: "15.99㎡ (4.84평)",
+      service: "5.79㎡ (1.75평)",
+      other: "83.79㎡ (25.35평)",
+      ratio: "74.01%"
+    },
+    features: [
+      "3ROOM+욕실+발코니+창고대",
+      "공간활용 특화 공간 분리 구조",
+      "3구 하이브리드, 경비실전화, 현관비밀번호, ADT캡스, 세대기가, 세대비상벨, 3in 1 전화망 에어컨, HAZZS칫솔꽂이, 신발세탁기",
+      "비스포크 알림 냉장고, 3in 1 전화망 에어컨, 에어드레서"
+    ]
   },
 ];
 
@@ -88,32 +130,15 @@ export default function UnitTypes() {
 
         {/* Unit Details */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Image Gallery */}
+          {/* Floor Plan Image */}
           <div>
-            {/* Main Image */}
-            <div className="relative aspect-[4/3] bg-gray-200 rounded-2xl overflow-hidden mb-4">
-              <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-xl font-bold">
-                평면도 {unitTypes[selectedUnit].type}
-              </div>
-            </div>
-
-            {/* Thumbnail Images */}
-            <div className="grid grid-cols-3 gap-4">
-              {unitTypes[selectedUnit].images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`relative aspect-video bg-gray-200 rounded-lg overflow-hidden ${
-                    selectedImage === index
-                      ? "ring-4 ring-secondary"
-                      : "hover:opacity-80"
-                  }`}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">
-                    뷰 {index + 1}
-                  </div>
-                </button>
-              ))}
+            <div className="relative aspect-[4/3] bg-white rounded-2xl overflow-hidden border-2 border-gray-200">
+              <Image
+                src={unitTypes[selectedUnit].floorPlan}
+                alt={`${unitTypes[selectedUnit].type}형 평면도`}
+                fill
+                className="object-contain p-4"
+              />
             </div>
           </div>
 
@@ -125,35 +150,53 @@ export default function UnitTypes() {
               </h3>
 
               {/* Specifications */}
-              <div className="space-y-4 mb-8">
+              <div className="space-y-3 mb-8">
+                <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                  <span className="text-gray-600">전용면적</span>
+                  <span className="font-bold text-primary text-lg">
+                    {unitTypes[selectedUnit].specs.exclusive}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                  <span className="text-gray-600">공용면적</span>
+                  <span className="font-bold text-primary text-lg">
+                    {unitTypes[selectedUnit].specs.common}
+                  </span>
+                </div>
                 <div className="flex justify-between items-center py-3 border-b border-gray-200">
                   <span className="text-gray-600">공급면적</span>
-                  <span className="font-bold text-primary text-xl">
-                    {unitTypes[selectedUnit].area}
+                  <span className="font-bold text-primary text-lg">
+                    {unitTypes[selectedUnit].supply}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-600">평형</span>
-                  <span className="font-bold text-primary text-xl">
-                    {unitTypes[selectedUnit].pyeong}
+                  <span className="text-gray-600">기타면적</span>
+                  <span className="font-bold text-primary text-lg">
+                    {unitTypes[selectedUnit].specs.service}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-600">방 구성</span>
-                  <span className="font-bold text-primary text-xl">
-                    {unitTypes[selectedUnit].rooms}Room / {unitTypes[selectedUnit].bathrooms}Bath
+                  <span className="text-gray-600">계약면적</span>
+                  <span className="font-bold text-primary text-lg">
+                    {unitTypes[selectedUnit].specs.other}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                  <span className="text-gray-600">전용률</span>
+                  <span className="font-bold text-primary text-lg">
+                    {unitTypes[selectedUnit].specs.ratio}
                   </span>
                 </div>
               </div>
 
               {/* Features */}
-              <div className="mb-8">
+              <div>
                 <h4 className="font-bold text-lg mb-4 text-primary">주요 특징</h4>
                 <ul className="space-y-3">
                   {unitTypes[selectedUnit].features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
+                    <li key={index} className="flex items-start text-gray-700">
                       <svg
-                        className="w-5 h-5 text-secondary mr-3"
+                        className="w-5 h-5 text-secondary mr-3 flex-shrink-0 mt-0.5"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -163,59 +206,11 @@ export default function UnitTypes() {
                           clipRule="evenodd"
                         />
                       </svg>
-                      {feature}
+                      <span className="text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="flex-1 bg-secondary text-white px-6 py-3 rounded-full font-bold hover:bg-accent transition-all">
-                  평면도 다운로드
-                </button>
-                <button className="flex-1 border-2 border-primary text-primary px-6 py-3 rounded-full font-bold hover:bg-primary hover:text-white transition-all">
-                  상담 신청
-                </button>
-              </div>
-            </div>
-
-            {/* Additional Info */}
-            <div className="mt-6 p-6 bg-luxury-cream rounded-xl border-2 border-luxury-gold">
-              <div className="flex items-center gap-2 mb-2">
-                <svg className="w-5 h-5 text-luxury-gold" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/>
-                </svg>
-                <p className="text-sm font-semibold text-luxury-charcoal">
-                  투룸 가격에 쓰리룸 특가!
-                </p>
-              </div>
-              <p className="text-sm text-gray-600 leading-relaxed space-y-1">
-                <span className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-luxury-gold flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                  삼성 비스포크 가전 풀옵션
-                </span>
-                <span className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-luxury-gold flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                  현대 리바트 가구 포함
-                </span>
-                <span className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-luxury-gold flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                  1:1 주차 가능
-                </span>
-                <span className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-luxury-gold flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                  전 호실 일조량 GOOD (막힘없는 뷰)
-                </span>
-              </p>
             </div>
           </div>
         </div>

@@ -78,20 +78,23 @@ export default function Header() {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <div className="flex items-center">
-            <h1
-              className={`text-2xl font-bold transition-colors ${
-                isScrolled ? "text-primary" : "text-white"
-              }`}
-            >
-              PREMIUM RESIDENCE
-            </h1>
+            <div className={`${isScrolled ? 'bg-luxury-charcoal px-4 py-2 rounded-lg' : ''}`}>
+              <Image
+                src="/thechaeum-logo.png"
+                alt="염창역 더채움"
+                width={216}
+                height={60}
+                className="h-14 w-auto"
+                priority
+              />
+            </div>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => scrollToSection("complex-info")}
-              className={`font-semibold text-xl transition-colors ${
+              className={`font-semibold text-2xl transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -101,7 +104,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => scrollToSection("unit-types")}
-              className={`font-semibold text-xl transition-colors ${
+              className={`font-semibold text-2xl transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -111,7 +114,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => scrollToSection("location")}
-              className={`font-semibold text-xl transition-colors ${
+              className={`font-semibold text-2xl transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -121,7 +124,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => scrollToSection("schedule")}
-              className={`font-semibold text-xl transition-colors ${
+              className={`font-semibold text-2xl transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -131,9 +134,9 @@ export default function Header() {
             </button>
             <a
               href="tel:1611-1000"
-              className="bg-luxury-gold text-luxury-charcoal px-6 py-3 rounded-full font-black text-xl hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
+              className="bg-luxury-gold text-luxury-charcoal px-7 py-4 rounded-full font-black text-2xl hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
             >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
               <span>1611-1000</span>
@@ -156,7 +159,7 @@ export default function Header() {
               `}</style>
               <button
                 onClick={() => setIsConsultOpen(!isConsultOpen)}
-                className="consult-button bg-primary-600 text-white px-6 py-3 rounded-full font-black text-xl hover:bg-primary-700 transition-all shadow-lg"
+                className="consult-button bg-primary-600 text-white px-7 py-4 rounded-full font-black text-2xl hover:bg-primary-700 transition-all shadow-lg"
               >
                 무료상담신청
               </button>
@@ -274,33 +277,33 @@ export default function Header() {
           <nav className="md:hidden bg-white shadow-lg rounded-lg p-4 mb-4">
             <button
               onClick={() => scrollToSection("complex-info")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-xl"
+              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-2xl"
             >
               단지정보
             </button>
             <button
               onClick={() => scrollToSection("unit-types")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-xl"
+              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-2xl"
             >
               세대정보
             </button>
             <button
               onClick={() => scrollToSection("location")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-xl"
+              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-2xl"
             >
               입지환경
             </button>
             <button
               onClick={() => scrollToSection("schedule")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-xl"
+              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-2xl"
             >
               분양안내
             </button>
             <a
               href="tel:1611-1000"
-              className="block w-full text-center mt-3 bg-luxury-gold text-luxury-charcoal px-6 py-3 rounded-full font-bold text-xl hover:bg-luxury-gold/90 flex items-center justify-center gap-2"
+              className="block w-full text-center mt-3 bg-luxury-gold text-luxury-charcoal px-7 py-4 rounded-full font-bold text-2xl hover:bg-luxury-gold/90 flex items-center justify-center gap-2"
             >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
               1611-1000

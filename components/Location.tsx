@@ -175,22 +175,23 @@ export default function Location() {
     }
 
     try {
+      // 지도 중심 좌표 - 염창역 더채움 중심
       const mapOptions = {
-        center: new window.naver.maps.LatLng(centerPosition.lat, centerPosition.lng),
-        zoom: 14,
+        center: new window.naver.maps.LatLng(projectLocation.lat, projectLocation.lng),
+        zoom: 12,
         zoomControl: false,
         mapTypeControl: false,
         scaleControl: false,
         logoControl: false,
         mapDataControl: false,
-        minZoom: 10,
-        maxZoom: 20,
+        minZoom: 11,
+        maxZoom: 15,
       };
 
       const map = new window.naver.maps.Map('naver-map', mapOptions);
       mapRef.current = map;
 
-      // 실제 분양 위치 마커 - 펄스 애니메이션 포함
+      // 실제 분양 위치 마커 - 동그란 원 (빨간색)
       new window.naver.maps.Marker({
         position: new window.naver.maps.LatLng(projectLocation.lat, projectLocation.lng),
         map: map,
@@ -206,41 +207,43 @@ export default function Location() {
                 animation: pulse 2s ease-in-out infinite;
               }
             </style>
-            <div class="main-marker" style="
-              background: linear-gradient(135deg, #2c2c2c 0%, #3d3d3d 100%);
-              color: #d4af37;
-              padding: 12px 20px;
-              border-radius: 25px;
-              font-weight: 900;
-              font-size: 16px;
-              box-shadow: 0 8px 16px rgba(44,44,44,0.5), 0 0 0 3px rgba(212,175,55,0.3);
-              white-space: nowrap;
-              border: 2px solid #d4af37;
-              position: relative;
-            ">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#d4af37" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-              </svg>
-              <span style="text-shadow: 0 2px 4px rgba(0,0,0,0.3);">염창역 더채움</span>
+            <div style="display: flex; flex-direction: column; align-items: center;">
               <div style="
-                position: absolute;
-                bottom: -8px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 0;
-                height: 0;
-                border-left: 8px solid transparent;
-                border-right: 8px solid transparent;
-                border-top: 8px solid #2c2c2c;
-                filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
-              "></div>
+                background: #EF4444;
+                color: white;
+                padding: 6px 12px;
+                border-radius: 20px;
+                font-weight: 700;
+                font-size: 13px;
+                white-space: nowrap;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                margin-bottom: 8px;
+              ">
+                염창역 더채움
+              </div>
+              <div class="main-marker" style="
+                background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+                color: white;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 8px rgba(239,68,68,0.5), 0 0 0 2px rgba(239,68,68,0.3);
+                border: 2px solid white;
+              ">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+              </div>
             </div>
           `,
-          anchor: new window.naver.maps.Point(85, 50),
+          anchor: new window.naver.maps.Point(60, 80),
         },
       });
 
-      // 홍보관 마커 - 펄스 애니메이션 포함 (동일한 크기와 효과)
+      // 홍보관 마커 - 동그란 원
       new window.naver.maps.Marker({
         position: new window.naver.maps.LatLng(showroomLocation.lat, showroomLocation.lng),
         map: map,
@@ -256,37 +259,39 @@ export default function Location() {
                 animation: pulse-showroom 2s ease-in-out infinite;
               }
             </style>
-            <div class="showroom-marker" style="
-              background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-              color: #2c2c2c;
-              padding: 12px 20px;
-              border-radius: 25px;
-              font-weight: 900;
-              font-size: 16px;
-              box-shadow: 0 8px 16px rgba(212,175,55,0.5), 0 0 0 3px rgba(212,175,55,0.2);
-              white-space: nowrap;
-              border: 2px solid #2c2c2c;
-              position: relative;
-            ">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#2c2c2c" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-              </svg>
-              <span style="text-shadow: 0 2px 4px rgba(0,0,0,0.1);">홍보관</span>
+            <div style="display: flex; flex-direction: column; align-items: center;">
               <div style="
-                position: absolute;
-                bottom: -8px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 0;
-                height: 0;
-                border-left: 8px solid transparent;
-                border-right: 8px solid transparent;
-                border-top: 8px solid #d4af37;
-                filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
-              "></div>
+                background: #d4af37;
+                color: #2c2c2c;
+                padding: 6px 12px;
+                border-radius: 20px;
+                font-weight: 700;
+                font-size: 13px;
+                white-space: nowrap;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                margin-bottom: 8px;
+              ">
+                홍보관
+              </div>
+              <div class="showroom-marker" style="
+                background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+                color: #2c2c2c;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 8px rgba(212,175,55,0.5), 0 0 0 2px rgba(212,175,55,0.2);
+                border: 2px solid #2c2c2c;
+              ">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#2c2c2c">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              </div>
             </div>
           `,
-          anchor: new window.naver.maps.Point(60, 50),
+          anchor: new window.naver.maps.Point(40, 80),
         },
       });
 
@@ -414,6 +419,108 @@ export default function Location() {
         strokeStyle: 'solid',
         strokeLineCap: 'round',
         strokeLineJoin: 'round'
+      });
+
+      // 주요 입지 원형 표시 (입지환경.png 기준)
+      const majorLocations = [
+        {
+          name: '9호선 염창역',
+          sub: '급행(1-2정거장)',
+          lat: 37.5477,
+          lng: 126.8747,
+          radius: 400,
+          color: '#3B82F6'
+        },
+        {
+          name: '마곡나루역',
+          sub: '일반산업단지',
+          lat: 37.5580,
+          lng: 126.8250,
+          radius: 1200,
+          color: '#64B5F6'
+        },
+        {
+          name: '여의도',
+          sub: '금융/방송가',
+          lat: 37.5219,
+          lng: 126.9245,
+          radius: 1500,
+          color: '#9C27B0'
+        },
+        {
+          name: '목동',
+          sub: '주거/학군지',
+          lat: 37.5263,
+          lng: 126.8643,
+          radius: 1000,
+          color: '#81C784'
+        },
+        {
+          name: '합정/홍대/연남',
+          sub: '상업/문화지구',
+          lat: 37.5490,
+          lng: 126.9140,
+          radius: 1200,
+          color: '#FFB74D'
+        },
+        {
+          name: '가산디지털단지',
+          sub: 'IT첨단산업',
+          lat: 37.4815,
+          lng: 126.8827,
+          radius: 1300,
+          color: '#4DB6AC'
+        },
+        {
+          name: '상암DMC',
+          sub: '디지털미디어시티',
+          lat: 37.5792,
+          lng: 126.8897,
+          radius: 1000,
+          color: '#BA68C8'
+        },
+      ];
+
+      majorLocations.forEach(location => {
+        new window.naver.maps.Circle({
+          map: map,
+          center: new window.naver.maps.LatLng(location.lat, location.lng),
+          radius: location.radius,
+          fillColor: location.color,
+          fillOpacity: 0.15,
+          strokeColor: location.color,
+          strokeOpacity: 0.6,
+          strokeWeight: 2,
+        });
+
+        // 지역 이름 텍스트 (원 중심에 표시)
+        new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(location.lat, location.lng),
+          map: map,
+          title: location.name,
+          icon: {
+            content: `
+              <div style="
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                color: ${location.color};
+                font-weight: bold;
+                font-size: 14px;
+                text-align: center;
+                text-shadow: 0 0 4px white, 0 0 4px white, 0 0 4px white, 0 0 4px white;
+                pointer-events: none;
+                line-height: 1.3;
+                white-space: nowrap;
+              ">
+                <div>${location.name}</div>
+                <div style="font-size: 11px; font-weight: normal; margin-top: 2px;">${location.sub}</div>
+              </div>
+            `,
+            anchor: new window.naver.maps.Point(0, 0),
+          },
+        });
       });
 
       setIsMapLoaded(true);
@@ -712,6 +819,127 @@ export default function Location() {
                   </button>
                 </div>
               )}
+            </div>
+          </motion.div>
+
+          {/* 홍보관 오시는 길 약도 */}
+          <motion.div
+            className="bg-white rounded-3xl p-12 shadow-2xl mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="text-center mb-12">
+              <h3 className="text-3xl md:text-4xl font-bold text-luxury-charcoal mb-4">
+                홍보관 오시는 길
+              </h3>
+              <p className="text-gray-600 text-lg mb-2">
+                서울시 영등포구 선유로54길14, 1층
+              </p>
+              <p className="text-luxury-gold font-bold text-lg">
+                당산역 2호선 1번 출구 / 9호선 13번 출구 도보 2분
+              </p>
+            </div>
+
+            {/* 약도 이미지 */}
+            <div className="max-w-4xl mx-auto mb-8">
+              <div className="relative border-2 border-gray-200 rounded-2xl overflow-hidden bg-gray-100">
+                <img
+                  id="showroom-map"
+                  src="/showroom-map.png"
+                  alt="홍보관 오시는 길 약도"
+                  className="w-full h-auto"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const parent = target.parentElement;
+                    if (parent) {
+                      parent.innerHTML = '<div class="flex items-center justify-center h-96 text-gray-500"><p>약도 이미지를 준비중입니다.<br/>네이버 지도를 참고해주세요.</p></div>';
+                    }
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* 공유 및 다운로드 버튼 */}
+            <div className="flex justify-center gap-4 flex-wrap">
+              <button
+                onClick={() => {
+                  const img = document.getElementById('showroom-map') as HTMLImageElement;
+                  if (!img || !img.src) return;
+
+                  fetch(img.src)
+                    .then(res => res.blob())
+                    .then(blob => {
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = '염창역더채움_홍보관_오시는길.png';
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    })
+                    .catch(() => {
+                      alert('이미지 다운로드에 실패했습니다.');
+                    });
+                }}
+                className="bg-luxury-gold hover:bg-opacity-90 text-luxury-charcoal px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg flex items-center gap-2"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                이미지 다운로드
+              </button>
+
+              <button
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: '염창역 더채움 홍보관 오시는 길',
+                      text: '서울시 영등포구 선유로54길14, 1층\n당산역 2호선 1번 출구 / 9호선 13번 출구 도보 2분',
+                      url: window.location.href
+                    }).catch(() => {});
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('링크가 복사되었습니다!');
+                  }
+                }}
+                className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg flex items-center gap-2"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+                공유하기
+              </button>
+            </div>
+
+            {/* 추가 정보 */}
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-gray-50 p-6 rounded-2xl">
+                <h4 className="text-lg font-bold text-luxury-charcoal mb-3 flex items-center gap-2">
+                  <svg className="w-6 h-6 text-luxury-gold" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                  </svg>
+                  지하철 이용
+                </h4>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• 2호선 당산역 1번 출구 도보 2분</li>
+                  <li>• 9호선 당산역 13번 출구 도보 2분</li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-50 p-6 rounded-2xl">
+                <h4 className="text-lg font-bold text-luxury-charcoal mb-3 flex items-center gap-2">
+                  <svg className="w-6 h-6 text-luxury-gold" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+                  </svg>
+                  주차 안내
+                </h4>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• 건물 내 주차 가능</li>
+                  <li>• 주차 공간 한정적 (대중교통 이용 권장)</li>
+                </ul>
+              </div>
             </div>
           </motion.div>
 
