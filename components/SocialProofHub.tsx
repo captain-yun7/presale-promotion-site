@@ -8,48 +8,36 @@ const qnaData = [
     id: 1,
     question: "주택수·대출규제·자금조달 제한이 정말 없나요?",
     answer: "네, 맞습니다. 염창역 더채움은 아파텔로 분류되어 주택수에 포함되지 않으며, 대출규제, 자금조달 증빙, 실거주의무 모두 해당되지 않습니다. 실거주자와 투자자 모두에게 열린 기회입니다.",
-    author: "김**",
-    date: "2025-10-09",
     category: "분양",
   },
   {
     id: 2,
     question: "투룸 가격에 쓰리룸이라는데 실제 가격 차이가 얼마나 나나요?",
     answer: "파격 할인이 적용되어 인근 투룸 시세 대비 쓰리룸을 분양받으실 수 있으며, 안전마진은 약 2억 정도로 예상됩니다. 자세한 분양가는 상담을 통해 안내드립니다.",
-    author: "이**",
-    date: "2025-10-08",
     category: "분양",
   },
   {
     id: 3,
     question: "실거주 목적인데 투자 목적 분양도 가능한가요?",
     answer: "네, 가능합니다. 실거주의무가 없어 실거주자와 투자자 모두 분양받으실 수 있습니다. 실거주 후 전월세 전환도 자유롭습니다.",
-    author: "박**",
-    date: "2025-10-07",
     category: "분양",
   },
   {
     id: 4,
     question: "삼성 비스포크와 현대 리바트가 기본 포함인가요?",
     answer: "네, 삼성 비스포크 가전 풀옵션(냉장고, 김치냉장고, 식기세척기 등)과 현대 리바트 가구가 기본 제공됩니다. 입주 즉시 생활 가능한 프리미엄 옵션입니다.",
-    author: "최**",
-    date: "2025-10-06",
     category: "시설",
   },
   {
     id: 5,
     question: "주차는 몇 대까지 가능한가요?",
     answer: "세대당 1:1 주차가 가능합니다. 별도 추가 비용 없이 1대의 주차 공간이 보장됩니다.",
-    author: "정**",
-    date: "2025-10-05",
     category: "시설",
   },
   {
     id: 6,
     question: "염창&가양 개발 호재가 정말 코엑스 2배 규모인가요?",
     answer: "네, 사업비 약 4조 규모의 업무시설이 착공 시작되었으며, 이는 코엑스의 약 2배 규모입니다. 마곡, 여의도, 마포, DMC 수요 흡수와 함께 지역 가치 상승이 기대됩니다.",
-    author: "강**",
-    date: "2025-10-04",
     category: "입주",
   },
 ];
@@ -77,25 +65,6 @@ export default function SocialProofHub() {
   return (
     <section id="social-proof" className="section-padding bg-gray-50">
       <div className="container-custom">
-        {/* Section Title */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
-            SOCIAL PROOF HUB
-          </p>
-          <h2 className="text-4xl md:text-6xl font-bold text-luxury-charcoal mb-6">
-            신뢰 구축
-          </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            실시간 관심도와 고객 문의사항을 확인하세요
-          </p>
-        </motion.div>
-
         {/* Q&A Section */}
         <motion.div
           className="bg-white rounded-3xl p-12 shadow-xl mb-16"
@@ -105,9 +74,12 @@ export default function SocialProofHub() {
           transition={{ duration: 0.8 }}
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold text-luxury-charcoal mb-4">
+            <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
+              FAQ
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-luxury-charcoal mb-4">
               자주 묻는 질문
-            </h3>
+            </h2>
             <p className="text-gray-600 text-lg mb-8">
               고객님들이 가장 궁금해하시는 내용입니다
             </p>
@@ -151,9 +123,6 @@ export default function SocialProofHub() {
                       <span className="bg-luxury-gold text-white px-3 py-1 rounded-full text-sm font-semibold">
                         Q
                       </span>
-                      <span className="text-sm text-gray-500">
-                        {item.author} · {item.date}
-                      </span>
                       <span className="text-sm bg-primary-100 text-primary-700 px-3 py-1 rounded-full">
                         {item.category}
                       </span>
@@ -163,7 +132,7 @@ export default function SocialProofHub() {
                     </h4>
                   </div>
                   <motion.svg
-                    className="w-6 h-6 text-luxury-gold ml-4"
+                    className="w-6 h-6 text-luxury-gold ml-4 flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -227,47 +196,32 @@ export default function SocialProofHub() {
               {timeline.map((item, index) => (
                 <motion.div
                   key={index}
-                  className="relative flex flex-col md:flex-row items-center gap-8"
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  className="relative flex flex-col items-center gap-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  {/* Left Side (Desktop) */}
-                  <div
-                    className={`flex-1 ${
-                      index % 2 === 0 ? "md:text-right" : "md:text-left md:order-2"
-                    }`}
-                  >
-                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 inline-block">
-                      <p className="text-luxury-gold font-bold text-2xl mb-2">
-                        {item.date}
-                      </p>
-                      <p className="text-white text-lg font-semibold">{item.event}</p>
-                    </div>
-                  </div>
-
-                  {/* Center Icon */}
+                  {/* Icon */}
                   <div className="relative z-10">
                     <motion.div
                       className="w-16 h-16 rounded-full bg-luxury-gold flex items-center justify-center shadow-2xl"
                       whileHover={{ scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
-                      {item.status === "upcoming" ? (
-                        <svg className="w-8 h-8 text-luxury-charcoal" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                      ) : (
-                        <svg className="w-8 h-8 text-luxury-charcoal" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                        </svg>
-                      )}
+                      <svg className="w-8 h-8 text-luxury-charcoal" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                      </svg>
                     </motion.div>
                   </div>
 
-                  {/* Right Side (Desktop) */}
-                  <div className="flex-1 md:order-1" />
+                  {/* Content */}
+                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center max-w-sm w-full">
+                    <p className="text-luxury-gold font-bold text-2xl mb-2">
+                      {item.date}
+                    </p>
+                    <p className="text-white text-lg font-semibold">{item.event}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>

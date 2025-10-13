@@ -207,19 +207,21 @@ export default function Location() {
               }
             </style>
             <div class="main-marker" style="
-              background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-              color: white;
+              background: linear-gradient(135deg, #2c2c2c 0%, #3d3d3d 100%);
+              color: #d4af37;
               padding: 12px 20px;
               border-radius: 25px;
               font-weight: 900;
               font-size: 16px;
-              box-shadow: 0 8px 16px rgba(212,175,55,0.4), 0 0 0 3px rgba(212,175,55,0.2);
+              box-shadow: 0 8px 16px rgba(44,44,44,0.5), 0 0 0 3px rgba(212,175,55,0.3);
               white-space: nowrap;
-              border: 2px solid white;
+              border: 2px solid #d4af37;
               position: relative;
             ">
-              <span style="font-size: 20px; margin-right: 6px;">🏢</span>
-              <span style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">염창역 더채움</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#d4af37" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+              <span style="text-shadow: 0 2px 4px rgba(0,0,0,0.3);">염창역 더채움</span>
               <div style="
                 position: absolute;
                 bottom: -8px;
@@ -229,7 +231,7 @@ export default function Location() {
                 height: 0;
                 border-left: 8px solid transparent;
                 border-right: 8px solid transparent;
-                border-top: 8px solid #d4af37;
+                border-top: 8px solid #2c2c2c;
                 filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
               "></div>
             </div>
@@ -255,19 +257,21 @@ export default function Location() {
               }
             </style>
             <div class="showroom-marker" style="
-              background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
-              color: white;
+              background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+              color: #2c2c2c;
               padding: 12px 20px;
               border-radius: 25px;
               font-weight: 900;
               font-size: 16px;
-              box-shadow: 0 8px 16px rgba(59,130,246,0.4), 0 0 0 3px rgba(59,130,246,0.2);
+              box-shadow: 0 8px 16px rgba(212,175,55,0.5), 0 0 0 3px rgba(212,175,55,0.2);
               white-space: nowrap;
-              border: 2px solid white;
+              border: 2px solid #2c2c2c;
               position: relative;
             ">
-              <span style="font-size: 20px; margin-right: 6px;">📍</span>
-              <span style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">홍보관</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#2c2c2c" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+              <span style="text-shadow: 0 2px 4px rgba(0,0,0,0.1);">홍보관</span>
               <div style="
                 position: absolute;
                 bottom: -8px;
@@ -277,7 +281,7 @@ export default function Location() {
                 height: 0;
                 border-left: 8px solid transparent;
                 border-right: 8px solid transparent;
-                border-top: 8px solid #3B82F6;
+                border-top: 8px solid #d4af37;
                 filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
               "></div>
             </div>
@@ -453,19 +457,21 @@ export default function Location() {
         icon: {
           content: `
             <div style="
-              background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-              color: white;
+              background: linear-gradient(135deg, #2c2c2c 0%, #3d3d3d 100%);
+              color: #d4af37;
               padding: 8px 14px;
               border-radius: 20px;
               font-weight: 900;
               font-size: 13px;
-              box-shadow: 0 6px 12px rgba(212,175,55,0.5);
+              box-shadow: 0 6px 12px rgba(44,44,44,0.5);
               white-space: nowrap;
-              border: 2px solid white;
+              border: 2px solid #d4af37;
               position: relative;
             ">
-              <span style="font-size: 16px; margin-right: 4px;">🏢</span>
-              <span style="text-shadow: 0 1px 2px rgba(0,0,0,0.2);">분양위치</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#d4af37" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+              <span style="text-shadow: 0 1px 2px rgba(0,0,0,0.3);">분양위치</span>
               <div style="
                 position: absolute;
                 bottom: -6px;
@@ -475,7 +481,7 @@ export default function Location() {
                 height: 0;
                 border-left: 6px solid transparent;
                 border-right: 6px solid transparent;
-                border-top: 6px solid #d4af37;
+                border-top: 6px solid #2c2c2c;
               "></div>
             </div>
           `,
@@ -491,19 +497,21 @@ export default function Location() {
         icon: {
           content: `
             <div style="
-              background: #3B82F6;
-              color: white;
+              background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+              color: #2c2c2c;
               padding: 8px 14px;
               border-radius: 20px;
               font-weight: 900;
               font-size: 13px;
-              box-shadow: 0 6px 12px rgba(59,130,246,0.5);
+              box-shadow: 0 6px 12px rgba(212,175,55,0.5);
               white-space: nowrap;
-              border: 2px solid white;
+              border: 2px solid #2c2c2c;
               position: relative;
             ">
-              <span style="font-size: 16px; margin-right: 4px;">📍</span>
-              <span style="text-shadow: 0 1px 2px rgba(0,0,0,0.2);">홍보관</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#2c2c2c" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+              <span style="text-shadow: 0 1px 2px rgba(0,0,0,0.1);">홍보관</span>
               <div style="
                 position: absolute;
                 bottom: -6px;
@@ -513,7 +521,7 @@ export default function Location() {
                 height: 0;
                 border-left: 6px solid transparent;
                 border-right: 6px solid transparent;
-                border-top: 6px solid #3B82F6;
+                border-top: 6px solid #d4af37;
               "></div>
             </div>
           `,
@@ -606,12 +614,16 @@ export default function Location() {
             <div id="mini-map" style={{ width: "320px", height: "240px" }} />
             <div className="p-3 bg-gray-50 text-xs text-gray-600 space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-sm">🏢</span>
+                <svg className="w-4 h-4" fill="#d4af37" viewBox="0 0 24 24">
+                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
                 <span className="font-semibold">염창역 더채움</span>
               </div>
               <div className="text-[10px]">서울시 강서구 염창동 262-5</div>
               <div className="flex items-center gap-2 pt-1 border-t border-gray-200">
-                <span className="text-sm">📍</span>
+                <svg className="w-4 h-4" fill="#d4af37" viewBox="0 0 24 24">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
                 <span className="font-semibold">홍보관</span>
               </div>
               <div className="text-[10px]">서울시 영등포구 선유로54길14, 1층</div>

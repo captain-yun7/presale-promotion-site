@@ -8,6 +8,7 @@ import UnitTypes from "@/components/UnitTypes";
 import Schedule from "@/components/Schedule";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
+import SocialProofToast from "@/components/SocialProofToast";
 
 export default function Home() {
   return (
@@ -39,6 +40,9 @@ export default function Home() {
 
       {/* Floating CTA - Sticky (카카오톡, 상담 예약) */}
       <FloatingCTA />
+
+      {/* Social Proof Toast - 왼쪽 하단 팝업 */}
+      <SocialProofToast />
     </>
   );
 }
