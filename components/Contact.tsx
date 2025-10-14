@@ -52,13 +52,17 @@ export default function Contact() {
   };
 
   const handleKakaoContact = () => {
-    // 실제 오픈채팅방 링크로 변경하세요
-    window.open('https://open.kakao.com/o/your-openchat-link', '_blank');
+    window.open('https://open.kakao.com/o/s1Cc83Wh', '_blank');
   };
 
   return (
-    <section id="contact" className="section-padding bg-gradient-to-br from-luxury-charcoal via-gray-800 to-luxury-charcoal">
-      <div className="container-custom">
+    <section id="contact" className="section-padding bg-gradient-to-br from-gray-50 via-luxury-cream to-gray-50 relative overflow-hidden">
+      {/* 장식 요소 */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-luxury-gold to-transparent"></div>
+      <div className="absolute top-20 left-10 w-32 h-32 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 right-10 w-40 h-40 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+
+      <div className="container-custom relative z-10">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -69,17 +73,17 @@ export default function Contact() {
           <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
             CONTACT
           </p>
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold text-luxury-charcoal mb-6">
             빠른 상담 신청
           </h2>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             지금 상담 신청하시면 전문 상담사가 빠르게 연락드립니다
           </p>
         </motion.div>
 
         <div className="max-w-2xl mx-auto">
           <motion.div
-            className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl"
+            className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl border-2 border-luxury-gold/20 hover:border-luxury-gold/40 transition-all duration-300"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -169,13 +173,13 @@ export default function Contact() {
               </button>
 
               <a
-                href="tel:1611-1000"
+                href="tel:1666-0952"
                 className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-colors font-bold text-lg flex items-center justify-center gap-3 shadow-lg"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
-                <span>전화 상담 1611-1000</span>
+                <span>전화 상담 1666-0952</span>
               </a>
             </div>
           </motion.div>

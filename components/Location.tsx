@@ -152,20 +152,6 @@ export default function Location() {
   // 실제 분양 위치 - 서울시 강서구 염창동 262-5
   const projectLocation = { lat: 37.5475, lng: 126.8752 };
 
-  // 홍보관 위치 - 서울시 영등포구 선유로 54길14, 1층
-  const showroomLocation = { lat: 37.5359389, lng: 126.8999939 };
-
-  // 지도 중심점 (홍보관과 분양 위치의 중심)
-  const centerLat = (projectLocation.lat + showroomLocation.lat) / 2;
-  const centerLng = (projectLocation.lng + showroomLocation.lng) / 2;
-  const centerPosition = { lat: centerLat, lng: centerLng };
-
-  // 당산역 2호선 1번 출구 위치
-  const dangsanLine2Exit1 = { lat: 37.5343144, lng: 126.9019119 };
-
-  // 당산역 9호선 13번 출구 위치
-  const dangsanLine9Exit13 = { lat: 37.5342924, lng: 126.9014797 };
-
   // 지도 초기화
   const initializeMap = useCallback(() => {
     if (!window.naver || !window.naver.maps) {
@@ -243,194 +229,8 @@ export default function Location() {
         },
       });
 
-      // 홍보관 마커 - 동그란 원
-      new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(showroomLocation.lat, showroomLocation.lng),
-        map: map,
-        title: "홍보관 (상담)",
-        icon: {
-          content: `
-            <style>
-              @keyframes pulse-showroom {
-                0%, 100% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(1.1); opacity: 0.8; }
-              }
-              .showroom-marker {
-                animation: pulse-showroom 2s ease-in-out infinite;
-              }
-            </style>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <div style="
-                background: #d4af37;
-                color: #2c2c2c;
-                padding: 6px 12px;
-                border-radius: 20px;
-                font-weight: 700;
-                font-size: 13px;
-                white-space: nowrap;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-                margin-bottom: 8px;
-              ">
-                홍보관
-              </div>
-              <div class="showroom-marker" style="
-                background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-                color: #2c2c2c;
-                width: 48px;
-                height: 48px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 4px 8px rgba(212,175,55,0.5), 0 0 0 2px rgba(212,175,55,0.2);
-                border: 2px solid #2c2c2c;
-              ">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#2c2c2c">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                </svg>
-              </div>
-            </div>
-          `,
-          anchor: new window.naver.maps.Point(40, 80),
-        },
-      });
-
-      // 당산역 2호선 1번 출구 마커
-      new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(dangsanLine2Exit1.lat, dangsanLine2Exit1.lng),
-        map: map,
-        title: "당산역 2호선 1번 출구",
-        icon: {
-          content: `
-            <div style="
-              background: #00A84D;
-              color: white;
-              width: 32px;
-              height: 32px;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 18px;
-              box-shadow: 0 4px 8px rgba(0,168,77,0.3);
-              border: 2px solid white;
-            ">
-              🚇
-            </div>
-          `,
-          anchor: new window.naver.maps.Point(16, 16),
-        },
-      });
-
-      // 당산역 9호선 13번 출구 마커
-      new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(dangsanLine9Exit13.lat, dangsanLine9Exit13.lng),
-        map: map,
-        title: "당산역 9호선 13번 출구",
-        icon: {
-          content: `
-            <div style="
-              background: #BDB092;
-              color: white;
-              width: 32px;
-              height: 32px;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 18px;
-              box-shadow: 0 4px 8px rgba(189,176,146,0.3);
-              border: 2px solid white;
-            ">
-              🚇
-            </div>
-          `,
-          anchor: new window.naver.maps.Point(16, 16),
-        },
-      });
-
-      // 2호선 1번 출구에서 홍보관까지 도보 경로 (초록색 - 2호선 색상)
-      // 네이버 길찾기 API의 실제 경로 좌표 사용
-      const path2Line = [
-        new window.naver.maps.LatLng(37.5343144, 126.9019119), // 당산역 1번 출구
-        new window.naver.maps.LatLng(37.5343576, 126.9018911), // 양평로
-        new window.naver.maps.LatLng(37.5343363, 126.9017781), // 왼쪽 방향
-        new window.naver.maps.LatLng(37.5343214, 126.9016809), // KFC 당산역점
-        new window.naver.maps.LatLng(37.5343203, 126.9016515),
-        new window.naver.maps.LatLng(37.5343258, 126.9014839),
-        new window.naver.maps.LatLng(37.5343645, 126.9013014),
-        new window.naver.maps.LatLng(37.5343884, 126.9012084),
-        new window.naver.maps.LatLng(37.5344384, 126.9011106),
-        new window.naver.maps.LatLng(37.5345347, 126.9009118),
-        new window.naver.maps.LatLng(37.5346471, 126.9006789),
-        new window.naver.maps.LatLng(37.5347845, 126.9003971),
-        new window.naver.maps.LatLng(37.5348326, 126.9002937),
-        new window.naver.maps.LatLng(37.5348808, 126.9002016),
-        new window.naver.maps.LatLng(37.5349191, 126.9001096), // 횡단보도
-        new window.naver.maps.LatLng(37.5349378, 126.9000676), // GS25 당산역점
-        new window.naver.maps.LatLng(37.5352147, 126.9002714), // 선유로54길
-        new window.naver.maps.LatLng(37.5352807, 126.9003207),
-        new window.naver.maps.LatLng(37.5355594, 126.9005267),
-        new window.naver.maps.LatLng(37.5356381, 126.9005826),
-        new window.naver.maps.LatLng(37.5358924, 126.9000849), // 왼쪽 방향
-        new window.naver.maps.LatLng(showroomLocation.lat, showroomLocation.lng)  // 홍보관
-      ];
-
-      new window.naver.maps.Polyline({
-        map: map,
-        path: path2Line,
-        strokeColor: '#EF4444',
-        strokeOpacity: 0.9,
-        strokeWeight: 6,
-        strokeStyle: 'solid',
-        strokeLineCap: 'round',
-        strokeLineJoin: 'round'
-      });
-
-      // 9호선 13번 출구에서 홍보관까지 도보 경로 (빨간색)
-      // 네이버 길찾기 API의 실제 경로 좌표 사용
-      const path9Line = [
-        new window.naver.maps.LatLng(37.5342924, 126.9014797), // 당산역 13번 출구
-        new window.naver.maps.LatLng(37.5343258, 126.9014839), // 양평로
-        new window.naver.maps.LatLng(37.5343645, 126.9013014), // 왼쪽 방향
-        new window.naver.maps.LatLng(37.5343884, 126.9012084),
-        new window.naver.maps.LatLng(37.5344384, 126.9011106),
-        new window.naver.maps.LatLng(37.5345347, 126.9009118),
-        new window.naver.maps.LatLng(37.5346471, 126.9006789),
-        new window.naver.maps.LatLng(37.5347845, 126.9003971),
-        new window.naver.maps.LatLng(37.5348326, 126.9002937),
-        new window.naver.maps.LatLng(37.5348808, 126.9002016),
-        new window.naver.maps.LatLng(37.5349191, 126.9001096), // 횡단보도
-        new window.naver.maps.LatLng(37.5349378, 126.9000676), // GS25 당산역점
-        new window.naver.maps.LatLng(37.5352147, 126.9002714), // 선유로54길
-        new window.naver.maps.LatLng(37.5352807, 126.9003207),
-        new window.naver.maps.LatLng(37.5355594, 126.9005267),
-        new window.naver.maps.LatLng(37.5356381, 126.9005826),
-        new window.naver.maps.LatLng(37.5358924, 126.9000849), // 왼쪽 방향
-        new window.naver.maps.LatLng(showroomLocation.lat, showroomLocation.lng)  // 홍보관
-      ];
-
-      new window.naver.maps.Polyline({
-        map: map,
-        path: path9Line,
-        strokeColor: '#EF4444',
-        strokeOpacity: 0.9,
-        strokeWeight: 6,
-        strokeStyle: 'solid',
-        strokeLineCap: 'round',
-        strokeLineJoin: 'round'
-      });
-
       // 주요 입지 원형 표시 (입지환경.png 기준)
       const majorLocations = [
-        {
-          name: '9호선 염창역',
-          sub: '급행(1-2정거장)',
-          lat: 37.5477,
-          lng: 126.8747,
-          radius: 400,
-          color: '#3B82F6'
-        },
         {
           name: '마곡나루역',
           sub: '일반산업단지',
@@ -530,7 +330,7 @@ export default function Location() {
     }
   }, []);
 
-  // 카테고리별 마커는 표시하지 않음 (홍보관, 분양위치, 지하철역만 표시)
+  // 카테고리별 마커는 표시하지 않음 (분양위치만 표시)
 
   // 미니맵 초기화
   const initializeMiniMap = useCallback(() => {
@@ -595,50 +395,10 @@ export default function Location() {
           anchor: new window.naver.maps.Point(55, 35),
         },
       });
-
-      // 미니맵에 홍보관 마커 (텍스트 포함)
-      new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(showroomLocation.lat, showroomLocation.lng),
-        map: miniMap,
-        title: "홍보관 (상담)",
-        icon: {
-          content: `
-            <div style="
-              background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-              color: #2c2c2c;
-              padding: 8px 14px;
-              border-radius: 20px;
-              font-weight: 900;
-              font-size: 13px;
-              box-shadow: 0 6px 12px rgba(212,175,55,0.5);
-              white-space: nowrap;
-              border: 2px solid #2c2c2c;
-              position: relative;
-            ">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#2c2c2c" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-              </svg>
-              <span style="text-shadow: 0 1px 2px rgba(0,0,0,0.1);">홍보관</span>
-              <div style="
-                position: absolute;
-                bottom: -6px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 0;
-                height: 0;
-                border-left: 6px solid transparent;
-                border-right: 6px solid transparent;
-                border-top: 6px solid #d4af37;
-              "></div>
-            </div>
-          `,
-          anchor: new window.naver.maps.Point(50, 35),
-        },
-      });
     } catch (error) {
       console.error('미니맵 초기화 실패:', error);
     }
-  }, [isMapLoaded, projectLocation.lat, projectLocation.lng, showroomLocation.lat, showroomLocation.lng]);
+  }, [isMapLoaded, projectLocation.lat, projectLocation.lng]);
 
   // 미니맵이 열릴 때 초기화
   useEffect(() => {
@@ -665,14 +425,13 @@ export default function Location() {
         onError={() => setMapLoadError(true)}
       />
 
-      {/* Sticky 미니맵 */}
-      <motion.div
+      {/* Sticky 미니맵 - 임시 주석 처리 */}
+      {/* <motion.div
         className="fixed bottom-6 right-6 z-50"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* 토글 버튼 */}
         {!isMiniMapOpen && (
           <motion.div
             className="flex flex-col items-center gap-2"
@@ -696,7 +455,6 @@ export default function Location() {
           </motion.div>
         )}
 
-        {/* 미니맵 패널 */}
         {isMiniMapOpen && (
           <motion.div
             className="bg-white rounded-2xl shadow-2xl overflow-hidden"
@@ -727,17 +485,10 @@ export default function Location() {
                 <span className="font-semibold">염창역 더채움</span>
               </div>
               <div className="text-[10px]">서울시 강서구 염창동 262-5</div>
-              <div className="flex items-center gap-2 pt-1 border-t border-gray-200">
-                <svg className="w-4 h-4" fill="#d4af37" viewBox="0 0 24 24">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                </svg>
-                <span className="font-semibold">홍보관</span>
-              </div>
-              <div className="text-[10px]">서울시 영등포구 선유로54길14, 1층</div>
             </div>
           </motion.div>
         )}
-      </motion.div>
+      </motion.div> */}
 
       <section id="location" className="section-padding bg-white">
         <div className="container-custom">

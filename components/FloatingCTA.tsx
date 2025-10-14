@@ -53,11 +53,11 @@ export default function FloatingCTA() {
   };
 
   const handlePhoneCall = () => {
-    window.location.href = "tel:1588-0000";
+    window.location.href = "tel:1666-0952";
   };
 
   const openKakaoTalk = () => {
-    window.open("https://pf.kakao.com/_your_channel_id", "_blank");
+    window.open("https://open.kakao.com/o/s1Cc83Wh", "_blank");
   };
 
   return (

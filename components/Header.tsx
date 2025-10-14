@@ -133,13 +133,13 @@ export default function Header() {
               분양안내
             </button>
             <a
-              href="tel:1611-1000"
+              href="tel:1666-0952"
               className="bg-luxury-gold text-luxury-charcoal px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
             >
               <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
-              <span className="hidden lg:inline">1611-1000</span>
+              <span className="hidden lg:inline">1666-0952</span>
               <span className="lg:hidden">전화</span>
             </a>
             <div className="relative">
@@ -229,13 +229,24 @@ export default function Header() {
 
                   <div className="mt-4 space-y-2">
                     <a
-                      href="tel:1588-0000"
+                      href="https://open.kakao.com/o/s1Cc83Wh"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-3 bg-[#FEE500] hover:bg-[#FDD835] text-[#3C1E1E] rounded-xl transition-colors font-bold text-sm flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.8 6.7-.2 1-.6 3.7-.7 4.2 0 0 0 .3.2.4.1.1.3.1.4 0 .7-.5 4.2-2.8 4.9-3.3.5.1 1 .1 1.5.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/>
+                      </svg>
+                      <span>카카오톡 상담</span>
+                    </a>
+                    <a
+                      href="tel:1666-0952"
                       className="w-full py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-bold text-sm flex items-center justify-center gap-2"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                       </svg>
-                      <span>전화상담 1588-0000</span>
+                      <span>전화상담 1666-0952</span>
                     </a>
                   </div>
 
@@ -251,13 +262,13 @@ export default function Header() {
           {/* Mobile Actions */}
           <div className="md:hidden flex items-center gap-2">
             <a
-              href="tel:1611-1000"
+              href="tel:1666-0952"
               className="bg-luxury-gold text-luxury-charcoal px-4 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-luxury-gold/90 transition-all shadow-lg"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
-              <span>1611-1000</span>
+              <span>1666-0952</span>
             </a>
             <button
               className="p-2"
@@ -313,13 +324,13 @@ export default function Header() {
               분양안내
             </button>
             <a
-              href="tel:1611-1000"
+              href="tel:1666-0952"
               className="block w-full text-center mt-2 bg-luxury-gold text-luxury-charcoal px-4 py-3 rounded-full font-bold text-base hover:bg-luxury-gold/90 flex items-center justify-center gap-2"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
-              1611-1000
+              1666-0952
             </a>
             <button
               onClick={() => setIsConsultOpen(true)}

@@ -80,7 +80,7 @@ export default function Schedule() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             <a
-              href="tel:1588-0000"
+              href="tel:1666-0952"
               className="border-2 border-luxury-gold rounded-2xl p-8 hover:bg-luxury-cream transition-all transform hover:scale-105"
             >
               <div className="text-luxury-gold mb-4">
@@ -89,11 +89,11 @@ export default function Schedule() {
                 </svg>
               </div>
               <p className="font-bold text-xl text-luxury-charcoal mb-2">전화 상담</p>
-              <p className="text-luxury-gold text-3xl font-bold">1588-0000</p>
+              <p className="text-luxury-gold text-3xl font-bold">1666-0952</p>
             </a>
 
             <a
-              href="https://pf.kakao.com/_xaxaxaxaxa"
+              href="https://open.kakao.com/o/s1Cc83Wh"
               target="_blank"
               rel="noopener noreferrer"
               className="border-2 border-gray-200 rounded-2xl p-8 hover:bg-luxury-cream transition-all transform hover:scale-105"
