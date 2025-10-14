@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
+export default function Header({ forceScrolled = false }: { forceScrolled?: boolean }) {
+  const [isScrolled, setIsScrolled] = useState(forceScrolled);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isConsultOpen, setIsConsultOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -53,12 +54,14 @@ export default function Header() {
   };
 
   useEffect(() => {
+    if (forceScrolled) return; // forceScrolled가 true면 스크롤 이벤트 무시
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [forceScrolled]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -77,7 +80,7 @@ export default function Header() {
       <div className="container-custom">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <div className="flex items-center">
+          <Link href="/yeomchang-thechaeum" className="flex items-center cursor-pointer">
             <div className={`${isScrolled ? 'bg-luxury-charcoal px-2 py-1 md:px-4 md:py-2 rounded-lg' : ''}`}>
               <Image
                 src="/thechaeum-logo.png"
@@ -88,7 +91,7 @@ export default function Header() {
                 priority
               />
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
