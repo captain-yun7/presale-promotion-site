@@ -14,9 +14,9 @@ import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import "swiper/css/free-mode";
 
-const images = Array.from({ length: 30 }, (_, i) => ({
+const images = Array.from({ length: 18 }, (_, i) => ({
   id: i,
-  src: `/images/KakaoTalk_20251010_180002245${i === 0 ? '' : `_${String(i).padStart(2, '0')}`}.jpg`,
+  src: `/images/KakaoTalk_20251014_125002456${i === 0 ? '' : `_${String(i).padStart(2, '0')}`}.jpg`,
   alt: `염창역 더채움 갤러리 이미지 ${i + 1}`,
 }));
 
