@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fetch-blogs": "node scripts/fetch-blog-metadata.js"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.6",

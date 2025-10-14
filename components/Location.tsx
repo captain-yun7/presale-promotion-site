@@ -337,9 +337,9 @@ export default function Location() {
     if (!window.naver || !window.naver.maps || !isMapLoaded) return;
 
     try {
-      // 두 지점의 중심 좌표 계산
-      const centerLat = (projectLocation.lat + showroomLocation.lat) / 2;
-      const centerLng = (projectLocation.lng + showroomLocation.lng) / 2;
+      // 분양 위치를 중심으로 미니맵 표시
+      const centerLat = projectLocation.lat;
+      const centerLng = projectLocation.lng;
 
       const miniMapOptions = {
         center: new window.naver.maps.LatLng(centerLat, centerLng),

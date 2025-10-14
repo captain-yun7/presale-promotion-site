@@ -103,16 +103,6 @@ export default function Header() {
               단지정보
             </button>
             <button
-              onClick={() => scrollToSection("unit-types")}
-              className={`font-semibold text-base lg:text-lg transition-colors ${
-                isScrolled
-                  ? "text-gray-700 hover:text-primary"
-                  : "text-white hover:text-secondary"
-              }`}
-            >
-              세대정보
-            </button>
-            <button
               onClick={() => scrollToSection("location")}
               className={`font-semibold text-base lg:text-lg transition-colors ${
                 isScrolled
@@ -123,15 +113,25 @@ export default function Header() {
               입지환경
             </button>
             <button
-              onClick={() => scrollToSection("schedule")}
+              onClick={() => scrollToSection("unit-types")}
               className={`font-semibold text-base lg:text-lg transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
               }`}
             >
-              분양안내
+              세대정보
             </button>
+            <a
+              href="/yeomchang-thechaeum/blog"
+              className={`font-semibold text-base lg:text-lg transition-colors ${
+                isScrolled
+                  ? "text-gray-700 hover:text-primary"
+                  : "text-white hover:text-secondary"
+              }`}
+            >
+              블로그
+            </a>
             <a
               href="tel:1666-0952"
               className="bg-luxury-gold text-luxury-charcoal px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
@@ -306,23 +306,23 @@ export default function Header() {
               단지정보
             </button>
             <button
-              onClick={() => scrollToSection("unit-types")}
-              className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
-            >
-              세대정보
-            </button>
-            <button
               onClick={() => scrollToSection("location")}
               className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
               입지환경
             </button>
             <button
-              onClick={() => scrollToSection("schedule")}
+              onClick={() => scrollToSection("unit-types")}
               className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
-              분양안내
+              세대정보
             </button>
+            <a
+              href="/yeomchang-thechaeum/blog"
+              className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
+            >
+              블로그
+            </a>
             <a
               href="tel:1666-0952"
               className="block w-full text-center mt-2 bg-luxury-gold text-luxury-charcoal px-4 py-3 rounded-full font-bold text-base hover:bg-luxury-gold/90 flex items-center justify-center gap-2"
