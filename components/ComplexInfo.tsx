@@ -70,40 +70,40 @@ export default function ComplexInfo() {
     <section id="complex-info" className="section-padding bg-gray-50">
       <div className="container-custom">
         {/* Section Title */}
-        <div className="text-center mb-16">
-          <p className="text-secondary text-lg mb-3 font-medium">Complex Information</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+        <div className="text-center mb-10 md:mb-16 px-4">
+          <p className="text-secondary text-sm md:text-base mb-2 md:mb-3 font-medium">Complex Information</p>
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary mb-3 md:mb-4">
             단지 정보
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
             프리미엄 라이프스타일을 위한 완벽한 주거 환경을 제공합니다
           </p>
         </div>
 
         {/* Complex Overview */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-12 mb-8 md:mb-12 mx-4 md:mx-0">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {complexData.map((item, index) => (
-              <div key={index} className="text-center md:text-left">
-                <p className="text-gray-500 text-sm mb-2">{item.label}</p>
-                <p className="text-primary font-bold text-xl">{item.value}</p>
+              <div key={index} className="text-center">
+                <p className="text-gray-500 text-xs md:text-sm mb-1 md:mb-2">{item.label}</p>
+                <p className="text-primary font-bold text-sm md:text-xl leading-tight">{item.value}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4 md:px-0">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl p-8 shadow-md hover:shadow-xl transition-shadow duration-300"
+              className="bg-white rounded-xl p-5 md:p-8 shadow-md hover:shadow-xl transition-shadow duration-300"
             >
-              <div className="text-luxury-gold mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-bold text-primary mb-3">
+              <div className="text-luxury-gold mb-3 md:mb-4 w-10 h-10 md:w-12 md:h-12">{feature.icon}</div>
+              <h3 className="text-base md:text-xl font-bold text-primary mb-2 md:mb-3 leading-tight">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
                 {feature.description}
               </p>
             </div>
@@ -111,19 +111,19 @@ export default function ComplexInfo() {
         </div>
 
         {/* Brand Story */}
-        <div className="mt-16 bg-gradient-to-r from-primary to-accent rounded-2xl p-8 md:p-12 text-white">
+        <div className="mt-10 md:mt-16 bg-gradient-to-r from-primary to-accent rounded-xl md:rounded-2xl p-6 md:p-12 text-white mx-4 md:mx-0">
           <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-3xl md:text-4xl font-bold mb-6">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6">
               4無의 자유로움
             </h3>
-            <p className="text-lg leading-relaxed mb-8 text-gray-100">
-              주택수 無 · 자금조달 無 · 대출규제 無 · 실거주의무 無<br />
+            <p className="text-sm sm:text-base md:text-lg leading-relaxed mb-6 md:mb-8 text-gray-100">
+              주택수 無 · 자금조달 無 · 대출규제 無 · 실거주의무 無<br className="hidden sm:block" />
               실거주자와 투자자 모두에게 열린 기회, 마곡·여의도·마포·DMC 수요 흡수와 더불어
               염창&가양 대규모 업무시설 착공으로 가치 상승이 기대되는 프리미엄 아파텔입니다.
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
               {["주택수 無", "자금조달 無", "대출규제 無", "실거주의무 無"].map((item, i) => (
-                <div key={i} className="bg-white/20 backdrop-blur-sm rounded-xl py-3 px-4 font-bold">
+                <div key={i} className="bg-white/20 backdrop-blur-sm rounded-lg md:rounded-xl py-2 md:py-3 px-2 md:px-4 font-bold text-sm md:text-base">
                   {item}
                 </div>
               ))}

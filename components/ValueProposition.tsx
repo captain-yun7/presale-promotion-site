@@ -48,25 +48,25 @@ export default function ValueProposition() {
       <div className="container-custom">
         {/* Section Title */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
+          <p className="text-luxury-gold text-sm md:text-base mb-2 md:mb-3 font-medium tracking-wide">
             3 REASONS TO CHOOSE
           </p>
-          <h2 className="text-4xl md:text-6xl font-bold text-luxury-charcoal mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-luxury-charcoal mb-3 md:mb-6">
             더채움을 선택하는 이유
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-sm md:text-base px-4 max-w-2xl mx-auto">
             염창역 더채움이 선택받는 핵심 차별점
           </p>
         </motion.div>
 
         {/* Value Points Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-12 md:mb-16 px-4 md:px-0">
           {valuePoints.map((point, index) => (
             <motion.div
               key={index}
@@ -76,45 +76,47 @@ export default function ValueProposition() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 h-full">
+              <div className="bg-white rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 h-full">
                 {/* Gradient Background */}
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${point.gradient} opacity-0 group-hover:opacity-5 rounded-3xl transition-opacity duration-500`}
+                  className={`absolute inset-0 bg-gradient-to-br ${point.gradient} opacity-0 group-hover:opacity-5 rounded-2xl md:rounded-3xl transition-opacity duration-500`}
                 />
 
                 {/* Icon */}
                 <motion.div
-                  className="text-luxury-gold mb-6"
+                  className="text-luxury-gold mb-4 md:mb-6"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  {point.icon}
+                  <div className="w-12 h-12 md:w-16 md:h-16">
+                    {point.icon}
+                  </div>
                 </motion.div>
 
                 {/* Title */}
-                <h3 className="text-2xl font-bold text-luxury-charcoal mb-4">
+                <h3 className="text-lg md:text-2xl font-bold text-luxury-charcoal mb-3 md:mb-4 leading-tight">
                   {point.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-600 text-lg mb-6 leading-relaxed">
+                <p className="text-gray-600 text-sm md:text-base mb-4 md:mb-6 leading-relaxed">
                   {point.description}
                 </p>
 
                 {/* Stats */}
-                <div className="flex items-center justify-between pt-6 border-t border-gray-200">
+                <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-gray-200">
                   <div>
-                    <p className="text-3xl font-bold text-luxury-gold mb-1">
+                    <p className="text-2xl md:text-3xl font-bold text-luxury-gold mb-1">
                       {point.stats}
                     </p>
-                    <p className="text-sm text-gray-500">{point.detail}</p>
+                    <p className="text-xs md:text-sm text-gray-500">{point.detail}</p>
                   </div>
                   <motion.div
                     whileHover={{ x: 5 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     <svg
-                      className="w-8 h-8 text-luxury-gold"
+                      className="w-6 h-6 md:w-8 md:h-8 text-luxury-gold"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

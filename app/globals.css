@@ -29,3 +29,31 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Swiper Custom Styles */
+.gallery-swiper .swiper-button-next,
+.gallery-swiper .swiper-button-prev {
+  @apply text-luxury-gold bg-white/90 backdrop-blur-sm rounded-full w-12 h-12 shadow-lg;
+}
+
+.gallery-swiper .swiper-button-next:after,
+.gallery-swiper .swiper-button-prev:after {
+  @apply text-lg font-bold;
+}
+
+.gallery-swiper .swiper-button-next:hover,
+.gallery-swiper .swiper-button-prev:hover {
+  @apply bg-luxury-gold text-white;
+}
+
+.gallery-swiper .swiper-pagination-bullet {
+  @apply bg-luxury-gold/50 w-3 h-3;
+}
+
+.gallery-swiper .swiper-pagination-bullet-active {
+  @apply bg-luxury-gold w-8 rounded-full;
+}
+
+.gallery-thumbs .swiper-slide-thumb-active > div {
+  @apply opacity-100 ring-2 ring-luxury-gold;
+}

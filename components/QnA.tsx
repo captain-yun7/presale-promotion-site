@@ -85,12 +85,12 @@ export default function QnA() {
             </p>
 
             {/* Category Filter */}
-            <div className="flex justify-center gap-3 flex-wrap">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 max-w-xl mx-auto">
               {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-2 rounded-full font-semibold transition-all ${
+                  className={`px-4 py-2 sm:px-6 rounded-full font-semibold transition-all text-sm sm:text-base ${
                     selectedCategory === category
                       ? "bg-luxury-gold text-white shadow-lg"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"

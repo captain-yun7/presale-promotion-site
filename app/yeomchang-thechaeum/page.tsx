@@ -6,6 +6,7 @@ import ComplexInfo from "@/components/ComplexInfo";
 import Location from "@/components/Location";
 import QnA from "@/components/QnA";
 import UnitTypes from "@/components/UnitTypes";
+import Showroom from "@/components/Showroom";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
@@ -37,7 +38,10 @@ export default function Home() {
         {/* 7. Unit Types - 평형별 안내 */}
         <UnitTypes />
 
-        {/* 8. Contact - 빠른 상담 신청 */}
+        {/* 8. Showroom - 홍보관 오시는 길 */}
+        <Showroom />
+
+        {/* 9. Contact - 빠른 상담 신청 */}
         <Contact />
       </main>
       <Footer />

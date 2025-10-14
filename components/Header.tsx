@@ -78,13 +78,13 @@ export default function Header() {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <div className="flex items-center">
-            <div className={`${isScrolled ? 'bg-luxury-charcoal px-4 py-2 rounded-lg' : ''}`}>
+            <div className={`${isScrolled ? 'bg-luxury-charcoal px-2 py-1 md:px-4 md:py-2 rounded-lg' : ''}`}>
               <Image
                 src="/thechaeum-logo.png"
                 alt="염창역 더채움"
                 width={216}
                 height={60}
-                className="h-14 w-auto"
+                className="h-8 md:h-14 w-auto"
                 priority
               />
             </div>
@@ -94,7 +94,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => scrollToSection("complex-info")}
-              className={`font-semibold text-2xl transition-colors ${
+              className={`font-semibold text-base lg:text-lg transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -104,7 +104,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => scrollToSection("unit-types")}
-              className={`font-semibold text-2xl transition-colors ${
+              className={`font-semibold text-base lg:text-lg transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -114,7 +114,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => scrollToSection("location")}
-              className={`font-semibold text-2xl transition-colors ${
+              className={`font-semibold text-base lg:text-lg transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -124,7 +124,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => scrollToSection("schedule")}
-              className={`font-semibold text-2xl transition-colors ${
+              className={`font-semibold text-base lg:text-lg transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
                   : "text-white hover:text-secondary"
@@ -134,12 +134,13 @@ export default function Header() {
             </button>
             <a
               href="tel:1611-1000"
-              className="bg-luxury-gold text-luxury-charcoal px-7 py-4 rounded-full font-black text-2xl hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
+              className="bg-luxury-gold text-luxury-charcoal px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
             >
-              <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
-              <span>1611-1000</span>
+              <span className="hidden lg:inline">1611-1000</span>
+              <span className="lg:hidden">전화</span>
             </a>
             <div className="relative">
               <style jsx>{`
@@ -159,13 +160,13 @@ export default function Header() {
               `}</style>
               <button
                 onClick={() => setIsConsultOpen(!isConsultOpen)}
-                className="consult-button bg-primary-600 text-white px-7 py-4 rounded-full font-black text-2xl hover:bg-primary-700 transition-all shadow-lg"
+                className="consult-button bg-primary-600 text-white px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-primary-700 transition-all shadow-lg"
               >
-                무료상담신청
+                무료상담
               </button>
 
               {isConsultOpen && (
-                <div className="fixed right-0 top-[80px] w-80 bg-white rounded-bl-2xl shadow-2xl p-6 z-50 max-h-[calc(100vh-80px)] overflow-y-auto">
+                <div className="fixed right-0 top-[60px] md:top-[80px] w-full md:w-80 bg-white md:rounded-bl-2xl shadow-2xl p-4 md:p-6 z-50 max-h-[calc(100vh-60px)] md:max-h-[calc(100vh-80px)] overflow-y-auto">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-xl font-bold text-luxury-charcoal">
                       빠른 상담 신청
@@ -247,67 +248,85 @@ export default function Header() {
             </div>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <div className="space-y-2">
-              <span
-                className={`block w-8 h-0.5 transition-colors ${
-                  isScrolled ? "bg-primary" : "bg-white"
-                }`}
-              ></span>
-              <span
-                className={`block w-8 h-0.5 transition-colors ${
-                  isScrolled ? "bg-primary" : "bg-white"
-                }`}
-              ></span>
-              <span
-                className={`block w-8 h-0.5 transition-colors ${
-                  isScrolled ? "bg-primary" : "bg-white"
-                }`}
-              ></span>
-            </div>
-          </button>
+          {/* Mobile Actions */}
+          <div className="md:hidden flex items-center gap-2">
+            <a
+              href="tel:1611-1000"
+              className="bg-luxury-gold text-luxury-charcoal px-4 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-luxury-gold/90 transition-all shadow-lg"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+              </svg>
+              <span>1611-1000</span>
+            </a>
+            <button
+              className="p-2"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="메뉴 열기"
+            >
+              <div className="space-y-1.5">
+                <span
+                  className={`block w-6 h-0.5 transition-colors ${
+                    isScrolled ? "bg-primary" : "bg-white"
+                  }`}
+                ></span>
+                <span
+                  className={`block w-6 h-0.5 transition-colors ${
+                    isScrolled ? "bg-primary" : "bg-white"
+                  }`}
+                ></span>
+                <span
+                  className={`block w-6 h-0.5 transition-colors ${
+                    isScrolled ? "bg-primary" : "bg-white"
+                  }`}
+                ></span>
+              </div>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <nav className="md:hidden bg-white shadow-lg rounded-lg p-4 mb-4">
+          <nav className="md:hidden bg-white shadow-lg rounded-lg p-3 mb-3">
             <button
               onClick={() => scrollToSection("complex-info")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-2xl"
+              className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
               단지정보
             </button>
             <button
               onClick={() => scrollToSection("unit-types")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-2xl"
+              className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
               세대정보
             </button>
             <button
               onClick={() => scrollToSection("location")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-2xl"
+              className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
               입지환경
             </button>
             <button
               onClick={() => scrollToSection("schedule")}
-              className="block w-full text-left py-3 text-gray-700 hover:text-primary font-semibold text-2xl"
+              className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
               분양안내
             </button>
             <a
               href="tel:1611-1000"
-              className="block w-full text-center mt-3 bg-luxury-gold text-luxury-charcoal px-7 py-4 rounded-full font-bold text-2xl hover:bg-luxury-gold/90 flex items-center justify-center gap-2"
+              className="block w-full text-center mt-2 bg-luxury-gold text-luxury-charcoal px-4 py-3 rounded-full font-bold text-base hover:bg-luxury-gold/90 flex items-center justify-center gap-2"
             >
-              <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
               1611-1000
             </a>
+            <button
+              onClick={() => setIsConsultOpen(true)}
+              className="block w-full text-center mt-2 bg-primary-600 text-white px-4 py-3 rounded-full font-bold text-base hover:bg-primary-700"
+            >
+              무료상담 신청
+            </button>
           </nav>
         )}
       </div>

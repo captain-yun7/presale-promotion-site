@@ -743,32 +743,32 @@ export default function Location() {
         <div className="container-custom">
           {/* Section Title */}
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-10 md:mb-16 px-4"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
+            <p className="text-luxury-gold text-sm md:text-base mb-2 md:mb-3 font-medium tracking-wide">
               LOCATION INTELLIGENCE
             </p>
-            <h2 className="text-4xl md:text-6xl font-bold text-luxury-charcoal mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-luxury-charcoal mb-3 md:mb-6">
               입지 분석
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
               완벽한 교통망과 생활 인프라가 갖춰진 프리미엄 입지
             </p>
           </motion.div>
 
           {/* Interactive Map */}
           <motion.div
-            className="bg-white rounded-3xl shadow-2xl overflow-hidden mb-16"
+            className="bg-white rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden mb-12 md:mb-16"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="relative aspect-video">
+            <div className="relative aspect-square md:aspect-video">
               <div id="naver-map" style={{ width: "100%", height: "100%" }} className="rounded-lg" />
 
               {/* Loading State */}
@@ -794,14 +794,14 @@ export default function Location() {
 
               {/* Zoom Controls */}
               {isMapLoaded && (
-                <div className="absolute top-6 right-6 bg-white rounded-lg shadow-md p-2 space-y-1 z-10">
+                <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-white rounded-lg shadow-md p-1.5 md:p-2 space-y-1 z-10">
                   <button
                     onClick={() => {
                       if (mapRef.current) {
                         mapRef.current.setZoom(mapRef.current.getZoom() + 1);
                       }
                     }}
-                    className="block w-8 h-8 text-lg bg-white border border-gray-300 rounded hover:bg-gray-50"
+                    className="block w-8 h-8 md:w-10 md:h-10 text-base md:text-lg bg-white border border-gray-300 rounded hover:bg-gray-50 font-bold"
                     title="확대"
                   >
                     +
@@ -812,134 +812,13 @@ export default function Location() {
                         mapRef.current.setZoom(mapRef.current.getZoom() - 1);
                       }
                     }}
-                    className="block w-8 h-8 text-lg bg-white border border-gray-300 rounded hover:bg-gray-50"
+                    className="block w-8 h-8 md:w-10 md:h-10 text-base md:text-lg bg-white border border-gray-300 rounded hover:bg-gray-50 font-bold"
                     title="축소"
                   >
                     -
                   </button>
                 </div>
               )}
-            </div>
-          </motion.div>
-
-          {/* 홍보관 오시는 길 약도 */}
-          <motion.div
-            className="bg-white rounded-3xl p-12 shadow-2xl mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="text-center mb-12">
-              <h3 className="text-3xl md:text-4xl font-bold text-luxury-charcoal mb-4">
-                홍보관 오시는 길
-              </h3>
-              <p className="text-gray-600 text-lg mb-2">
-                서울시 영등포구 선유로54길14, 1층
-              </p>
-              <p className="text-luxury-gold font-bold text-lg">
-                당산역 2호선 1번 출구 / 9호선 13번 출구 도보 2분
-              </p>
-            </div>
-
-            {/* 약도 이미지 */}
-            <div className="max-w-4xl mx-auto mb-8">
-              <div className="relative border-2 border-gray-200 rounded-2xl overflow-hidden bg-gray-100">
-                <img
-                  id="showroom-map"
-                  src="/showroom-map.png"
-                  alt="홍보관 오시는 길 약도"
-                  className="w-full h-auto"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const parent = target.parentElement;
-                    if (parent) {
-                      parent.innerHTML = '<div class="flex items-center justify-center h-96 text-gray-500"><p>약도 이미지를 준비중입니다.<br/>네이버 지도를 참고해주세요.</p></div>';
-                    }
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* 공유 및 다운로드 버튼 */}
-            <div className="flex justify-center gap-4 flex-wrap">
-              <button
-                onClick={() => {
-                  const img = document.getElementById('showroom-map') as HTMLImageElement;
-                  if (!img || !img.src) return;
-
-                  fetch(img.src)
-                    .then(res => res.blob())
-                    .then(blob => {
-                      const url = URL.createObjectURL(blob);
-                      const a = document.createElement('a');
-                      a.href = url;
-                      a.download = '염창역더채움_홍보관_오시는길.png';
-                      a.click();
-                      URL.revokeObjectURL(url);
-                    })
-                    .catch(() => {
-                      alert('이미지 다운로드에 실패했습니다.');
-                    });
-                }}
-                className="bg-luxury-gold hover:bg-opacity-90 text-luxury-charcoal px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg flex items-center gap-2"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                이미지 다운로드
-              </button>
-
-              <button
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({
-                      title: '염창역 더채움 홍보관 오시는 길',
-                      text: '서울시 영등포구 선유로54길14, 1층\n당산역 2호선 1번 출구 / 9호선 13번 출구 도보 2분',
-                      url: window.location.href
-                    }).catch(() => {});
-                  } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    alert('링크가 복사되었습니다!');
-                  }
-                }}
-                className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg flex items-center gap-2"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                </svg>
-                공유하기
-              </button>
-            </div>
-
-            {/* 추가 정보 */}
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-gray-50 p-6 rounded-2xl">
-                <h4 className="text-lg font-bold text-luxury-charcoal mb-3 flex items-center gap-2">
-                  <svg className="w-6 h-6 text-luxury-gold" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                  </svg>
-                  지하철 이용
-                </h4>
-                <ul className="space-y-2 text-gray-700">
-                  <li>• 2호선 당산역 1번 출구 도보 2분</li>
-                  <li>• 9호선 당산역 13번 출구 도보 2분</li>
-                </ul>
-              </div>
-
-              <div className="bg-gray-50 p-6 rounded-2xl">
-                <h4 className="text-lg font-bold text-luxury-charcoal mb-3 flex items-center gap-2">
-                  <svg className="w-6 h-6 text-luxury-gold" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
-                  </svg>
-                  주차 안내
-                </h4>
-                <ul className="space-y-2 text-gray-700">
-                  <li>• 건물 내 주차 가능</li>
-                  <li>• 주차 공간 한정적 (대중교통 이용 권장)</li>
-                </ul>
-              </div>
             </div>
           </motion.div>
 
