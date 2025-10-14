@@ -18,7 +18,7 @@ const categories = [
     icon: "🚇",
     color: "#3B82F6", // 파랑
     items: [
-      { name: "염창역 (2·9호선)", distance: "도보 3분", coords: { lat: 37.5477, lng: 126.8747 } },
+      { name: "염창역 (9호선 급행)", distance: "도보 3분", coords: { lat: 37.5477, lng: 126.8747 } },
       { name: "신목동역 (5호선)", distance: "도보 8분", coords: { lat: 37.5244, lng: 126.8755 } },
       { name: "양천향교역 (9호선)", distance: "도보 5분", coords: { lat: 37.5517, lng: 126.8661 } },
       { name: "선유도역 (9호선)", distance: "차량 5분", coords: { lat: 37.5348, lng: 126.8934 } },
