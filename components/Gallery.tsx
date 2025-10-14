@@ -39,7 +39,7 @@ export default function Gallery() {
             <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
               GALLERY
             </p>
-            <h2 className="text-4xl md:text-6xl font-bold text-luxury-charcoal mb-6">
+            <h2 className="text-4xl md:text-6xl font-bold text-primary mb-6">
               갤러리
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">

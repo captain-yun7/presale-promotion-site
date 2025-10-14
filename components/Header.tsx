@@ -31,6 +31,24 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
     setIsSubmitting(true);
 
     try {
+      const response = await fetch('/api/consultations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          source: 'header-modal',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || '상담 신청에 실패했습니다.');
+      }
+
       alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n담당자가 빠른 시일 내에 연락드리겠습니다.`);
       setFormData({
         name: "",
@@ -38,8 +56,9 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
         privacyAgree: false,
       });
       setIsConsultOpen(false);
-    } catch {
-      alert('상담 신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : '상담 신청 중 오류가 발생했습니다. 다시 시도해주세요.';
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -81,7 +100,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link href="/yeomchang-thechaeum" className="flex items-center cursor-pointer">
-            <div className={`${isScrolled ? 'bg-luxury-charcoal px-2 py-1 md:px-4 md:py-2 rounded-lg' : ''}`}>
+            <div className={`${isScrolled ? 'bg-primary-600 px-2 py-1 md:px-4 md:py-2 rounded-lg' : ''}`}>
               <Image
                 src="/thechaeum-logo.png"
                 alt="염창역 더채움"
@@ -125,6 +144,16 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
             >
               세대정보
             </button>
+            <button
+              onClick={() => scrollToSection("showroom")}
+              className={`font-semibold text-base lg:text-lg transition-colors ${
+                isScrolled
+                  ? "text-gray-700 hover:text-primary"
+                  : "text-white hover:text-secondary"
+              }`}
+            >
+              오시는길
+            </button>
             <a
               href="/yeomchang-thechaeum/blog"
               className={`font-semibold text-base lg:text-lg transition-colors ${
@@ -165,7 +194,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
                 onClick={() => setIsConsultOpen(!isConsultOpen)}
                 className="consult-button bg-primary-600 text-white px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-primary-700 transition-all shadow-lg"
               >
-                무료상담
+                무료상담신청
               </button>
 
               {isConsultOpen && (
@@ -319,6 +348,12 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
               className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
               세대정보
+            </button>
+            <button
+              onClick={() => scrollToSection("showroom")}
+              className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
+            >
+              오시는길
             </button>
             <a
               href="/yeomchang-thechaeum/blog"

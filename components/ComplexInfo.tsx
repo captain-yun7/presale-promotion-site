@@ -60,9 +60,26 @@ export default function ComplexInfo() {
   ];
 
   const complexData = [
-    { label: "위치", value: "서울특별시 강서구 염창동" },
-    { label: "브랜드", value: "더채움 (4번째 성공 신화)" },
-    { label: "타입", value: "쓰리룸 아파텔" },
+    {
+      label: "위치",
+      value: (
+        <>
+          서울특별시<br /> 강서구 염창동
+        </>
+      )
+    },
+    {
+      label: "브랜드",
+      value: (
+        <>
+          더채움<br /> (4번째 성공 신화)
+        </>
+      )
+    },
+    {
+      label: "타입",
+      value: "쓰리룸 아파텔"
+    },
     { label: "주차", value: "1:1 주차 가능" },
   ];
 
@@ -81,53 +98,52 @@ export default function ComplexInfo() {
         </div>
 
         {/* Complex Overview */}
-        <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-12 mb-8 md:mb-12 mx-4 md:mx-0">
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            {complexData.map((item, index) => (
-              <div key={index} className="text-center">
-                <p className="text-gray-500 text-xs md:text-sm mb-1 md:mb-2">{item.label}</p>
-                <p className="text-primary font-bold text-sm md:text-xl leading-tight">{item.value}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12 mx-4 md:mx-0">
+          {complexData.map((item, index) => (
+            <div key={index} className="relative w-[180px] h-[180px] md:w-full md:h-auto mx-auto md:max-w-none md:pb-[100%]">
+              <div className="absolute inset-0 bg-primary-600 rounded-full shadow-lg flex flex-col items-center justify-center hover:shadow-xl transition-shadow duration-300 p-3 md:p-6">
+                <div className="flex flex-col items-center">
+                  <div className="bg-luxury-gold text-luxury-charcoal px-3 py-1.5 md:px-4 md:py-2 rounded-full font-bold text-sm md:text-base mb-3 shadow-lg">
+                    {item.label}
+                  </div>
+                  <div className="w-12 h-px bg-white/40 mb-3"></div>
+                  <div className="h-16 md:h-20 flex items-start justify-center">
+                    <p className="text-white font-bold text-lg md:text-2xl leading-tight text-center px-2">{item.value}</p>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4 md:px-0">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl p-5 md:p-8 shadow-md hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="text-luxury-gold mb-3 md:mb-4 w-10 h-10 md:w-12 md:h-12">{feature.icon}</div>
-              <h3 className="text-base md:text-xl font-bold text-primary mb-2 md:mb-3 leading-tight">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-                {feature.description}
-              </p>
             </div>
           ))}
         </div>
 
-        {/* Brand Story */}
-        <div className="mt-10 md:mt-16 bg-gradient-to-r from-primary to-accent rounded-xl md:rounded-2xl p-6 md:p-12 text-white mx-4 md:mx-0">
-          <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6">
-              4無의 자유로움
-            </h3>
-            <p className="text-sm sm:text-base md:text-lg leading-relaxed mb-6 md:mb-8 text-gray-100">
-              주택수 無 · 자금조달 無 · 대출규제 無 · 실거주의무 無<br className="hidden sm:block" />
-              실거주자와 투자자 모두에게 열린 기회, 마곡·여의도·마포·DMC 수요 흡수와 더불어
-              염창&가양 대규모 업무시설 착공으로 가치 상승이 기대되는 프리미엄 아파텔입니다.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-              {["주택수 無", "자금조달 無", "대출규제 無", "실거주의무 無"].map((item, i) => (
-                <div key={i} className="bg-white/20 backdrop-blur-sm rounded-lg md:rounded-xl py-2 md:py-3 px-2 md:px-4 font-bold text-sm md:text-base">
-                  {item}
+        {/* Features Grid */}
+        <div className="relative px-4 md:px-0">
+          {/* Connection Line */}
+          <div className="absolute top-1/2 left-0 right-0 h-1 bg-primary-600 transform -translate-y-1/2 hidden lg:block"></div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-12 relative">
+            {features.map((feature, index) => (
+              <div key={index} className="relative">
+                {/* Connection Node */}
+                <div className="absolute top-1/2 left-1/2 w-4 h-4 bg-primary-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 hidden lg:block"></div>
+
+                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative z-20">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 bg-primary-600 rounded-2xl flex items-center justify-center">
+                      <div className="text-luxury-gold w-8 h-8 md:w-10 md:h-10">{feature.icon}</div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg md:text-xl font-bold text-primary leading-tight">
+                        {feature.title}
+                      </h3>
+                    </div>
+                  </div>
+                  <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

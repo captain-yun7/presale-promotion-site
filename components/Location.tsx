@@ -77,7 +77,7 @@ const categories = [
 const commuteDestinations = [
   {
     name: "여의도",
-    time: 12,
+    time: 7,
     icon: (
       <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
         <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
@@ -86,7 +86,7 @@ const commuteDestinations = [
   },
   {
     name: "강남",
-    time: 25,
+    time: 17,
     icon: (
       <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
         <path d="M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm6 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>
@@ -503,7 +503,7 @@ export default function Location() {
             <p className="text-luxury-gold text-sm md:text-base mb-2 md:mb-3 font-medium tracking-wide">
               LOCATION INTELLIGENCE
             </p>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-luxury-charcoal mb-3 md:mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary mb-3 md:mb-6">
               입지 분석
             </h2>
             <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">

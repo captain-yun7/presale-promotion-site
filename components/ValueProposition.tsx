@@ -6,7 +6,11 @@ export default function ValueProposition() {
   const valuePoints = [
     {
       title: "9호선 급행 초역세권",
-      description: "한강벨트라인 황금노선, 마곡·여의도·강남 30분 생활권",
+      description: (
+        <>
+          한강벨트라인 황금노선,<br /> 마곡·여의도·강남 30분 생활권
+        </>
+      ),
       icon: (
         <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
@@ -18,8 +22,16 @@ export default function ValueProposition() {
       detail: "출퇴근 시간 단축",
     },
     {
-      title: "역세권·초품아·숲세권 트리플 입지",
-      description: "전 세대 먹방 없이 시원한 뷰, 염창&가양 개발 호재 (4조 규모)",
+      title: (
+        <>
+          역세권·초품아·숲세권<br className="sm:hidden" /> 트리플 입지
+        </>
+      ),
+      description: (
+        <>
+          전 세대 먹방 없이 시원한 뷰,<br /> 염창&가양 개발 호재 (4조 규모)
+        </>
+      ),
       icon: (
         <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2L4 7v9c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-8-5zm0 2.18l6 3.5v7.32c0 4.51-3.08 8.72-6 9.82-2.92-1.1-6-5.31-6-9.82V7.68l6-3.5zM12 6c-1.66 0-3 1.34-3 3 0 2 3 5 3 5s3-3 3-5c0-1.66-1.34-3-3-3z"/>
@@ -31,7 +43,11 @@ export default function ValueProposition() {
     },
     {
       title: "투룸 가격에 쓰리룸!",
-      description: "파격 할인으로 안전마진 2억, 실거주·투자 모두 최적",
+      description: (
+        <>
+          파격 할인으로 안전마진 2억,<br /> 실거주·투자 모두 최적
+        </>
+      ),
       icon: (
         <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/>
@@ -57,7 +73,7 @@ export default function ValueProposition() {
           <p className="text-luxury-gold text-sm md:text-base mb-2 md:mb-3 font-medium tracking-wide">
             3 REASONS TO CHOOSE
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-luxury-charcoal mb-3 md:mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary mb-3 md:mb-6">
             더채움을 선택하는 이유
           </h2>
           <p className="text-gray-600 text-sm md:text-base px-4 max-w-2xl mx-auto">
@@ -76,59 +92,35 @@ export default function ValueProposition() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <div className="bg-white rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 h-full">
+              <div className="bg-primary-600 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 h-full flex flex-col">
+                {/* Number Badge */}
+                <div className="absolute -top-3 -left-3 md:-top-4 md:-left-4 w-10 h-10 md:w-12 md:h-12 bg-primary rounded-full flex items-center justify-center shadow-lg">
+                  <span className="text-luxury-gold font-bold text-lg md:text-xl">{index + 1}</span>
+                </div>
+
                 {/* Gradient Background */}
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${point.gradient} opacity-0 group-hover:opacity-5 rounded-2xl md:rounded-3xl transition-opacity duration-500`}
+                  className={`absolute inset-0 bg-gradient-to-br ${point.gradient} opacity-0 group-hover:opacity-10 rounded-2xl md:rounded-3xl transition-opacity duration-500`}
                 />
 
-                {/* Icon */}
-                <motion.div
-                  className="text-luxury-gold mb-4 md:mb-6"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="w-12 h-12 md:w-16 md:h-16">
-                    {point.icon}
-                  </div>
-                </motion.div>
-
                 {/* Title */}
-                <h3 className="text-lg md:text-2xl font-bold text-luxury-charcoal mb-3 md:mb-4 leading-tight">
+                <h3 className="text-xl md:text-3xl font-bold text-white mb-3 md:mb-4 leading-tight">
                   {point.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-600 text-sm md:text-base mb-4 md:mb-6 leading-relaxed">
+                <p className="text-white/90 text-sm md:text-base mb-4 md:mb-6 leading-relaxed flex-grow">
                   {point.description}
                 </p>
 
                 {/* Stats */}
-                <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-gray-200">
+                <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-white/48 mt-auto">
                   <div>
                     <p className="text-2xl md:text-3xl font-bold text-luxury-gold mb-1">
                       {point.stats}
                     </p>
-                    <p className="text-xs md:text-sm text-gray-500">{point.detail}</p>
+                    <p className="text-xs md:text-sm text-white/70">{point.detail}</p>
                   </div>
-                  <motion.div
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <svg
-                      className="w-6 h-6 md:w-8 md:h-8 text-luxury-gold"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 7l5 5m0 0l-5 5m5-5H6"
-                      />
-                    </svg>
-                  </motion.div>
                 </div>
               </div>
             </motion.div>

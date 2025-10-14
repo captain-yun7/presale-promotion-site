@@ -59,7 +59,7 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <motion.p
-                className="text-luxury-gold text-sm md:text-lg mb-3 md:mb-4 font-medium tracking-wide"
+                className="text-luxury-gold text-lg md:text-2xl mb-4 md:mb-6 font-medium tracking-wide"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
@@ -68,7 +68,7 @@ export default function HeroSection() {
               </motion.p>
 
               <motion.h1
-                className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight"
+                className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold text-white mb-6 md:mb-9 leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
@@ -77,7 +77,7 @@ export default function HeroSection() {
               </motion.h1>
 
               <motion.p
-                className="text-base sm:text-lg md:text-xl text-gray-100 mb-8 md:mb-12 leading-relaxed max-w-2xl"
+                className="text-xl sm:text-2xl md:text-3xl text-gray-100 mb-12 md:mb-16 leading-relaxed max-w-3xl"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
@@ -124,7 +124,7 @@ export default function HeroSection() {
 
               {/* Key Features */}
               <motion.div
-                className="mt-8 md:mt-12 flex flex-col md:flex-row md:flex-wrap gap-2 md:gap-4"
+                className="mt-12 md:mt-16 flex flex-col md:flex-row md:flex-wrap gap-3 md:gap-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 1.2 }}
@@ -132,7 +132,7 @@ export default function HeroSection() {
                 {[
                   {
                     icon: (
-                      <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                       </svg>
                     ),
@@ -140,7 +140,7 @@ export default function HeroSection() {
                   },
                   {
                     icon: (
-                      <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                       </svg>
                     ),
@@ -148,7 +148,7 @@ export default function HeroSection() {
                   },
                   {
                     icon: (
-                      <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                       </svg>
                     ),
@@ -157,13 +157,13 @@ export default function HeroSection() {
                 ].map((feature, index) => (
                   <motion.div
                     key={index}
-                    className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 md:px-4 md:py-2 rounded-full w-fit"
+                    className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-5 py-3 md:px-6 md:py-3.5 rounded-full w-fit"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 1.4 + index * 0.1 }}
                   >
                     <span className="text-luxury-gold flex-shrink-0">{feature.icon}</span>
-                    <span className="text-white font-semibold text-xs md:text-sm whitespace-nowrap">{feature.text}</span>
+                    <span className="text-white font-semibold text-sm md:text-lg whitespace-nowrap">{feature.text}</span>
                   </motion.div>
                 ))}
               </motion.div>

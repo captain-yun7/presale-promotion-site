@@ -77,7 +77,7 @@ export default function QnA() {
             <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
               FAQ
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-luxury-charcoal mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
               자주 묻는 질문
             </h2>
             <p className="text-gray-600 text-lg mb-8">

@@ -27,8 +27,23 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // 여기에 실제 API 호출 로직 추가
-      await new Promise(resolve => setTimeout(resolve, 1000)); // 임시 딜레이
+      const response = await fetch('/api/consultations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          source: 'contact-form',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || '상담 신청에 실패했습니다.');
+      }
 
       alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n담당자가 빠른 시일 내에 연락드리겠습니다.`);
       setFormData({
@@ -36,8 +51,9 @@ export default function Contact() {
         phone: "",
         privacyAgree: false,
       });
-    } catch {
-      alert('상담 신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : '상담 신청 중 오류가 발생했습니다. 다시 시도해주세요.';
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -73,7 +89,7 @@ export default function Contact() {
           <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
             CONTACT
           </p>
-          <h2 className="text-4xl md:text-6xl font-bold text-luxury-charcoal mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold text-primary mb-6">
             빠른 상담 신청
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">

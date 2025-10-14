@@ -10,7 +10,7 @@ import Showroom from "@/components/Showroom";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
-import SocialProofToast from "@/components/SocialProofToast";
+// import SocialProofToast from "@/components/SocialProofToast";
 
 export default function Home() {
   // 구조화된 데이터 (JSON-LD) - 부동산 SEO 최적화
@@ -124,7 +124,7 @@ export default function Home() {
       <FloatingCTA />
 
       {/* Social Proof Toast - 왼쪽 하단 팝업 */}
-      <SocialProofToast />
+      {/* <SocialProofToast /> */}
     </>
   );
 }
