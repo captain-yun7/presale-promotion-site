@@ -8,6 +8,7 @@ export async function GET(request: Request) {
     const limit = parseInt(searchParams.get('limit') || '50');
     const search = searchParams.get('search') || '';
     const source = searchParams.get('source') || '';
+    const project = searchParams.get('project') || '';
 
     const offset = (page - 1) * limit;
 
@@ -24,6 +25,11 @@ export async function GET(request: Request) {
     // 출처 필터
     if (source) {
       query = query.eq('source', source);
+    }
+
+    // 프로젝트 필터
+    if (project) {
+      query = query.eq('project', project);
     }
 
     // 정렬 및 페이지네이션
@@ -84,10 +90,21 @@ export async function POST(request: Request) {
         return acc;
       }, {});
 
+      // 프로젝트별 통계
+      const { data: projectStats } = await supabase
+        .from('consultations')
+        .select('project');
+
+      const projectCounts = projectStats?.reduce((acc: Record<string, number>, item) => {
+        acc[item.project || '염창역더채움'] = (acc[item.project || '염창역더채움'] || 0) + 1;
+        return acc;
+      }, {});
+
       return NextResponse.json({
         totalCount: totalCount || 0,
         todayCount: todayCount || 0,
         sourceCounts: sourceCounts || {},
+        projectCounts: projectCounts || {},
       });
     }
 

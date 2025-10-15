@@ -25,6 +25,7 @@ export interface Consultation {
   name: string;
   phone: string;
   source?: string;
+  project?: string;
   created_at?: string;
 }
 
@@ -59,6 +60,7 @@ export async function submitConsultation(data: Consultation) {
         name: data.name,
         phone: data.phone,
         source: data.source || 'website',
+        project: data.project || '염창역더채움',
       },
     ])
     .select();

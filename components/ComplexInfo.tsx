@@ -10,7 +10,12 @@ export default function ComplexInfo() {
         </svg>
       ),
       title: "9호선 급행 초역세권",
-      description: "염창역 도보 3분, 한강벨트라인 황금노선 접근성",
+      description: (
+        <>
+          염창역 도보 3분,<br />
+          한강벨트라인 황금노선 접근성
+        </>
+      ),
     },
     {
       icon: (
@@ -19,7 +24,12 @@ export default function ComplexInfo() {
         </svg>
       ),
       title: "전 세대 먹방 없이 시원한 뷰",
-      description: "막힘없는 전호실 일조량 GOOD, 탁 트인 조망",
+      description: (
+        <>
+          막힘없는 전호실 일조량 GOOD,<br />
+          탁 트인 조망
+        </>
+      ),
     },
     {
       icon: (
@@ -28,7 +38,12 @@ export default function ComplexInfo() {
         </svg>
       ),
       title: "의료 인프라 대한민국 2위",
-      description: "인근 대학병원 3개, 의료시설 밀집 지역",
+      description: (
+        <>
+          인근 대학병원 3개,<br />
+          의료시설 밀집 지역
+        </>
+      ),
     },
     {
       icon: (
@@ -37,7 +52,12 @@ export default function ComplexInfo() {
         </svg>
       ),
       title: "제2의 목동 학군",
-      description: "목동에 뒤쳐지지 않는 우수한 교육 환경",
+      description: (
+        <>
+          목동에 뒤쳐지지 않는<br />
+          우수한 교육 환경
+        </>
+      ),
     },
     {
       icon: (
@@ -45,8 +65,18 @@ export default function ComplexInfo() {
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
       ),
-      title: "삼성 비스포크 + 현대 리바트 풀옵션",
-      description: "프리미엄 가전·가구 완비, 입주 즉시 생활 가능",
+      title: (
+        <>
+          삼성 비스포크 +<br />
+          현대 리바트 풀옵션
+        </>
+      ),
+      description: (
+        <>
+          프리미엄 가전·가구 완비,<br />
+          입주 즉시 생활 가능
+        </>
+      ),
     },
     {
       icon: (
@@ -55,7 +85,12 @@ export default function ComplexInfo() {
         </svg>
       ),
       title: "염창&가양 개발 호재",
-      description: "사업비 4조 규모 업무시설 착공 (코엑스 약 2배 규모)",
+      description: (
+        <>
+          사업비 4조 규모 업무시설 착공<br />
+          (코엑스 약 2배 규모)
+        </>
+      ),
     },
   ];
 
@@ -116,34 +151,54 @@ export default function ComplexInfo() {
           ))}
         </div>
 
-        {/* Features Grid */}
-        <div className="relative px-4 md:px-0">
-          {/* Connection Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-1 bg-primary-600 transform -translate-y-1/2 hidden lg:block"></div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-12 relative">
+        {/* Features Timeline */}
+        <div className="relative px-4 md:px-0 max-w-5xl mx-auto">
+          {/* Mobile View */}
+          <div className="lg:hidden space-y-6">
             {features.map((feature, index) => (
-              <div key={index} className="relative">
-                {/* Connection Node */}
-                <div className="absolute top-1/2 left-1/2 w-4 h-4 bg-primary-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 hidden lg:block"></div>
-
-                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative z-20">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 bg-primary-600 rounded-2xl flex items-center justify-center">
-                      <div className="text-luxury-gold w-8 h-8 md:w-10 md:h-10">{feature.icon}</div>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg md:text-xl font-bold text-primary leading-tight">
-                        {feature.title}
-                      </h3>
-                    </div>
-                  </div>
-                  <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
+              <div key={index} className="bg-luxury-gold rounded-2xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-primary-600 leading-tight mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-base text-gray-700 leading-relaxed font-semibold">
+                  {feature.description}
+                </p>
               </div>
             ))}
+          </div>
+
+          {/* Desktop Timeline View */}
+          <div className="hidden lg:block relative py-20">
+            {/* Center Timeline */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-primary-600 transform -translate-x-1/2"></div>
+
+            <div className="-space-y-4">
+              {features.map((feature, index) => {
+                const isLeft = index % 2 === 0;
+
+                return (
+                  <div key={index} className="relative flex items-center">
+                    {/* Timeline Node */}
+                    <div className="absolute left-1/2 top-1/2 w-5 h-5 bg-luxury-gold border-4 border-primary-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-20 shadow-lg"></div>
+
+                    {/* Branch Line */}
+                    <div className={`absolute top-1/2 ${isLeft ? 'right-1/2 left-0' : 'left-1/2 right-0'} h-0.5 bg-primary-600 transform -translate-y-1/2`}></div>
+
+                    {/* Card */}
+                    <div className={`${isLeft ? 'ml-0 mr-auto pr-12' : 'ml-auto mr-0 pl-12'} w-[360px]`}>
+                      <div className="bg-luxury-gold rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 relative z-10">
+                        <h3 className="text-2xl font-bold text-primary-600 leading-tight mb-3">
+                          {feature.title}
+                        </h3>
+                        <p className="text-base text-gray-700 leading-relaxed font-semibold">
+                          {feature.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

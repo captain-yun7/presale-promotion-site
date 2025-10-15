@@ -8,6 +8,7 @@ interface Consultation {
   name: string;
   phone: string;
   source: string;
+  project: string;
   created_at: string;
 }
 
@@ -15,6 +16,7 @@ interface Stats {
   totalCount: number;
   todayCount: number;
   sourceCounts: Record<string, number>;
+  projectCounts: Record<string, number>;
 }
 
 export default function AdminDashboard() {
@@ -26,6 +28,7 @@ export default function AdminDashboard() {
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState("");
   const [sourceFilter, setSourceFilter] = useState("");
+  const [projectFilter, setProjectFilter] = useState("");
 
   // 통계 데이터 로드
   useEffect(() => {
@@ -47,6 +50,7 @@ export default function AdminDashboard() {
       limit: "50",
       ...(search && { search }),
       ...(sourceFilter && { source: sourceFilter }),
+      ...(projectFilter && { project: projectFilter }),
     });
 
     fetch(`/api/admin/consultations?${params}`)
@@ -60,7 +64,7 @@ export default function AdminDashboard() {
         console.error("Error loading consultations:", err);
         setLoading(false);
       });
-  }, [page, search, sourceFilter]);
+  }, [page, search, sourceFilter, projectFilter]);
 
   const handleLogout = () => {
     document.cookie = "admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
@@ -69,11 +73,12 @@ export default function AdminDashboard() {
 
   const exportToCSV = () => {
     const csv = [
-      ["번호", "이름", "전화번호", "출처", "신청일시"],
+      ["번호", "이름", "전화번호", "분양출처", "출처", "신청일시"],
       ...consultations.map((item, index) => [
         index + 1,
         item.name,
         item.phone,
+        item.project || '염창역더채움',
         item.source,
         new Date(item.created_at).toLocaleString("ko-KR"),
       ]),
@@ -106,7 +111,7 @@ export default function AdminDashboard() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* 통계 카드 */}
         {stats && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-white rounded-lg shadow p-6">
               <h3 className="text-sm font-medium text-gray-500 mb-2">전체 상담 신청</h3>
               <p className="text-3xl font-bold text-gray-900">{stats.totalCount}건</p>
@@ -114,6 +119,17 @@ export default function AdminDashboard() {
             <div className="bg-white rounded-lg shadow p-6">
               <h3 className="text-sm font-medium text-gray-500 mb-2">오늘 상담 신청</h3>
               <p className="text-3xl font-bold text-blue-600">{stats.todayCount}건</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-6">
+              <h3 className="text-sm font-medium text-gray-500 mb-2">분양출처별 통계</h3>
+              <div className="text-sm space-y-1 mt-2">
+                {Object.entries(stats.projectCounts || {}).map(([project, count]) => (
+                  <div key={project} className="flex justify-between">
+                    <span className="text-gray-600">{project}:</span>
+                    <span className="font-semibold">{count}건</span>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="bg-white rounded-lg shadow p-6">
               <h3 className="text-sm font-medium text-gray-500 mb-2">출처별 통계</h3>
@@ -131,7 +147,7 @@ export default function AdminDashboard() {
 
         {/* 필터 및 검색 */}
         <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <input
               type="text"
               placeholder="이름 또는 전화번호 검색"
@@ -139,6 +155,14 @@ export default function AdminDashboard() {
               onChange={(e) => setSearch(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
+            <select
+              value={projectFilter}
+              onChange={(e) => setProjectFilter(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="">모든 분양출처</option>
+              <option value="염창역더채움">염창역더채움</option>
+            </select>
             <select
               value={sourceFilter}
               onChange={(e) => setSourceFilter(e.target.value)}
@@ -172,6 +196,9 @@ export default function AdminDashboard() {
                   전화번호
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  분양출처
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   출처
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -182,13 +209,13 @@ export default function AdminDashboard() {
             <tbody className="bg-white divide-y divide-gray-200">
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan={6} className="px-6 py-4 text-center text-gray-500">
                     로딩 중...
                   </td>
                 </tr>
               ) : consultations.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan={6} className="px-6 py-4 text-center text-gray-500">
                     데이터가 없습니다.
                   </td>
                 </tr>
@@ -203,6 +230,11 @@ export default function AdminDashboard() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {item.phone}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
+                        {item.project || '염창역더채움'}
+                      </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                       <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
