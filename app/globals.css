@@ -57,3 +57,30 @@ body {
 .gallery-thumbs .swiper-slide-thumb-active > div {
   @apply opacity-100 ring-2 ring-luxury-gold;
 }
+
+/* Blog Content Highlight Styles */
+.blog-content strong {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(to bottom, transparent 60%, rgba(212, 175, 55, 0.2) 60%, rgba(212, 175, 55, 0.3) 100%);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  color: #2c2c2c;
+  transition: all 0.3s ease;
+}
+
+.blog-content strong:hover {
+  background: linear-gradient(to bottom, transparent 50%, rgba(212, 175, 55, 0.3) 50%, rgba(212, 175, 55, 0.4) 100%);
+  transform: translateY(-1px);
+}
+
+/* Custom blockquote style for emphasis */
+.blog-content blockquote {
+  background: linear-gradient(135deg, #faf7f2 0%, #ffffff 100%);
+  border-left: 4px solid #d4af37;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}

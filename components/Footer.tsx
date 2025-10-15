@@ -9,7 +9,10 @@ export default function Footer() {
               시행사: 더채움 | 대행사: 태성계발
             </p>
             <p>
-              홍보관 위치: 서울 강서구 염창동 254-6 (영천시장 옆)
+              염창역 더채움 홍보관 주소: 서울특별시 강서구 염창동 262-5
+            </p>
+            <p>
+              상담문의: 1666-0952 (평일/주말 무휴)
             </p>
             <p className="text-xs pt-4">
               ※ 본 홍보물은 소비자의 이해를 돕기 위한 것으로 실제와 다를 수 있으며,
@@ -22,8 +25,8 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
-          <p>&copy; 2025 PREMIUM RESIDENCE. All rights reserved.</p>
+        <div className="border-t border-gray-800 mt-8 pb-8 pt-8 text-center text-sm text-gray-500">
+          <p>&copy; 2025 smilebunyang.com. All rights reserved.</p>
         </div>
       </div>
     </footer>

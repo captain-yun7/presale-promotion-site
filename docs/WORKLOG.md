@@ -1083,3 +1083,342 @@ NEXT_PUBLIC_NAVER_MAP_CLIENT_ID=your_client_id_here
 **핵심 개선**: 모바일 지도 높이 78% 증가
 
 ---
+
+## 작업 업데이트 (2025-10-15)
+
+### 20. Markdown 기반 내부 블로그 시스템 구축
+**완료 시간**: 2025-10-15
+**핵심 요약**: 외부 네이버 블로그 링크에서 내부 Markdown 블로그로 전환, 완전한 블로그 시스템 구축
+
+#### 📝 블로그 시스템 아키텍처
+**배경**:
+- 사용자 요구사항: 외부 링크가 아닌 자체 블로그 시스템 구축
+- 선택: 순수 Markdown (MDX 대신 가벼운 접근)
+- 장점: 콘텐츠 관리 용이, SEO 최적화, 빠른 로딩
+
+**상세 내용**:
+
+#### 1. **패키지 설치 및 의존성**
+```bash
+npm install gray-matter marked reading-time
+```
+- `gray-matter` (v4.0.3): Frontmatter 파싱 (제목, 날짜, 카테고리 등)
+- `marked` (v16.4.0): Markdown → HTML 변환
+- `reading-time` (v1.5.0): 예상 읽기 시간 계산
+
+**파일**: `package.json:18-20`
+
+---
+
+#### 2. **폴더 구조 생성**
+```
+content/
+  └── blog/
+      ├── 2025-10-04-model-house-guide.md
+      ├── 2025-10-11-location-analysis.md
+      ├── 2025-10-12-model-house-review.md
+      └── 2025-10-13-special-supply.md
+```
+- `content/blog/`: Markdown 파일 저장 디렉토리
+- 파일명 형식: `YYYY-MM-DD-slug.md`
+- 4개 블로그 포스트 초기 생성
+
+---
+
+#### 3. **블로그 유틸리티 함수 (`lib/blog.ts`)**
+**주요 기능**:
+```typescript
+export interface BlogPost {
+  slug: string;           // URL 경로용 슬러그
+  title: string;          // 블로그 제목
+  description: string;    // 요약 설명
+  date: string;           // 작성 날짜
+  category: string;       // 카테고리 (분양안내, 입지분석 등)
+  image: string;          // 대표 이미지
+  author?: string;        // 작성자
+  content: string;        // HTML로 변환된 콘텐츠
+  readingTime: string;    // 예상 읽기 시간
+}
+
+// 함수 목록
+- getAllPostSlugs(): string[]           // 모든 블로그 슬러그 가져오기
+- getPostBySlug(slug): BlogPost | null  // 특정 블로그 가져오기
+- getAllPosts(): BlogPostMetadata[]     // 목록용 메타데이터만 가져오기
+```
+
+**기술적 특징**:
+- Frontmatter 파싱: `gray-matter`로 YAML 메타데이터 추출
+- Markdown → HTML: `marked` 라이브러리 사용
+- 읽기 시간 계산: 영어 기준 200 단어/분 (한글은 약간 빠름)
+- 날짜순 정렬: 최신 블로그가 맨 위에 표시
+
+**파일**: `lib/blog.ts:1`
+
+---
+
+#### 4. **Markdown 블로그 파일 작성**
+**Frontmatter 형식**:
+```markdown
+---
+title: "염창역 더채움 분양가 특별공급 6세대 선착순 공급정보"
+description: "염창역 더채움 오피스텔 선착순 분양 정보입니다."
+date: "2025-10-13"
+category: "분양안내"
+image: "/images/blog/blog-59852bb7-1760422855800.png"
+author: "염창역 더채움"
+---
+
+# 염창역 더채움 특별공급 안내
+
+블로그 본문 내용...
+```
+
+**작성된 블로그**:
+1. **목동 더채움 염창역 모델하우스 및 분양안내** (2025-10-04)
+   - 카테고리: 분양안내
+   - 내용: 모델하우스 위치, 운영시간, 주요 특징
+
+2. **틈새 ConMark 지유1668-3590** (2025-10-11)
+   - 카테고리: 입지분석
+   - 내용: 교통, 생활 인프라, 개발 전망
+
+3. **살고 싶은 거리, 사고 싶은 거리** (2025-10-12)
+   - 카테고리: 모델하우스
+   - 내용: 모델하우스 방문 후기, 내부 공간, 커뮤니티 시설
+
+4. **염창역 더채움 분양가 특별공급 6세대 선착순 공급정보** (2025-10-13)
+   - 카테고리: 분양안내
+   - 내용: 특별공급 개요, 조건, 신청 방법
+
+**파일**:
+- `content/blog/2025-10-04-model-house-guide.md`
+- `content/blog/2025-10-11-location-analysis.md`
+- `content/blog/2025-10-12-model-house-review.md`
+- `content/blog/2025-10-13-special-supply.md`
+
+---
+
+#### 5. **API 라우트 구현 (`app/api/blog/[slug]/route.ts`)**
+**상세 내용**:
+```typescript
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  const post = getPostBySlug(params.slug);
+  if (!post) {
+    return NextResponse.json({ error: 'Blog post not found' }, { status: 404 });
+  }
+  return NextResponse.json(post);
+}
+```
+- Next.js App Router API Routes 활용
+- 동적 경로: `/api/blog/[slug]`
+- 에러 핸들링: 404 처리
+
+**파일**: `app/api/blog/[slug]/route.ts:1`
+
+---
+
+#### 6. **블로그 상세 페이지 (`app/yeomchang-thechaeum/blog/[slug]/page.tsx`)**
+**주요 기능**:
+- **헤더 섹션**:
+  - 카테고리 배지 (luxury-gold)
+  - 작성 날짜, 읽기 시간 아이콘
+  - 제목, 설명
+  - 작성자 정보 (아바타 아이콘)
+
+- **대표 이미지**:
+  - 그림자 효과 (`shadow-xl`)
+  - 라운드 처리 (`rounded-2xl`)
+  - Framer Motion 애니메이션 (scale, fade-in)
+  - 에러 시 fallback 이미지
+
+- **블로그 콘텐츠**:
+  - Prose 스타일 (타이포그래피 최적화)
+  - 커스텀 CSS:
+    - H1~H3 (luxury-charcoal, 굵기, 크기)
+    - 링크 (luxury-gold, hover 효과)
+    - 리스트, 인용문, 이미지 스타일링
+  - `dangerouslySetInnerHTML`로 HTML 렌더링
+
+- **네비게이션**:
+  - 상단: 블로그 목록으로 돌아가기 링크
+  - 하단: 블로그 목록으로 돌아가기 버튼 (CTA 스타일)
+
+**Framer Motion 애니메이션**:
+```tsx
+<motion.header
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+/>
+<motion.div
+  initial={{ opacity: 0, scale: 0.95 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.6, delay: 0.2 }}
+/>
+```
+
+**파일**: `app/yeomchang-thechaeum/blog/[slug]/page.tsx:1`
+
+---
+
+#### 7. **블로그 목록 페이지 업데이트 (`app/yeomchang-thechaeum/blog/page.tsx`)**
+**변경 사항**:
+- **기존**: `blog-links.json` 사용, 외부 링크 (`target="_blank"`)
+- **변경**: `getAllPosts()` 함수로 Markdown 파일 읽기, 내부 링크
+
+**주요 기능**:
+- **로딩 상태**: 3개 스켈레톤 카드 (애니메이션)
+- **블로그 카드**:
+  - Link 컴포넌트 사용 (`/yeomchang-thechaeum/blog/[slug]`)
+  - 카테고리 배지
+  - 날짜 + 읽기 시간
+  - 제목, 설명, "자세히 보기" 버튼
+  - Hover 효과 (shadow, border-luxury-gold)
+  - Framer Motion 순차 등장 (delay)
+
+**반응형 그리드**:
+- 모바일: 1열
+- 태블릿: 2열
+- 데스크톱: 3열
+
+**파일**: `app/yeomchang-thechaeum/blog/page.tsx:1`
+
+---
+
+#### 8. **SEO 메타데이터 설정 (`app/yeomchang-thechaeum/blog/[slug]/metadata.ts`)**
+**상세 내용**:
+```typescript
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const post = getPostBySlug(params.slug);
+  return {
+    title: `${post.title} | 염창역 더채움 블로그`,
+    description: post.description,
+    keywords: `염창역 더채움, ${post.category}, ${post.title}`,
+    openGraph: {
+      type: "article",
+      url: `https://smilebunyang.com/yeomchang-thechaeum/blog/${params.slug}`,
+      title: post.title,
+      images: [{ url: post.image, width: 1200, height: 630 }],
+      publishedTime: post.date,
+      authors: [post.author],
+    },
+    twitter: { card: "summary_large_image", ... },
+    robots: { index: true, follow: true },
+  };
+}
+
+export async function generateStaticParams() {
+  const slugs = getAllPostSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
+```
+
+**기능**:
+- 동적 메타데이터 생성 (각 블로그마다 고유)
+- OpenGraph 이미지 설정 (소셜 공유 최적화)
+- Twitter Card 설정
+- Google 검색 최적화 (robots)
+- Static Generation: 빌드 시 모든 블로그 경로 사전 생성
+
+**파일**: `app/yeomchang-thechaeum/blog/[slug]/metadata.ts:1`
+
+---
+
+#### 🎯 개선 효과
+
+**기술적 장점**:
+- ✅ **완전한 콘텐츠 소유권**: 외부 플랫폼 의존 없음
+- ✅ **SEO 최적화**: 동적 메타데이터, OpenGraph 이미지
+- ✅ **빠른 로딩**: Static Generation (빌드 시 HTML 생성)
+- ✅ **콘텐츠 관리 용이**: Markdown 파일로 간편 편집
+- ✅ **확장성**: 새 블로그 추가 시 `.md` 파일만 생성하면 끝
+
+**사용자 경험**:
+- ✅ **일관된 디자인**: 사이트 전체와 통일된 UI
+- ✅ **빠른 네비게이션**: SPA 방식 페이지 전환
+- ✅ **읽기 최적화**: Prose 스타일, 타이포그래피
+- ✅ **모바일 반응형**: 모든 디바이스 최적화
+
+**비즈니스 가치**:
+- ✅ **브랜딩 강화**: 자체 블로그 플랫폼
+- ✅ **검색 유입 증가**: SEO 최적화로 구글 노출
+- ✅ **전환율 향상**: 블로그 → 상담 예약 연결
+- ✅ **신뢰도 구축**: 전문성 있는 콘텐츠 제공
+
+---
+
+### 주요 성과 및 통계
+
+#### ✅ 완성된 기능 (추가)
+21. ✅ Markdown 기반 블로그 시스템
+22. ✅ 블로그 목록 페이지 (카드 그리드, 카테고리 배지)
+23. ✅ 블로그 상세 페이지 (Prose 스타일, 애니메이션)
+24. ✅ 읽기 시간 계산 (자동)
+25. ✅ SEO 메타데이터 (OpenGraph, Twitter Card)
+26. ✅ API Routes (블로그 데이터 제공)
+27. ✅ Static Generation (빌드 시 사전 렌더링)
+
+#### 📊 변경 파일 통계
+**신규 작성**:
+- `lib/blog.ts` (95줄) - 블로그 유틸리티 함수
+- `content/blog/*.md` (4개 파일, 총 약 400줄)
+- `app/api/blog/[slug]/route.ts` (21줄)
+- `app/yeomchang-thechaeum/blog/[slug]/page.tsx` (248줄)
+- `app/yeomchang-thechaeum/blog/[slug]/metadata.ts` (60줄)
+
+**대폭 수정**:
+- `app/yeomchang-thechaeum/blog/page.tsx` (132줄 → 158줄)
+
+**총 코드 라인**: 약 800줄 추가
+
+---
+
+### 다음 단계 (Next Steps)
+
+#### 콘텐츠 확장
+1. **블로그 추가 작성**:
+   - 입지 분석, 시장 동향, 인테리어 팁 등
+   - 매주 1-2개 블로그 발행 목표
+
+2. **이미지 최적화**:
+   - Next.js Image 컴포넌트 적용
+   - WebP 포맷 변환
+   - 블로그 대표 이미지 고해상도 준비
+
+#### 기능 추가
+3. **관리자 페이지**:
+   - 블로그 작성/편집/삭제 UI
+   - Markdown 에디터 연동
+   - 이미지 업로드 기능
+
+4. **카테고리 필터**:
+   - 블로그 목록 페이지에 카테고리 탭 추가
+   - 전체/분양안내/입지분석/모델하우스 필터
+
+5. **검색 기능**:
+   - 블로그 제목/내용 검색
+   - 태그 시스템 추가
+
+6. **소셜 공유**:
+   - 블로그 상세 페이지에 공유 버튼
+   - 카카오톡, 페이스북, 트위터 공유
+
+#### 성능 최적화
+7. **Lighthouse 점수 개선**:
+   - Performance 90+ 목표
+   - 이미지 lazy loading
+   - 코드 스플리팅
+
+---
+
+**작업자**: AI Assistant
+**작업일**: 2025-10-15
+**작업 시간**: 약 1.5시간
+**변경 파일 수**: 10개 (신규 8, 대폭 수정 2)
+**추가 코드 라인**: 약 800줄
+**패키지 추가**: 3개 (gray-matter, marked, reading-time)
+
+---
