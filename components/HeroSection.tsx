@@ -42,7 +42,7 @@ export default function HeroSection() {
           playsInline
           onLoadedData={() => setIsVideoLoaded(true)}
         >
-          <source src="/ref_data/hero-video-1.mp4" type="video/mp4" />
+          <source src="/videos/hero-video-1.mp4" type="video/mp4" />
         </video>
 
         {/* Gradient Overlay */}

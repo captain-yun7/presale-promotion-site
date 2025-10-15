@@ -14,11 +14,26 @@ import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import "swiper/css/free-mode";
 
-const images = Array.from({ length: 18 }, (_, i) => ({
-  id: i,
-  src: `/images/KakaoTalk_20251014_125002456${i === 0 ? '' : `_${String(i).padStart(2, '0')}`}.jpg`,
-  alt: `염창역 더채움 갤러리 이미지 ${i + 1}`,
-}));
+const images = [
+  { id: 0, src: '/images/yeomchang-thechaeum-exterior-view.jpg', alt: '염창역 더채움 외관 전경' },
+  { id: 1, src: '/images/yeomchang-thechaeum-entrance-lobby.jpg', alt: '염창역 더채움 입구 로비' },
+  { id: 2, src: '/images/yeomchang-thechaeum-unit-interior-01.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 1' },
+  { id: 3, src: '/images/yeomchang-thechaeum-unit-interior-02.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 2' },
+  { id: 4, src: '/images/yeomchang-thechaeum-unit-interior-03.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 3' },
+  { id: 5, src: '/images/yeomchang-thechaeum-unit-interior-04.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 4' },
+  { id: 6, src: '/images/yeomchang-thechaeum-unit-interior-05.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 5' },
+  { id: 7, src: '/images/yeomchang-thechaeum-unit-interior-06.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 6' },
+  { id: 8, src: '/images/yeomchang-thechaeum-unit-interior-07.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 7' },
+  { id: 9, src: '/images/yeomchang-thechaeum-unit-interior-08.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 8' },
+  { id: 10, src: '/images/yeomchang-thechaeum-unit-interior-09.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 9' },
+  { id: 11, src: '/images/yeomchang-thechaeum-unit-interior-10.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 10' },
+  { id: 12, src: '/images/yeomchang-thechaeum-unit-interior-11.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 11' },
+  { id: 13, src: '/images/yeomchang-thechaeum-unit-interior-12.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 12' },
+  { id: 14, src: '/images/yeomchang-thechaeum-unit-interior-13.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 13' },
+  { id: 15, src: '/images/yeomchang-thechaeum-unit-interior-14.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 14' },
+  { id: 16, src: '/images/yeomchang-thechaeum-unit-interior-15.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 15' },
+  { id: 17, src: '/images/yeomchang-thechaeum-unit-interior-16.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 16' },
+];
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);

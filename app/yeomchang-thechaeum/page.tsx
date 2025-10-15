@@ -33,7 +33,7 @@ export default function Home() {
       "latitude": "37.5475",
       "longitude": "126.8752"
     },
-    "image": "https://smilebunyang.com/images/KakaoTalk_20251014_125002456.jpg",
+    "image": "https://smilebunyang.com/images/yeomchang-thechaeum-exterior-view.jpg",
     "priceRange": "$$",
     "areaServed": {
       "@type": "City",
