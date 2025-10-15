@@ -628,7 +628,6 @@ export default function Location() {
                 {commuteDestinations[selectedDestination].time}
                 <span className="text-4xl">분</span>
               </p>
-              <p className="text-gray-200">지하철 환승 1회 이내</p>
             </motion.div>
           </motion.div>
         </div>

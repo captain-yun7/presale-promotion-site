@@ -90,7 +90,7 @@ export default function Showroom() {
                 if (navigator.share) {
                   navigator.share({
                     title: '염창역 더채움 홍보관 오시는 길',
-                    text: '서울특별시 강서구 염창동 262-5\n염창역 도보 4분',
+                    text: '서울특별시 강서구 염창동 262-5\n염창역 도보 3분',
                     url: window.location.href
                   }).catch(() => {});
                 } else {
