@@ -22,7 +22,7 @@ export default function Showroom() {
               서울특별시 강서구 염창동 262-5
             </p>
             <p className="text-luxury-gold font-bold text-sm md:text-base">
-              염창역 도보 4분
+              염창역 도보 3분
             </p>
           </div>
 

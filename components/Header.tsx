@@ -175,121 +175,27 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
               <span className="hidden lg:inline">1666-0952</span>
               <span className="lg:hidden">전화</span>
             </a>
-            <div className="relative">
-              <style jsx>{`
-                @keyframes pulse-glow {
-                  0%, 100% {
-                    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-                    transform: scale(1);
-                  }
-                  50% {
-                    box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
-                    transform: scale(1.05);
-                  }
+            <style jsx>{`
+              @keyframes pulse-glow {
+                0%, 100% {
+                  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+                  transform: scale(1);
                 }
-                .consult-button {
-                  animation: pulse-glow 3s ease-in-out infinite;
+                50% {
+                  box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+                  transform: scale(1.05);
                 }
-              `}</style>
-              <button
-                onClick={() => setIsConsultOpen(!isConsultOpen)}
-                className="consult-button bg-primary-600 text-white px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-primary-700 transition-all shadow-lg"
-              >
-                무료상담신청
-              </button>
-
-              {isConsultOpen && (
-                <div className="fixed right-0 top-[60px] md:top-[80px] w-full md:w-80 bg-white md:rounded-bl-2xl shadow-2xl p-4 md:p-6 z-50 max-h-[calc(100vh-60px)] md:max-h-[calc(100vh-80px)] overflow-y-auto">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-bold text-luxury-charcoal">
-                      빠른 상담 신청
-                    </h3>
-                    <button
-                      onClick={() => setIsConsultOpen(false)}
-                      className="text-gray-400 hover:text-gray-600"
-                    >
-                      ✕
-                    </button>
-                  </div>
-
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="이름"
-                      required
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
-                    />
-
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="전화번호 (숫자만 입력)"
-                      required
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
-                    />
-
-                    <div className="flex items-start gap-2 py-2">
-                      <input
-                        type="checkbox"
-                        id="headerPrivacyAgree"
-                        name="privacyAgree"
-                        checked={formData.privacyAgree}
-                        onChange={handleChange}
-                        className="mt-1 w-4 h-4 text-luxury-gold border-gray-300 rounded focus:ring-luxury-gold"
-                      />
-                      <label htmlFor="headerPrivacyAgree" className="text-xs text-gray-700">
-                        개인정보 수집 및 이용에 동의합니다
-                      </label>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className={`w-full py-3 rounded-xl transition-colors font-bold text-sm ${
-                        isSubmitting
-                          ? 'bg-gray-400 cursor-not-allowed text-gray-200'
-                          : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90 shadow-lg'
-                      }`}
-                    >
-                      {isSubmitting ? '처리 중...' : '상담 신청하기'}
-                    </button>
-                  </form>
-
-                  <div className="mt-4 space-y-2">
-                    <a
-                      href="https://open.kakao.com/o/s1Cc83Wh"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-3 bg-[#FEE500] hover:bg-[#FDD835] text-[#3C1E1E] rounded-xl transition-colors font-bold text-sm flex items-center justify-center gap-2"
-                    >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.8 6.7-.2 1-.6 3.7-.7 4.2 0 0 0 .3.2.4.1.1.3.1.4 0 .7-.5 4.2-2.8 4.9-3.3.5.1 1 .1 1.5.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/>
-                      </svg>
-                      <span>카카오톡 상담</span>
-                    </a>
-                    <a
-                      href="tel:1666-0952"
-                      className="w-full py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-bold text-sm flex items-center justify-center gap-2"
-                    >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                      </svg>
-                      <span>전화상담 1666-0952</span>
-                    </a>
-                  </div>
-
-                  <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
-                    개인정보는 상담 목적으로만 사용되며<br />
-                    안전하게 보관됩니다
-                  </p>
-                </div>
-              )}
-            </div>
+              }
+              .consult-button {
+                animation: pulse-glow 3s ease-in-out infinite;
+              }
+            `}</style>
+            <button
+              onClick={() => setIsConsultOpen(!isConsultOpen)}
+              className="consult-button bg-primary-600 text-white px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-primary-700 transition-all shadow-lg"
+            >
+              무료상담신청
+            </button>
           </nav>
 
           {/* Mobile Actions */}
@@ -372,7 +278,10 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
               1666-0952
             </a>
             <button
-              onClick={() => setIsConsultOpen(true)}
+              onClick={() => {
+                setIsConsultOpen(true);
+                setIsMobileMenuOpen(false);
+              }}
               className="block w-full text-center mt-2 bg-primary-600 text-white px-4 py-3 rounded-full font-bold text-base hover:bg-primary-700"
             >
               무료상담 신청
@@ -380,6 +289,99 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
           </nav>
         )}
       </div>
+
+      {/* 상담 신청 모달 (모바일/데스크탑 공용) */}
+      {isConsultOpen && (
+        <div className="fixed right-0 top-[60px] md:top-[80px] w-full md:w-80 bg-white md:rounded-bl-2xl shadow-2xl p-4 md:p-6 z-50 max-h-[calc(100vh-60px)] md:max-h-[calc(100vh-80px)] overflow-y-auto">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-xl font-bold text-luxury-charcoal">
+              빠른 상담 신청
+            </h3>
+            <button
+              onClick={() => setIsConsultOpen(false)}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              ✕
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="이름"
+              required
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+            />
+
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="전화번호 (숫자만 입력)"
+              required
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+            />
+
+            <div className="flex items-start gap-2 py-2">
+              <input
+                type="checkbox"
+                id="headerPrivacyAgree"
+                name="privacyAgree"
+                checked={formData.privacyAgree}
+                onChange={handleChange}
+                className="mt-1 w-4 h-4 text-luxury-gold border-gray-300 rounded focus:ring-luxury-gold"
+              />
+              <label htmlFor="headerPrivacyAgree" className="text-xs text-gray-700">
+                개인정보 수집 및 이용에 동의합니다
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`w-full py-3 rounded-xl transition-colors font-bold text-sm ${
+                isSubmitting
+                  ? 'bg-gray-400 cursor-not-allowed text-gray-200'
+                  : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90 shadow-lg'
+              }`}
+            >
+              {isSubmitting ? '처리 중...' : '상담 신청하기'}
+            </button>
+          </form>
+
+          <div className="mt-4 space-y-2">
+            <a
+              href="https://open.kakao.com/o/s1Cc83Wh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3 bg-[#FEE500] hover:bg-[#FDD835] text-[#3C1E1E] rounded-xl transition-colors font-bold text-sm flex items-center justify-center gap-2"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.8 6.7-.2 1-.6 3.7-.7 4.2 0 0 0 .3.2.4.1.1.3.1.4 0 .7-.5 4.2-2.8 4.9-3.3.5.1 1 .1 1.5.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/>
+              </svg>
+              <span>카카오톡 상담</span>
+            </a>
+            <a
+              href="tel:1666-0952"
+              className="w-full py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors font-bold text-sm flex items-center justify-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+              </svg>
+              <span>전화상담 1666-0952</span>
+            </a>
+          </div>
+
+          <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
+            개인정보는 상담 목적으로만 사용되며<br />
+            안전하게 보관됩니다
+          </p>
+        </div>
+      )}
     </header>
   );
 }

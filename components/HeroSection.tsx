@@ -174,7 +174,7 @@ export default function HeroSection() {
 
       {/* Scroll Down Indicator */}
       <motion.div
-        className="absolute bottom-6 md:bottom-12 left-1/2 -translate-x-1/2 z-20 cursor-pointer"
+        className="absolute bottom-6 md:bottom-12 left-0 right-0 z-20 cursor-pointer flex items-center justify-center"
         onClick={scrollToNext}
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -182,7 +182,7 @@ export default function HeroSection() {
         <div className="flex flex-col items-center justify-center gap-1 md:gap-2">
           <span className="text-white text-xs md:text-sm tracking-wider text-center">SCROLL DOWN</span>
           <svg
-            className="w-5 h-5 md:w-6 md:h-6 text-luxury-gold mx-auto"
+            className="w-5 h-5 md:w-6 md:h-6 text-luxury-gold"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
