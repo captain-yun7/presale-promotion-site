@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "../styles/globals.css";
+import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://smilebunyang.com'),
@@ -26,7 +27,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-noto">{children}</body>
+      <body className="font-noto">
+        <ClientLayout>{children}</ClientLayout>
+      </body>
     </html>
   );
 }

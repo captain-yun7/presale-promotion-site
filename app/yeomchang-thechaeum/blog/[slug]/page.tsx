@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 import Link from "next/link";
+import { trackEvent } from "@/components/Analytics";
 
 interface BlogPost {
   slug: string;
@@ -32,6 +33,9 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
         if (response.ok) {
           const data = await response.json();
           setPost(data);
+
+          // Track blog view event
+          trackEvent.blogView(data.slug, data.title);
         }
       } catch (error) {
         console.error("Error fetching blog post:", error);

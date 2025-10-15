@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { trackEvent } from "./Analytics";
 
 export default function FloatingCTA() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +31,9 @@ export default function FloatingCTA() {
       // TODO: Supabase 연동
       alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n담당자가 빠른 시일 내에 연락드리겠습니다.`);
 
+      // Track consultation event
+      trackEvent.consultation("플로팅폼");
+
       // 폼 초기화
       setFormData({
         name: "",
@@ -53,6 +57,7 @@ export default function FloatingCTA() {
   };
 
   const handlePhoneCall = () => {
+    trackEvent.phoneClick();
     window.location.href = "tel:1666-0952";
   };
 
