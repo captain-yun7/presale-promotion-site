@@ -1422,3 +1422,120 @@ export async function generateStaticParams() {
 **패키지 추가**: 3개 (gray-matter, marked, reading-time)
 
 ---
+
+## 작업 업데이트 (2025-10-16)
+
+### 21. SEO 최적화 - robots.ts 생성
+**완료 시간**: 2025-10-16
+**핵심 요약**: Next.js 15 권장 방식으로 동적 robots.ts 파일 생성하여 검색엔진 크롤링 최적화
+
+#### 🔍 robots.ts 생성
+**배경**:
+- 네이버 웹마스터 도구에서 "robots.txt가 존재하지 않습니다" 경고 발생
+- Next.js 15 App Router의 동적 생성 방식 적용 필요
+- 기존에 `app/sitemap.ts`는 있었으나 `app/robots.ts`는 누락된 상태
+
+**상세 내용**:
+1. **app/robots.ts 생성**:
+   - `MetadataRoute.Robots` 타입 사용
+   - 크롤러별 규칙 설정:
+     - 전체 크롤러 (`*`): `/` 허용, `/api/`, `/_next/`, `/admin/`, `*.json`, `/private/` 차단
+     - Googlebot: `/` 허용, `/api/`, `/admin/` 차단
+     - Yeti (네이버 크롤러): `/` 허용, `/api/`, `/admin/` 차단
+   - Sitemap URL 자동 포함: `/sitemap.xml`
+   - 환경변수로 Base URL 관리 (`NEXT_PUBLIC_BASE_URL`)
+   - 기본값: `https://www.smilebunyang.com`
+
+**생성된 라우트**:
+- `/robots.txt` - Next.js가 자동으로 동적 생성
+
+**코드**:
+```typescript
+// app/robots.ts
+import { MetadataRoute } from 'next'
+
+export default function robots(): MetadataRoute.Robots {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.smilebunyang.com'
+
+  return {
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/api/', '/_next/', '/admin/', '*.json', '/private/'],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
+      },
+      {
+        userAgent: 'Yeti', // 네이버 크롤러
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
+      },
+    ],
+    sitemap: `${baseUrl}/sitemap.xml`,
+  }
+}
+```
+
+**파일**:
+- `app/robots.ts:1` (신규)
+
+---
+
+#### 🎯 개선 효과
+1. **SEO 최적화**:
+   - ✅ 검색엔진 크롤러에게 명확한 크롤링 가이드 제공
+   - ✅ 네이버 Yeti 크롤러 전용 규칙 추가 (국내 검색 최적화)
+   - ✅ sitemap.xml 자동 참조로 페이지 발견성 향상
+   - ✅ 동적 생성으로 환경별 설정 가능
+
+2. **유지보수성**:
+   - ✅ TypeScript 타입 안정성 (MetadataRoute.Robots)
+   - ✅ 환경변수로 Base URL 분리 관리
+   - ✅ Next.js 15 공식 권장 패턴 준수
+   - ✅ `public/robots.txt` 정적 파일보다 유연한 관리
+
+3. **보안**:
+   - ✅ API 라우트 크롤링 방지 (`/api/`)
+   - ✅ 관리자 페이지 노출 차단 (`/admin/`)
+   - ✅ 내부 파일 보호 (`*.json`, `/private/`)
+   - ✅ Next.js 빌드 파일 차단 (`/_next/`)
+
+---
+
+#### 📝 환경 설정 가이드
+**선택적 환경 변수**:
+```env
+# .env.local 파일에 추가 (선택사항, 기본값: https://www.smilebunyang.com)
+NEXT_PUBLIC_BASE_URL=https://www.smilebunyang.com
+```
+
+**배포 후 확인**:
+1. `https://www.smilebunyang.com/robots.txt` 접속하여 내용 확인
+2. `https://www.smilebunyang.com/sitemap.xml` 접속하여 페이지 목록 확인
+3. 네이버 웹마스터 도구에서 사이트 재검증
+4. Google Search Console에서 robots.txt 테스트
+
+---
+
+### 변경된 파일 목록
+
+#### 신규 작성
+- `app/robots.ts` (32줄) - 검색엔진 크롤링 규칙 (동적 생성)
+
+#### 기존 파일 (참고)
+- `app/sitemap.ts` - 이미 존재 (블로그 포스트 포함한 동적 sitemap 생성)
+- `public/robots.txt` - 정적 파일 (동적 `app/robots.ts`가 우선)
+
+---
+
+**작업자**: AI Assistant
+**작업일**: 2025-10-16
+**작업 시간**: 약 5분
+**변경 파일 수**: 1개 (신규 1)
+**개선 항목**: SEO 최적화 (robots.txt 동적 생성)
+
+---
