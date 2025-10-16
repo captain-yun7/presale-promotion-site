@@ -28,7 +28,38 @@ export default function FloatingCTA() {
     setIsSubmitting(true);
 
     try {
-      // TODO: Supabase 연동
+      console.log('[Floating CTA] 상담 신청 시작:', { name: formData.name, phone: formData.phone });
+
+      const response = await fetch('/api/consultations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          source: 'floating-cta',
+          project: '염창역더채움',
+        }),
+      });
+
+      console.log('[Floating CTA] API 응답 상태:', response.status, response.statusText);
+
+      const data = await response.json();
+      console.log('[Floating CTA] API 응답 데이터:', data);
+
+      if (!response.ok) {
+        console.error('[Floating CTA] ❌ API 요청 실패:', data);
+        throw new Error(data.error || '상담 신청에 실패했습니다.');
+      }
+
+      // 성공 시에도 실제 데이터가 있는지 확인
+      if (!data.data || data.data.length === 0) {
+        console.error('[Floating CTA] ⚠️ API는 성공했지만 데이터가 비어있음');
+        throw new Error('상담 신청이 정상 처리되지 않았습니다. 관리자에게 문의해주세요.');
+      }
+
+      console.log('[Floating CTA] ✅ 상담 신청 성공');
       alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n담당자가 빠른 시일 내에 연락드리겠습니다.`);
 
       // Track consultation event
@@ -41,8 +72,10 @@ export default function FloatingCTA() {
         privacyAgree: false,
       });
       setIsOpen(false);
-    } catch {
-      alert('상담 신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+    } catch (error) {
+      console.error('[Floating CTA] ❌ 상담 신청 중 오류:', error);
+      const errorMessage = error instanceof Error ? error.message : '상담 신청 중 오류가 발생했습니다. 다시 시도해주세요.';
+      alert(`❌ ${errorMessage}\n\n긴급한 경우 1666-0952로 전화주세요.`);
     } finally {
       setIsSubmitting(false);
     }

@@ -27,6 +27,8 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
+      console.log('[Contact Form] 상담 신청 시작:', { name: formData.name, phone: formData.phone });
+
       const response = await fetch('/api/consultations', {
         method: 'POST',
         headers: {
@@ -40,12 +42,23 @@ export default function Contact() {
         }),
       });
 
+      console.log('[Contact Form] API 응답 상태:', response.status, response.statusText);
+
       const data = await response.json();
+      console.log('[Contact Form] API 응답 데이터:', data);
 
       if (!response.ok) {
+        console.error('[Contact Form] ❌ API 요청 실패:', data);
         throw new Error(data.error || '상담 신청에 실패했습니다.');
       }
 
+      // 성공 시에도 실제 데이터가 있는지 확인
+      if (!data.data || data.data.length === 0) {
+        console.error('[Contact Form] ⚠️ API는 성공했지만 데이터가 비어있음');
+        throw new Error('상담 신청이 정상 처리되지 않았습니다. 관리자에게 문의해주세요.');
+      }
+
+      console.log('[Contact Form] ✅ 상담 신청 성공');
       alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n담당자가 빠른 시일 내에 연락드리겠습니다.`);
       setFormData({
         name: "",
@@ -53,8 +66,9 @@ export default function Contact() {
         privacyAgree: false,
       });
     } catch (error) {
+      console.error('[Contact Form] ❌ 상담 신청 중 오류:', error);
       const errorMessage = error instanceof Error ? error.message : '상담 신청 중 오류가 발생했습니다. 다시 시도해주세요.';
-      alert(errorMessage);
+      alert(`❌ ${errorMessage}\n\n긴급한 경우 1666-0952로 전화주세요.`);
     } finally {
       setIsSubmitting(false);
     }

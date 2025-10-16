@@ -1784,3 +1784,77 @@ NEXT_PUBLIC_BASE_URL=https://www.smilebunyang.com
 **핵심 목표**: 전환율 0% → 3-4% 개선
 
 ---
+
+---
+
+### 🚨 긴급 수정: 상담 신청 DB 저장 문제 해결
+**완료 시간**: 2025-10-17
+**핵심 요약**: Supabase RLS 정책 미설정으로 인한 상담 신청 데이터 미저장 문제 해결
+
+**문제 상황**:
+- 고객들이 상담 신청을 했으나 Supabase DB에 전혀 저장되지 않음
+- 프론트엔드에서는 "상담 신청 완료" 메시지가 표시되지만 실제 DB에는 저장 안됨
+- 이미 많은 고객 데이터가 손실된 상태
+
+**원인 분석**:
+1. **Supabase RLS(Row Level Security) 정책 미설정**
+   - `consultations` 테이블에 INSERT 권한 정책이 없음
+   - 익명 사용자(anon key)가 데이터를 삽입할 수 없는 상태
+2. **에러 로깅 부족**
+   - API route에서 에러가 발생해도 상세 로그 없음
+   - 클라이언트에서 응답 검증 없이 성공 메시지 표시
+3. **백업 시스템 부재**
+   - Supabase 실패 시 대체 로깅 시스템 없음
+
+**해결 방법**:
+
+1. **Supabase RLS 정책 SQL 파일 생성** (`supabase-rls-policy.sql`)
+   ```sql
+   ALTER TABLE consultations ENABLE ROW LEVEL SECURITY;
+   
+   CREATE POLICY "Anyone can insert consultations"
+   ON consultations FOR INSERT TO anon WITH CHECK (true);
+   
+   CREATE POLICY "Authenticated users can read all consultations"
+   ON consultations FOR SELECT TO authenticated USING (true);
+   
+   CREATE POLICY "Service role can do everything"
+   ON consultations FOR ALL TO service_role USING (true) WITH CHECK (true);
+   ```
+
+2. **API route 에러 핸들링 강화** (`app/api/consultations/route.ts`)
+   - 상세한 콘솔 로깅 추가 (요청 받음, 저장 시도, 성공/실패)
+   - 에러 타입, 메시지, 전체 에러 객체 로깅
+   - 에러 발생 시에도 백업 로그 파일에 저장 시도
+
+3. **백업 로깅 시스템 추가**
+   - `logs/consultations.log`: 성공한 상담 신청 백업
+   - `logs/consultation-errors.log`: 실패한 요청 기록
+   - 파일 시스템에 직접 로그 저장 (Supabase 실패 대비)
+
+4. **클라이언트 응답 체크 로직 개선**
+   - `components/Contact.tsx`: 
+     - API 응답 상태 코드 확인
+     - 응답 데이터 검증 (data 배열이 비어있는지 체크)
+     - 실패 시 명확한 에러 메시지 + 긴급 전화번호 안내
+   - `components/FloatingCTA.tsx`:
+     - TODO 주석 제거하고 실제 API 연동 구현
+     - Contact.tsx와 동일한 에러 핸들링 로직 적용
+
+**수정된 파일**:
+- `supabase-rls-policy.sql` (신규 생성)
+- `app/api/consultations/route.ts`
+- `components/Contact.tsx`
+- `components/FloatingCTA.tsx`
+
+**다음 단계**:
+1. Supabase 대시보드에서 `supabase-rls-policy.sql` 실행 (필수!)
+2. 배포 후 실제 상담 신청 테스트
+3. `logs/` 디렉토리 생성 및 권한 확인
+4. 콘솔 로그 모니터링하여 정상 작동 확인
+
+**교훈**:
+- Supabase 테이블 생성 시 반드시 RLS 정책도 함께 설정할 것
+- 클라이언트에서 API 응답을 철저히 검증할 것
+- 중요한 데이터는 백업 로깅 시스템 필수
+- 에러 로깅은 상세할수록 디버깅이 쉬움
