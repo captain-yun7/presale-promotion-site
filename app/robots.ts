@@ -22,7 +22,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/admin/'],
       },
       {
-        userAgent: 'Yeti', // $t„ ldì
+        userAgent: 'Yeti', // Naver crawler
         allow: '/',
         disallow: ['/api/', '/admin/'],
       },
