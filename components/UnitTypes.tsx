@@ -109,7 +109,7 @@ export default function UnitTypes() {
             세대 정보
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            파격 할인으로 안전마진 2억, 실거주와 투자 모두 최적의 쓰리룸 아파텔
+            파격 할인으로 안전마진 확실, 실거주와 투자 모두 최적의 쓰리룸 아파텔
           </p>
         </div>
 

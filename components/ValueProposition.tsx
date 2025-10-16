@@ -45,7 +45,7 @@ export default function ValueProposition() {
       title: "투룸 가격에 쓰리룸!",
       description: (
         <>
-          파격 할인으로 안전마진 2억,<br /> 실거주·투자 모두 최적
+          파격 할인으로 안전마진 확실,<br /> 실거주·투자 모두 최적
         </>
       ),
       icon: (
@@ -54,7 +54,7 @@ export default function ValueProposition() {
         </svg>
       ),
       gradient: "from-purple-500 to-pink-500",
-      stats: "2억 마진",
+      stats: "안전마진 확실",
       detail: "가성비 최고",
     },
   ];

@@ -17,8 +17,8 @@ export default function Home() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
-    "name": "염창역 더채움 - 한강벨트라인 9호선 급행 초역세권 쓰리룸 아파텔",
-    "description": "투룸 가격으로 쓰리룸! 안전마진 2억. 한강벨트라인 염창역 9호선 급행 초역세권. 주택수·대출규제·자금출처 무관. 전세대 시원한뷰, 역세권·초품아·숲세권, 삼성비스포크·현대리바트 프리미엄 가전가구",
+    "name": "염창역 더채움 - 9호선 급행 초역세권 쓰리룸 아파텔",
+    "description": "목동 염창역 더채움 분양. 9호선 급행 초역세권 투룸 가격에 쓰리룸! ☎1666-0952",
     "url": "https://smilebunyang.com/yeomchang-thechaeum",
     "telephone": "1666-0952",
     "address": {
@@ -50,11 +50,6 @@ export default function Home() {
         "name": "한강벨트라인",
         "value": true
       },
-      {
-        "@type": "LocationFeatureSpecification",
-        "name": "삼성비스포크·현대리바트 프리미엄 가전가구",
-        "value": true
-      }
     ]
   };
 
