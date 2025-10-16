@@ -88,39 +88,53 @@ export default function HeroSection() {
               </motion.p>
 
               {/* Interactive CTAs */}
-              {/* <motion.div
-                className="flex flex-col sm:flex-row gap-4"
+              <motion.div
+                className="flex flex-col sm:flex-row gap-3 md:gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1 }}
               >
                 <motion.button
                   onClick={scrollToContact}
-                  className="group relative bg-luxury-gold text-luxury-charcoal px-10 py-5 rounded-full font-bold text-lg overflow-hidden shadow-2xl"
+                  className="group relative bg-luxury-gold text-luxury-charcoal px-8 py-4 md:px-10 md:py-5 rounded-full font-black text-base md:text-lg overflow-hidden shadow-2xl"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  animate={{
+                    boxShadow: [
+                      "0 0 0 0 rgba(212, 175, 55, 0.7)",
+                      "0 0 0 10px rgba(212, 175, 55, 0)",
+                      "0 0 0 0 rgba(212, 175, 55, 0)"
+                    ]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "loop"
+                  }}
                 >
-                  <span className="relative z-10">상담 신청하기</span>
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    🔥 특별분양 상담신청 (선착순 6세대)
+                  </span>
                   <motion.div
                     className="absolute inset-0 bg-white"
                     initial={{ x: "-100%" }}
                     whileHover={{ x: 0 }}
                     transition={{ duration: 0.3 }}
                   />
-                  <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 text-luxury-charcoal font-bold">
-                    상담 신청하기
+                  <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 text-luxury-charcoal font-black gap-2">
+                    🔥 특별분양 상담신청 (선착순 6세대)
                   </span>
                 </motion.button>
 
                 <motion.button
                   onClick={scrollToNext}
-                  className="border-2 border-white text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-luxury-charcoal transition-all backdrop-blur-sm"
+                  className="border-2 border-white text-white px-8 py-4 md:px-10 md:py-5 rounded-full font-bold text-base md:text-lg hover:bg-white hover:text-luxury-charcoal transition-all backdrop-blur-sm"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   자세히 보기
                 </motion.button>
-              </motion.div> */}
+              </motion.div>
 
               {/* Key Features */}
               <motion.div

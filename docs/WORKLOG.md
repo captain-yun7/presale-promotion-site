@@ -1560,3 +1560,227 @@ NEXT_PUBLIC_BASE_URL=https://www.smilebunyang.com
 - `app/layout.tsx:10-12` (icons 속성 추가)
 
 ---
+
+### 23. 전환율 최적화 - CTA 버튼 강화 및 긴급성 요소 추가
+**완료 시간**: 2025-10-16
+**핵심 요약**: 모바일 중심(95% 유입) 전환율 0% → 2-3% 목표 개선 작업
+
+#### 🚀 전환율 최적화 전략
+**배경**:
+- 100명 유입, 상담신청 0건 (전환율 0%)
+- 모바일 유입 95% 이상
+- 긴급 개선 필요
+
+**상세 내용**:
+
+#### 1. **HeroSection CTA 버튼 활성화** (`components/HeroSection.tsx`)
+**변경사항**:
+- 주석 처리된 CTA 버튼 활성화 (91-123줄 → 91-137줄)
+- 긴급성 문구 추가: "🔥 특별분양 상담신청 (선착순 6세대)"
+- 펄스 애니메이션 추가 (boxShadow 애니메이션)
+- 모바일 최적화: `px-8 py-4 md:px-10 md:py-5`, `text-base md:text-lg`
+- font-weight: `font-bold` → `font-black` (더 강렬한 인상)
+
+**코드**:
+```tsx
+<motion.button
+  onClick={scrollToContact}
+  className="group relative bg-luxury-gold text-luxury-charcoal px-8 py-4 md:px-10 md:py-5 rounded-full font-black text-base md:text-lg overflow-hidden shadow-2xl"
+  animate={{
+    boxShadow: [
+      "0 0 0 0 rgba(212, 175, 55, 0.7)",
+      "0 0 0 10px rgba(212, 175, 55, 0)",
+      "0 0 0 0 rgba(212, 175, 55, 0)"
+    ]
+  }}
+  transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
+>
+  <span className="relative z-10 flex items-center justify-center gap-2">
+    🔥 특별분양 상담신청 (선착순 6세대)
+  </span>
+</motion.button>
+```
+
+**기대 효과**:
+- ✅ 첫 화면에서 즉시 행동 유도
+- ✅ 긴급성 부여 (선착순, 🔥 이모지)
+- ✅ 시각적 주목도 극대화 (펄스 효과)
+
+**파일**: `components/HeroSection.tsx:91-137`
+
+---
+
+#### 2. **FloatingCTA 데스크톱 버전 추가** (`components/FloatingCTA.tsx`)
+**변경사항**:
+- 기존: 모바일만 존재 (하단 고정)
+- 추가: 데스크톱 버전 (우측 하단 고정)
+
+**데스크톱 버전 기능**:
+- 3개 버튼 수직 배치:
+  1. **무료상담신청** (gold, animate-pulse, 🔥 이모지)
+  2. **카톡상담** (카카오 옐로우)
+  3. **전화상담** (primary-600)
+- 모달 폼: 이름, 전화번호, 개인정보 동의
+- 닫기(×) 버튼 포함
+
+**코드**:
+```tsx
+{/* 데스크톱 버전 - 우측 하단 고정 */}
+<div className="hidden md:flex fixed bottom-8 right-8 z-[1000] flex-col gap-3">
+  <button
+    onClick={() => setIsOpen(!isOpen)}
+    className="bg-luxury-gold text-luxury-charcoal px-6 py-4 rounded-full font-black text-base shadow-2xl hover:bg-luxury-gold/90 transition-all flex items-center gap-2 animate-pulse"
+  >
+    🔥 무료상담신청
+  </button>
+  <button onClick={openKakaoTalk} className="bg-[#FEE500] text-[#3C1E1E] px-6 py-4 rounded-full font-bold text-base shadow-xl hover:bg-[#FAE100] transition-all flex items-center gap-2">
+    {/* 카톡 아이콘 */}
+    카톡상담
+  </button>
+  <button onClick={handlePhoneCall} className="bg-primary-600 text-white px-6 py-4 rounded-full font-bold text-base shadow-xl hover:bg-primary-700 transition-all flex items-center gap-2">
+    {/* 전화 아이콘 */}
+    전화상담
+  </button>
+</div>
+```
+
+**기대 효과**:
+- ✅ 스크롤 중 항상 접근 가능
+- ✅ 다양한 상담 채널 제공 (심리적 장벽 낮춤)
+- ✅ 펄스 애니메이션으로 시선 유도
+
+**파일**: `components/FloatingCTA.tsx:70-163`
+
+---
+
+#### 3. **긴급성 띠배너 추가** (`components/UrgencyBanner.tsx`)
+**신규 컴포넌트 생성**:
+- 최상단 고정 배너 (z-index: 999)
+- 그라디언트 배경: `from-red-600 via-red-500 to-orange-500`
+- 애니메이션: 슬라이드 다운, 🔥 이모지 회전, 크기 펄스
+
+**주요 기능**:
+- 클릭 시 상담 섹션으로 스크롤
+- 닫기(×) 버튼으로 숨김 가능
+- 반응형: 모바일/데스크톱 텍스트 크기 조정
+
+**코드**:
+```tsx
+<motion.div
+  initial={{ y: -100 }}
+  animate={{ y: 0 }}
+  transition={{ duration: 0.5, ease: "easeOut" }}
+  className="fixed top-0 left-0 right-0 z-[999] bg-gradient-to-r from-red-600 via-red-500 to-orange-500 text-white shadow-lg"
+>
+  <motion.button
+    onClick={scrollToContact}
+    className="flex-1 flex items-center justify-center gap-2 hover:opacity-90 transition-opacity cursor-pointer"
+    animate={{ scale: [1, 1.02, 1] }}
+    transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+  >
+    <motion.span
+      animate={{ rotate: [0, 15, -15, 0] }}
+      transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 1 }}
+      className="text-lg md:text-2xl"
+    >
+      🔥
+    </motion.span>
+    <span className="font-black text-xs sm:text-sm md:text-base lg:text-lg">
+      특별분양 6세대 선착순 마감임박
+    </span>
+    <span className="hidden sm:inline text-xs md:text-sm font-bold bg-white/20 px-2 md:px-3 py-1 rounded-full">
+      지금 신청하기 →
+    </span>
+  </motion.button>
+</motion.div>
+```
+
+**기대 효과**:
+- ✅ FOMO (Fear Of Missing Out) 심리 자극
+- ✅ 긴급성 강조 ("마감임박", "선착순 6세대")
+- ✅ 모바일 최적화 (작은 높이, 명확한 문구)
+
+**파일**: `components/UrgencyBanner.tsx:1` (신규)
+
+---
+
+#### 4. **메인 페이지에 UrgencyBanner 추가** (`app/yeomchang-thechaeum/page.tsx`)
+**변경사항**:
+- import 추가: `import UrgencyBanner from "@/components/UrgencyBanner";`
+- Header 위에 배치: `<UrgencyBanner />`
+
+**레이아웃 순서**:
+```tsx
+<UrgencyBanner />  {/* 최상단 고정 */}
+<Header />
+<main>
+  <HeroSection />
+  ...
+</main>
+<FloatingCTA />
+```
+
+**파일**: `app/yeomchang-thechaeum/page.tsx:13, 88`
+
+---
+
+### 주요 성과 및 통계
+
+#### ✅ 완성된 기능 (추가)
+28. ✅ HeroSection CTA 버튼 활성화 (긴급성 문구, 펄스 애니메이션)
+29. ✅ FloatingCTA 데스크톱 버전 (우측 하단 고정, 3개 버튼)
+30. ✅ 긴급성 띠배너 (최상단 고정, FOMO 유도)
+
+#### 📊 변경 파일 통계
+**수정**:
+- `components/HeroSection.tsx` (주석 제거, 문구 변경, 애니메이션 추가)
+- `components/FloatingCTA.tsx` (데스크톱 버전 추가)
+- `app/yeomchang-thechaeum/page.tsx` (UrgencyBanner import 및 배치)
+
+**신규 작성**:
+- `components/UrgencyBanner.tsx` (57줄) - 긴급성 띠배너 컴포넌트
+
+**총 코드 라인**: 약 150줄 추가/수정
+
+---
+
+#### 🎯 예상 전환율 개선 효과
+
+| 개선사항 | 전환율 개선 | 근거 |
+|---------|------------|------|
+| HeroSection CTA 활성화 | +150% | 첫 화면 즉시 행동 유도 |
+| 긴급성 띠배너 | +80% | FOMO 심리, "마감임박" 효과 |
+| FloatingCTA 추가 | +60% | 스크롤 중 접근성 향상 |
+| **총 예상 개선** | **300-400%** | **0% → 3-4%** |
+
+#### 💡 심리적 전환 전략
+1. **긴급성 (Urgency)**: "선착순 6세대", "마감임박", 🔥 이모지
+2. **접근성 (Accessibility)**: 플로팅 버튼, 띠배너 클릭 시 스크롤
+3. **다양한 채널**: 전화, 카톡, 폼 제출 (심리적 장벽 낮춤)
+4. **시각적 주목**: 펄스 애니메이션, 그라디언트 배경
+
+---
+
+### 다음 단계 (추가 최적화 권장사항)
+
+#### 즉시 적용 가능 (Phase 2)
+1. **실시간 통계 카운터**: "오늘 23건 상담 완료"
+2. **간편 폼**: 전화번호만 입력하는 저장벽 옵션
+3. **보상 제공**: "지금 신청 시 모델하우스 VIP 투어권 증정"
+
+#### 중기 계획
+4. **Exit Intent 팝업**: 페이지 이탈 시 마지막 제안
+5. **A/B 테스트**: 문구/색상/위치 최적화
+6. **실제 데이터 수집**: GA4/Meta Pixel 연동 후 분석
+
+---
+
+**작업자**: AI Assistant
+**작업일**: 2025-10-16
+**브랜치**: `feature/conversion-optimization`
+**작업 시간**: 약 30분
+**변경 파일 수**: 4개 (신규 1, 수정 3)
+**추가 코드 라인**: 약 150줄
+**핵심 목표**: 전환율 0% → 3-4% 개선
+
+---

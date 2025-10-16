@@ -67,6 +67,101 @@ export default function FloatingCTA() {
 
   return (
     <>
+      {/* 데스크톱 버전 - 우측 하단 고정 */}
+      <div className="hidden md:flex fixed bottom-8 right-8 z-[1000] flex-col gap-3">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="bg-luxury-gold text-luxury-charcoal px-6 py-4 rounded-full font-black text-base shadow-2xl hover:bg-luxury-gold/90 transition-all flex items-center gap-2 animate-pulse"
+        >
+          🔥 무료상담신청
+        </button>
+        <button
+          onClick={openKakaoTalk}
+          className="bg-[#FEE500] text-[#3C1E1E] px-6 py-4 rounded-full font-bold text-base shadow-xl hover:bg-[#FAE100] transition-all flex items-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 3.14-9 7s4.03 7 9 7c.83 0 1.64-.09 2.42-.27l3.58 2.14v-3.2c1.78-1.45 3-3.5 3-5.67 0-3.86-4.03-7-9-7zm-3 9.5c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm3 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm3 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z"/>
+          </svg>
+          카톡상담
+        </button>
+        <button
+          onClick={handlePhoneCall}
+          className="bg-primary-600 text-white px-6 py-4 rounded-full font-bold text-base shadow-xl hover:bg-primary-700 transition-all flex items-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          전화상담
+        </button>
+      </div>
+
+      {/* 데스크톱 상담 모달 */}
+      {isOpen && (
+        <div className="hidden md:block fixed inset-0 bg-black/50 z-[1001] flex items-center justify-center" onClick={() => setIsOpen(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-luxury-charcoal">
+                빠른 상담 신청
+              </h3>
+              <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-700 text-2xl">
+                ×
+              </button>
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="이름"
+                  required
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors"
+                />
+              </div>
+
+              <div>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="전화번호 (숫자만 입력)"
+                  required
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors"
+                />
+              </div>
+
+              <div className="flex items-start gap-2 py-2">
+                <input
+                  type="checkbox"
+                  id="desktopPrivacyAgree"
+                  name="privacyAgree"
+                  checked={formData.privacyAgree}
+                  onChange={handleChange}
+                  className="mt-1 w-4 h-4 text-luxury-gold border-gray-300 rounded focus:ring-luxury-gold"
+                />
+                <label htmlFor="desktopPrivacyAgree" className="text-sm text-gray-700">
+                  개인정보 수집 및 이용에 동의합니다
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full py-3 rounded-xl transition-colors font-bold ${
+                  isSubmitting
+                    ? 'bg-gray-400 cursor-not-allowed text-gray-200'
+                    : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90'
+                }`}
+              >
+                {isSubmitting ? '처리 중...' : '상담 신청하기'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* 모바일 버전 - 하단 고정 */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-[1000]">
         <button

@@ -10,6 +10,7 @@ import Showroom from "@/components/Showroom";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
+import UrgencyBanner from "@/components/UrgencyBanner";
 // import SocialProofToast from "@/components/SocialProofToast";
 
 export default function Home() {
@@ -84,6 +85,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
 
+      <UrgencyBanner />
       <Header />
       <main>
         {/* 1. Hero Section - 몰입형 풀스크린 비디오 */}
