@@ -1539,3 +1539,24 @@ NEXT_PUBLIC_BASE_URL=https://www.smilebunyang.com
 **개선 항목**: SEO 최적화 (robots.txt 동적 생성)
 
 ---
+
+### 22. favicon 설정 (app/icon.svg)
+**완료 시간**: 2025-10-16
+**핵심 요약**: 메타데이터에 icon.svg 명시적으로 추가하여 favicon 설정 완료
+
+#### 🎨 favicon 설정
+**상세 내용**:
+1. **app/layout.tsx 메타데이터에 icons 속성 추가**:
+   - `icons: { icon: '/icon.svg' }` 추가
+   - 기존 `app/icon.svg` 파일 활용
+   - Next.js 15 메타데이터 규칙 준수
+
+**기대 효과**:
+- ✅ 브라우저 탭에 브랜드 아이콘 표시
+- ✅ 북마크 추가 시 아이콘 표시
+- ✅ PWA manifest에서 사용 가능
+
+**파일**:
+- `app/layout.tsx:10-12` (icons 속성 추가)
+
+---
