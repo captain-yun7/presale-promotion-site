@@ -32,11 +32,7 @@ export default function AdminDashboard() {
 
   // 통계 데이터 로드
   useEffect(() => {
-    fetch("/api/admin/consultations", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "stats" }),
-    })
+    fetch("/api/admin/consultations/stats")
       .then((res) => res.json())
       .then((data) => setStats(data))
       .catch((err) => console.error("Stats error:", err));
