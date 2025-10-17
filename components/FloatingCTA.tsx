@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { trackEvent } from "./Analytics";
+import { getStoredUTMParams } from "@/lib/utm-tracking";
 
 export default function FloatingCTA() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +31,10 @@ export default function FloatingCTA() {
     try {
       console.log('[Floating CTA] 상담 신청 시작:', { name: formData.name, phone: formData.phone });
 
+      // UTM 파라미터에서 유입 경로 가져오기
+      const utmParams = getStoredUTMParams();
+      const source = utmParams?.utm_source || 'website';
+
       const response = await fetch('/api/consultations', {
         method: 'POST',
         headers: {
@@ -38,7 +43,7 @@ export default function FloatingCTA() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          source: 'floating-cta',
+          source: source,
           project: '염창역더채움',
         }),
       });

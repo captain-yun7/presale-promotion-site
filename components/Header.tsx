@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getStoredUTMParams } from "@/lib/utm-tracking";
 
 export default function Header({ forceScrolled = false }: { forceScrolled?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(forceScrolled);
@@ -31,6 +32,10 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
     setIsSubmitting(true);
 
     try {
+      // UTM 파라미터에서 유입 경로 가져오기
+      const utmParams = getStoredUTMParams();
+      const source = utmParams?.utm_source || 'website';
+
       const response = await fetch('/api/consultations', {
         method: 'POST',
         headers: {
@@ -39,7 +44,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          source: 'header-modal',
+          source: source,
           project: '염창역더채움',
         }),
       });
