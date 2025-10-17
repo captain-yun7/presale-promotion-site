@@ -64,7 +64,7 @@ export default function HeroSection() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                투룸값에 쓰리룸 산다!
+                스마일분양 | 투룸값에 쓰리룸 산다!
               </motion.p>
 
               <motion.h1

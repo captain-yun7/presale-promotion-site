@@ -5,6 +5,9 @@ export default function Footer() {
         {/* Company Info */}
         <div className="border-t border-gray-800 pt-8">
           <div className="text-sm text-gray-500 space-y-2">
+            <p className="font-semibold text-gray-400">
+              제공: 스마일분양 (smilebunyang.com)
+            </p>
             <p>
               시행사: 더채움 | 대행사: 태성계발
             </p>

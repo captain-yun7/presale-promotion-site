@@ -55,7 +55,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
         throw new Error(data.error || '상담 신청에 실패했습니다.');
       }
 
-      alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n담당자가 빠른 시일 내에 연락드리겠습니다.`);
+      alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n\n스마일분양 담당자가 빠른 시일 내에 연락드리겠습니다.`);
       setFormData({
         name: "",
         phone: "",
@@ -105,16 +105,21 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
       <div className="container-custom">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link href="/yeomchang-thechaeum" className="flex items-center cursor-pointer">
-            <div className={`${isScrolled ? 'bg-primary-600 px-2 py-1 md:px-4 md:py-2 rounded-lg' : ''}`}>
-              <Image
-                src="/thechaeum-logo.png"
-                alt="염창역 더채움"
-                width={216}
-                height={60}
-                className="h-8 md:h-14 w-auto"
-                priority
-              />
+          <Link href="/yeomchang-thechaeum" className="flex items-center gap-2 md:gap-3 cursor-pointer">
+            <div className="flex flex-col items-start">
+              <span className={`text-xs md:text-sm font-bold ${isScrolled ? 'text-primary-600' : 'text-luxury-gold'}`}>
+                스마일분양
+              </span>
+              <div className={`${isScrolled ? 'bg-primary-600 px-2 py-1 md:px-4 md:py-2 rounded-lg' : ''}`}>
+                <Image
+                  src="/thechaeum-logo.png"
+                  alt="염창역 더채움"
+                  width={216}
+                  height={60}
+                  className="h-6 md:h-12 w-auto"
+                  priority
+                />
+              </div>
             </div>
           </Link>
 

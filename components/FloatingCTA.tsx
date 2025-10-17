@@ -65,7 +65,7 @@ export default function FloatingCTA() {
       }
 
       console.log('[Floating CTA] ✅ 상담 신청 성공');
-      alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n담당자가 빠른 시일 내에 연락드리겠습니다.`);
+      alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n\n스마일분양 담당자가 빠른 시일 내에 연락드리겠습니다.`);
 
       // Track consultation event
       trackEvent.consultation("플로팅폼");
