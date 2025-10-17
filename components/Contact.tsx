@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { getStoredUTMParams } from "@/lib/utm-tracking";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -29,6 +30,10 @@ export default function Contact() {
     try {
       console.log('[Contact Form] 상담 신청 시작:', { name: formData.name, phone: formData.phone });
 
+      // UTM 파라미터에서 유입 경로 가져오기
+      const utmParams = getStoredUTMParams();
+      const source = utmParams?.utm_source || 'website';
+
       const response = await fetch('/api/consultations', {
         method: 'POST',
         headers: {
@@ -37,7 +42,7 @@ export default function Contact() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          source: 'contact-form',
+          source: source,
           project: '염창역더채움',
         }),
       });

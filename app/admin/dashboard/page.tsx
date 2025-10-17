@@ -69,7 +69,7 @@ export default function AdminDashboard() {
 
   const exportToCSV = () => {
     const csv = [
-      ["번호", "이름", "전화번호", "분양출처", "출처", "신청일시"],
+      ["번호", "이름", "전화번호", "분양출처", "유입 경로", "신청일시"],
       ...consultations.map((item, index) => [
         index + 1,
         item.name,
@@ -128,7 +128,7 @@ export default function AdminDashboard() {
               </div>
             </div>
             <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="text-sm font-medium text-gray-500 mb-2">출처별 통계</h3>
+              <h3 className="text-sm font-medium text-gray-500 mb-2">유입 경로별 통계</h3>
               <div className="text-sm space-y-1 mt-2">
                 {Object.entries(stats.sourceCounts).map(([source, count]) => (
                   <div key={source} className="flex justify-between">
@@ -164,9 +164,11 @@ export default function AdminDashboard() {
               onChange={(e) => setSourceFilter(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="">모든 출처</option>
-              <option value="contact-form">상담 신청 폼</option>
-              <option value="header-modal">헤더 모달</option>
+              <option value="">모든 유입 경로</option>
+              <option value="daangn">당근</option>
+              <option value="naver">네이버</option>
+              <option value="kakao">카카오</option>
+              <option value="website">직접 방문</option>
             </select>
             <button
               onClick={exportToCSV}
@@ -195,7 +197,7 @@ export default function AdminDashboard() {
                   분양출처
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  출처
+                  유입 경로
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   신청일시
