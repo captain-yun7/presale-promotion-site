@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Script from "next/script";
 
 export default function LandingPage() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ export default function LandingPage() {
     privacyAgree: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const mapRef = useRef<any>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,11 +75,80 @@ export default function LandingPage() {
     }));
   };
 
-  return (
-    <div className="min-h-screen bg-gray-100">
+  // 네이버 지도 초기화
+  useEffect(() => {
+    const initMap = () => {
+      if (!window.naver || !window.naver.maps) {
+        setTimeout(initMap, 100);
+        return;
+      }
 
-      {/* 메인 컨텐츠 */}
-      <div className="w-full max-w-md mx-auto bg-white min-h-screen">
+      try {
+        const projectLocation = { lat: 37.5480, lng: 126.8755 };
+
+        const mapOptions = {
+          center: new window.naver.maps.LatLng(projectLocation.lat, projectLocation.lng),
+          zoom: 16,
+          zoomControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          logoControl: false,
+          mapDataControl: false,
+        };
+
+        const map = new window.naver.maps.Map('landing-map', mapOptions);
+        mapRef.current = map;
+
+        // 마커 추가
+        new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(projectLocation.lat, projectLocation.lng),
+          map: map,
+          title: "염창역 더채움",
+          icon: {
+            content: `
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                <div style="
+                  background: white;
+                  color: #f39e41;
+                  padding: 6px 12px;
+                  border-radius: 8px;
+                  font-weight: bold;
+                  font-size: 13px;
+                  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                  white-space: nowrap;
+                  border: 2px solid #f39e41;
+                ">
+                  염창역 더채움
+                </div>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#f39e41" stroke="white" stroke-width="2"/>
+                  <circle cx="12" cy="9" r="2.5" fill="white"/>
+                </svg>
+              </div>
+            `,
+            anchor: new window.naver.maps.Point(16, 48),
+          },
+        });
+
+        setIsMapLoaded(true);
+      } catch (error) {
+        console.error('네이버맵 초기화 실패:', error);
+      }
+    };
+
+    initMap();
+  }, []);
+
+  return (
+    <>
+      <Script
+        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}`}
+        strategy="afterInteractive"
+      />
+
+      <div className="min-h-screen bg-gray-100">
+        {/* 메인 컨텐츠 */}
+        <div className="w-full max-w-md mx-auto bg-white min-h-screen">
 
         {/* Hero Section - 대형 배경 이미지 */}
         <div className="relative min-h-[70vh] flex flex-col justify-center items-center px-6 py-16">
@@ -115,7 +187,10 @@ export default function LandingPage() {
 
             <div className="mb-12 px-4">
               <p className="text-base md:text-lg leading-relaxed text-white/90">
-                <span className="font-bold text-white">9호선 급행</span> 염창역 도보 3분 · <span className="font-bold text-white">한강</span> 5분 거리
+                <span className="font-bold text-white">9호선 급행</span> 염창역 도보 3분
+              </p>
+              <p className="text-base md:text-lg leading-relaxed text-white/90">
+                <span className="font-bold text-white">한강공원</span> 5분 거리
               </p>
               <p className="text-base md:text-lg leading-relaxed text-white/90">
                 <span className="font-bold text-white">신혼부부</span> 실거주에 최적화된 공간
@@ -174,9 +249,9 @@ export default function LandingPage() {
             <div className="mb-10">
               <h3 className="text-base text-[#707070] mb-3 font-medium">문의전화</h3>
               <div className="border-t border-black mb-3"></div>
-              <a href="tel:1666-0952" className="text-lg font-bold text-[#f39e41] hover:text-[#e38d35] transition-colors">
-                1666-0952
-              </a>
+              <p className="text-lg font-bold text-black">
+                스마일분양 / <a href="tel:1666-0952" className="text-[#f39e41] hover:text-[#e38d35] transition-colors">1666-0952</a>
+              </p>
             </div>
           </div>
         </div>
@@ -283,7 +358,7 @@ export default function LandingPage() {
         </div>
 
         {/* 상담 신청 폼 */}
-        <div className="px-6 py-16 bg-gray-50 mb-20">
+        <div className="px-6 py-8 bg-gray-50 mb-10">
           <div className="bg-white p-8 shadow-lg border border-gray-200">
             <div className="text-center mb-8">
               <div className="inline-block bg-[#f39e41] text-white px-4 py-1 text-xs font-bold mb-4 uppercase tracking-wider">
@@ -351,7 +426,92 @@ export default function LandingPage() {
             </form>
           </div>
         </div>
+
+        {/* 홍보관 오시는 길 */}
+        <div className="bg-white px-6 py-8">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-black mb-2">홍보관 오시는 길</h2>
+            <p className="text-sm text-[#707070]">방문 상담을 원하시면 언제든지 찾아오세요</p>
+          </div>
+
+          <div className="mb-6 space-y-4">
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-[#f39e41] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+              </svg>
+              <div>
+                <h3 className="font-bold text-black mb-1 text-sm">주소</h3>
+                <p className="text-sm text-[#707070]">서울특별시 강서구 염창동262-5</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-[#f39e41] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <h3 className="font-bold text-black mb-1 text-sm">운영시간</h3>
+                <p className="text-sm text-[#707070]">평일·주말 09:00 - 20:00</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-[#f39e41] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+              </svg>
+              <div>
+                <h3 className="font-bold text-black mb-1 text-sm">대중교통</h3>
+                <p className="text-sm text-[#707070]">9호선 염창역 1번 출구 도보 3분</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative bg-gray-200 rounded-lg overflow-hidden" style={{ height: '250px' }}>
+            <div id="landing-map" className="w-full h-full" />
+
+            {!isMapLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#f39e41] mx-auto mb-2"></div>
+                  <p className="text-sm text-[#707070]">지도를 불러오는 중...</p>
+                </div>
+              </div>
+            )}
+
+            {isMapLoaded && (
+              <a
+                href="https://map.naver.com/p/search/서울특별시%20강서구%20염창동262-5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-3 right-3 bg-white px-3 py-2 rounded-lg shadow-lg text-xs font-medium text-[#f39e41] hover:bg-gray-50 transition-colors flex items-center gap-1"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+                길찾기
+              </a>
+            )}
+          </div>
+        </div>
+
+        {/* 푸터 */}
+        <footer className="bg-[#2c2c2c] px-6 py-8 mb-20 text-center">
+          <div className="mb-4">
+            <h3 className="text-white font-bold text-base mb-2">염창역 더채움</h3>
+            <p className="text-white/60 text-xs mb-1">서울특별시 강서구 염창동262-5</p>
+            <p className="text-white/60 text-xs">스마일분양 / 문의: 1666-0952</p>
+          </div>
+
+          <div className="border-t border-white/20 pt-4 mt-4">
+            <p className="text-white/40 text-xs">
+              © 2025 스마일분양 / 염창역 더채움
+            </p>
+          </div>
+        </footer>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
