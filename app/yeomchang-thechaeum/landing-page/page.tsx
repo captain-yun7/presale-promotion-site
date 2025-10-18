@@ -203,7 +203,7 @@ export default function LandingPage() {
             {/* CTA 버튼 */}
             <a
               href="tel:1666-0952"
-              className="inline-block w-full max-w-md bg-[#f39e41] text-white py-5 px-8 text-lg font-bold hover:bg-[#e38d35] transition-all shadow-2xl rounded-sm"
+              className="inline-block w-full max-w-md bg-[#f39e41] text-white py-5 px-8 text-lg font-bold hover:bg-[#e38d35] transition-all shadow-2xl rounded-tl-[2rem] rounded-br-[2rem]"
             >
               무료 상담 신청하기
             </a>
