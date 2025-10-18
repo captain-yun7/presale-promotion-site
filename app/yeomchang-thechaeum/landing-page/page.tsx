@@ -73,13 +73,13 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-100">
 
       {/* 메인 컨텐츠 */}
-      <div className="max-w-[480px] mx-auto bg-white min-h-screen">
+      <div className="w-full max-w-md mx-auto bg-white min-h-screen">
 
         {/* Hero Section - 대형 배경 이미지 */}
-        <div className="relative min-h-screen flex flex-col justify-center items-center px-6 py-20">
+        <div className="relative min-h-[70vh] flex flex-col justify-center items-center px-6 py-16">
           {/* 배경 이미지 */}
           <div className="absolute inset-0 z-0">
             <Image
@@ -109,14 +109,21 @@ export default function LandingPage() {
             </div>
 
             {/* 메인 타이틀 */}
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight bg-gradient-to-r from-white via-white to-[#f39e41] bg-clip-text text-transparent">
               염창역 더채움
             </h1>
 
-            <p className="text-base md:text-lg leading-relaxed mb-12 text-white/90 px-4">
-              염창역 도보 3분 · 한강공원 5분 거리의 프리미엄 아파트<br/>
-              신혼부부 실거주에 최적화된 공간, 투룸 가격으로 쓰리룸의 넓은 공간을 누리세요
-            </p>
+            <div className="mb-12 px-4">
+              <p className="text-base md:text-lg leading-relaxed text-white/90">
+                <span className="font-bold text-white">9호선 급행</span> 염창역 도보 3분 · <span className="font-bold text-white">한강</span> 5분 거리
+              </p>
+              <p className="text-base md:text-lg leading-relaxed text-white/90">
+                <span className="font-bold text-white">신혼부부</span> 실거주에 최적화된 공간
+              </p>
+              <p className="text-base md:text-lg leading-relaxed text-white/90">
+                <span className="font-bold text-white">투룸 가격</span>으로 <span className="font-bold text-white">쓰리룸</span>의 넓은 공간을 누리세요
+              </p>
+            </div>
 
             {/* CTA 버튼 */}
             <a
@@ -125,64 +132,144 @@ export default function LandingPage() {
             >
               무료 상담 신청하기
             </a>
-
-            {/* 하단 작은 안내 문구 */}
-            <p className="text-xs text-white/70 mt-6">
-              * 상기 CG 및 일러스트, 이미지는 실제와 차이가 있습니다.
-            </p>
           </div>
         </div>
 
         {/* OVERVIEW 섹션 */}
-        <div className="bg-white px-6 py-16">
+        <div className="bg-white px-6 py-16 pb-6">
           <div className="mb-12">
             <h2 className="text-[#f39e41] text-sm font-bold mb-4 uppercase tracking-wider">OVERVIEW</h2>
 
             {/* 대지위치 */}
             <div className="mb-10">
               <h3 className="text-base text-[#707070] mb-3 font-medium">대지위치</h3>
+              <div className="border-t border-black mb-3"></div>
               <p className="text-lg font-bold text-black">
-                서울특별시 강서구 염창동 240-10
+                서울특별시 강서구 염창동262-5
               </p>
             </div>
 
             {/* 건축규모 */}
             <div className="mb-10">
               <h3 className="text-base text-[#707070] mb-3 font-medium">건축규모</h3>
+              <div className="border-t border-black mb-3"></div>
               <p className="text-lg font-bold text-black">
-                지하5층, 지상18층 4개동
+                지하1층, 지상20층 / 54.15m
               </p>
             </div>
 
-            {/* 세대안내 */}
+            {/* 타입안내 */}
             <div className="mb-10">
-              <h3 className="text-base text-[#707070] mb-3 font-medium">세대안내</h3>
+              <h3 className="text-base text-[#707070] mb-3 font-medium">타입안내</h3>
+              <div className="border-t border-black mb-3"></div>
               <p className="text-lg font-bold text-black mb-2">
-                총 330세대
+                총 38세대
               </p>
               <p className="text-sm text-[#707070]">
-                총 330세대, 59A-84세대/59B-112세대/84A-84세대/84B-50세대
+                61㎡A / 61㎡B / 61㎡C / 61㎡D
               </p>
             </div>
 
-            {/* 시공예정사 */}
+            {/* 문의전화 */}
             <div className="mb-10">
-              <h3 className="text-base text-[#707070] mb-3 font-medium">시공예정사</h3>
-              <p className="text-lg font-bold text-black">
-                (주)더채움건설
-              </p>
+              <h3 className="text-base text-[#707070] mb-3 font-medium">문의전화</h3>
+              <div className="border-t border-black mb-3"></div>
+              <a href="tel:1666-0952" className="text-lg font-bold text-[#f39e41] hover:text-[#e38d35] transition-colors">
+                1666-0952
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* 이런 분께 추천드려요 섹션 */}
+        <div className="relative px-6 py-16 overflow-hidden">
+          {/* 배경 이미지 */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/images/yeomchang-thechaeum-unit-interior-02.jpg"
+              alt="배경"
+              fill
+              className="object-cover"
+            />
+            {/* 어두운 오버레이 */}
+            <div className="absolute inset-0 bg-black/60"></div>
+          </div>
+
+          <div className="relative z-10">
+            <div className="text-center mb-10">
+              <p className="text-sm text-white/70 mb-2">신혼집 자체로 준비된 최적 공간</p>
+              <h2 className="text-2xl font-bold text-white mb-2">이런 분께 추천드려요</h2>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="border border-white/30 p-6 text-center bg-black/20 backdrop-blur-sm">
+                {/* 지하철 아이콘 SVG */}
+                <div className="flex justify-center mb-4">
+                  <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2l2-2h4l2 2h2v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm6 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1-7h-5V6h5v4z"/>
+                  </svg>
+                </div>
+                <h3 className="text-white font-bold mb-2 text-base">9호선 급행</h3>
+                <p className="text-xs text-white/70 leading-relaxed">
+                  강남 · 여의도<br/>
+                  빠른 출퇴근
+                </p>
+              </div>
+
+              <div className="border border-white/30 p-6 text-center bg-black/20 backdrop-blur-sm">
+                {/* 위치/맵 핀 아이콘 SVG */}
+                <div className="flex justify-center mb-4">
+                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-white font-bold mb-2 text-base">한강 5분</h3>
+                <p className="text-xs text-white/70 leading-relaxed">
+                  자연과 함께<br/>
+                  힐링 라이프
+                </p>
+              </div>
+
+              <div className="border border-white/30 p-6 text-center bg-black/20 backdrop-blur-sm">
+                {/* 하트/커플 아이콘 SVG */}
+                <div className="flex justify-center mb-4">
+                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                  </svg>
+                </div>
+                <h3 className="text-white font-bold mb-2 text-base">신혼부부</h3>
+                <p className="text-xs text-white/70 leading-relaxed">
+                  첫 집 마련<br/>
+                  실거주 최적
+                </p>
+              </div>
+
+              <div className="border border-white/30 p-6 text-center bg-black/20 backdrop-blur-sm">
+                {/* 집/건물 아이콘 SVG */}
+                <div className="flex justify-center mb-4">
+                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                  </svg>
+                </div>
+                <h3 className="text-white font-bold mb-2 text-base">가성비</h3>
+                <p className="text-xs text-white/70 leading-relaxed">
+                  투룸 가격<br/>
+                  쓰리룸 공간
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* 플로팅 상담 버튼 */}
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#f39e41] shadow-2xl max-w-[480px] mx-auto">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#f39e41] shadow-2xl max-w-md mx-auto">
           <div className="flex items-center justify-center gap-2 py-4 px-6">
             <a
               href="tel:1666-0952"
               className="flex-1 bg-white text-[#f39e41] py-4 text-center font-bold text-base hover:bg-gray-100 transition-colors"
             >
-              📞 전화 상담
+              📞 1666-0952
             </a>
             <a
               href="https://open.kakao.com/o/s1Cc83Wh"
