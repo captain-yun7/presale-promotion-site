@@ -13,6 +13,7 @@ export default function LandingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const mapRef = useRef<any>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,6 +74,10 @@ export default function LandingPage() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+  };
+
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   // 네이버 지도 초기화
@@ -342,23 +347,33 @@ export default function LandingPage() {
           <div className="flex items-center justify-center gap-2 py-4 px-6">
             <a
               href="tel:1666-0952"
-              className="flex-1 bg-white text-[#f39e41] py-4 text-center font-bold text-base hover:bg-gray-100 transition-colors"
+              className="flex-1 bg-white text-[#f39e41] py-4 text-center font-bold text-base hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
             >
-              📞 1666-0952
+              <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+              </svg>
+              1666-0952
             </a>
             <a
               href="https://open.kakao.com/o/s1Cc83Wh"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 bg-[#FEE500] text-[#3C1E1E] py-4 text-center font-bold text-base hover:bg-[#fdd700] transition-colors"
+              className="flex-1 bg-[#FEE500] text-[#3C1E1E] py-4 text-center font-bold text-base hover:bg-[#fdd700] transition-colors flex items-center justify-center gap-2"
             >
-              💬 카톡 상담
+              <Image
+                src="/KakaoTalk_logo.svg.png"
+                alt="카카오톡"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
+              카톡 상담
             </a>
           </div>
         </div>
 
         {/* 상담 신청 폼 */}
-        <div className="px-6 py-8 bg-gray-50 mb-10">
+        <div ref={formRef} className="px-6 py-8 bg-gray-50 mb-10">
           <div className="bg-white p-8 shadow-lg border border-gray-200">
             <div className="text-center mb-8">
               <div className="inline-block bg-[#f39e41] text-white px-4 py-1 text-xs font-bold mb-4 uppercase tracking-wider">
