@@ -89,7 +89,7 @@ export default function LandingPage() {
       }
 
       try {
-        const projectLocation = { lat: 37.5480, lng: 126.8755 };
+        const projectLocation = { lat: 37.5487, lng: 126.8752 };
 
         const mapOptions = {
           center: new window.naver.maps.LatLng(projectLocation.lat, projectLocation.lng),
@@ -231,7 +231,7 @@ export default function LandingPage() {
               <h3 className="text-base text-[#707070] mb-3 font-medium">대지위치</h3>
               <div className="border-t border-black mb-3"></div>
               <p className="text-lg font-bold text-black">
-                서울특별시 강서구 염창동262-5
+                서울특별시 강서구 염창동 262-5
               </p>
             </div>
 
@@ -261,7 +261,7 @@ export default function LandingPage() {
               <h3 className="text-base text-[#707070] mb-3 font-medium">문의전화</h3>
               <div className="border-t border-black mb-3"></div>
               <p className="text-lg font-bold text-black">
-                스마일분양 / <a href="tel:1666-0952" className="text-[#f39e41] hover:text-[#e38d35] transition-colors">1666-0952</a>
+                대표문의 / <a href="tel:1666-0952" className="text-[#f39e41] hover:text-[#e38d35] transition-colors">1666-0952</a>
               </p>
             </div>
           </div>
@@ -361,7 +361,7 @@ export default function LandingPage() {
               1666-0952
             </a>
             <a
-              href="https://open.kakao.com/o/s1Cc83Wh"
+              href="https://open.kakao.com/o/sXGXbTXh"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-[#FEE500] text-[#3C1E1E] py-4 text-center font-bold text-base hover:bg-[#fdd700] transition-colors flex items-center justify-center gap-2"
@@ -463,7 +463,7 @@ export default function LandingPage() {
               </svg>
               <div>
                 <h3 className="font-bold text-black mb-1 text-sm">주소</h3>
-                <p className="text-sm text-[#707070]">서울특별시 강서구 염창동262-5</p>
+                <p className="text-sm text-[#707070]">서울특별시 강서구 염창동 262-5</p>
               </div>
             </div>
 
@@ -473,7 +473,7 @@ export default function LandingPage() {
               </svg>
               <div>
                 <h3 className="font-bold text-black mb-1 text-sm">운영시간</h3>
-                <p className="text-sm text-[#707070]">평일·주말 09:00 - 20:00</p>
+                <p className="text-sm text-[#707070]">평일·주말 09:00 - 18:00</p>
               </div>
             </div>
 
@@ -521,7 +521,7 @@ export default function LandingPage() {
         <footer className="bg-[#2c2c2c] px-6 py-8 mb-20 text-center">
           <div className="mb-4">
             <h3 className="text-white font-bold text-base mb-2">염창역 더채움</h3>
-            <p className="text-white/60 text-xs mb-1">서울특별시 강서구 염창동262-5</p>
+            <p className="text-white/60 text-xs mb-1">서울특별시 강서구 염창동 262-5</p>
             <p className="text-white/60 text-xs">스마일분양 / 문의: 1666-0952</p>
           </div>
 

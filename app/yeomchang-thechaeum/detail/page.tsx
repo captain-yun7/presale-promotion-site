@@ -31,7 +31,7 @@ export default function Home() {
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "37.5475",
+      "latitude": "37.5487",
       "longitude": "126.8752"
     },
     "image": "https://smilebunyang.com/images/yeomchang-thechaeum-exterior-view.jpg",

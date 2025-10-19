@@ -88,7 +88,7 @@ export default function Contact() {
   };
 
   const handleKakaoContact = () => {
-    window.open('https://open.kakao.com/o/s1Cc83Wh', '_blank');
+    window.open('https://open.kakao.com/o/sXGXbTXh', '_blank');
   };
 
   return (

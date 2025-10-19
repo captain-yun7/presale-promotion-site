@@ -150,7 +150,7 @@ export default function Location() {
     .flatMap(cat => cat.items.map(item => ({ ...item, categoryColor: cat.color, categoryIcon: cat.icon })));
 
   // 실제 분양 위치 - 서울시 강서구 염창동 262-5
-  const projectLocation = { lat: 37.5475, lng: 126.8752 };
+  const projectLocation = { lat: 37.5487, lng: 126.8752 };
 
   // 지도 초기화
   const initializeMap = useCallback(() => {

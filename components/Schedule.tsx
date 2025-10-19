@@ -93,7 +93,7 @@ export default function Schedule() {
             </a>
 
             <a
-              href="https://open.kakao.com/o/s1Cc83Wh"
+              href="https://open.kakao.com/o/sXGXbTXh"
               target="_blank"
               rel="noopener noreferrer"
               className="border-2 border-gray-200 rounded-2xl p-8 hover:bg-luxury-cream transition-all transform hover:scale-105"

@@ -360,7 +360,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
 
           <div className="mt-4 space-y-2">
             <a
-              href="https://open.kakao.com/o/s1Cc83Wh"
+              href="https://open.kakao.com/o/sXGXbTXh"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-3 bg-[#FEE500] hover:bg-[#FDD835] text-[#3C1E1E] rounded-xl transition-colors font-bold text-sm flex items-center justify-center gap-2"
