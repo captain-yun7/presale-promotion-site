@@ -8,6 +8,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    message: "",
     privacyAgree: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,6 +43,7 @@ export default function Contact() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
+          message: formData.message,
           source: source,
           project: '염창역더채움',
         }),
@@ -68,6 +70,7 @@ export default function Contact() {
       setFormData({
         name: "",
         phone: "",
+        message: "",
         privacyAgree: false,
       });
     } catch (error) {
@@ -79,8 +82,9 @@ export default function Contact() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = 'checked' in e.target ? e.target.checked : false;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
@@ -155,6 +159,21 @@ export default function Contact() {
                   placeholder="전화번호를 입력해주세요 (숫자만)"
                   required
                   className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-base"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                  문의내용
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="문의하실 내용을 입력해주세요 (선택사항)"
+                  rows={5}
+                  className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-base resize-none"
                 />
               </div>
 

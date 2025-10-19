@@ -8,6 +8,7 @@ export default function LandingPage() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    message: "",
     privacyAgree: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,6 +40,7 @@ export default function LandingPage() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
+          message: formData.message,
           source: 'landing-page',
           project: '염창역더채움',
         }),
@@ -58,6 +60,7 @@ export default function LandingPage() {
       setFormData({
         name: "",
         phone: "",
+        message: "",
         privacyAgree: false,
       });
     } catch (error) {
@@ -68,8 +71,9 @@ export default function LandingPage() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = 'checked' in e.target ? e.target.checked : false;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
@@ -415,6 +419,17 @@ export default function LandingPage() {
                   placeholder="연락처 (- 없이 입력)"
                   required
                   className="w-full px-5 py-4 bg-white border-2 border-gray-300 text-black placeholder:text-[#989898] focus:outline-none focus:border-[#f39e41] transition-all"
+                />
+              </div>
+
+              <div>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="문의내용을 입력해주세요 (선택사항)"
+                  rows={4}
+                  className="w-full px-5 py-4 bg-white border-2 border-gray-300 text-black placeholder:text-[#989898] focus:outline-none focus:border-[#f39e41] transition-all resize-none"
                 />
               </div>
 

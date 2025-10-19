@@ -12,6 +12,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    message: "",
     privacyAgree: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,6 +45,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
+          message: formData.message,
           source: source,
           project: '염창역더채움',
         }),
@@ -59,6 +61,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
       setFormData({
         name: "",
         phone: "",
+        message: "",
         privacyAgree: false,
       });
       setIsConsultOpen(false);
@@ -70,8 +73,9 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = 'checked' in e.target ? e.target.checked : false;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
@@ -329,6 +333,15 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
               placeholder="전화번호 (숫자만 입력)"
               required
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+            />
+
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="문의내용을 입력해주세요 (선택사항)"
+              rows={4}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm resize-none"
             />
 
             <div className="flex items-start gap-2 py-2">

@@ -4,9 +4,9 @@ import { submitConsultation } from '@/lib/supabase';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, phone, source, project } = body;
+    const { name, phone, message, source, project } = body;
 
-    console.log('[Consultation API] 상담 신청 요청 받음:', { name, phone, source, project });
+    console.log('[Consultation API] 상담 신청 요청 받음:', { name, phone, message, source, project });
 
     // Validation
     if (!name || !phone) {
@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     const result = await submitConsultation({
       name,
       phone,
+      message,
       source: source || 'website',
       project: project || '염창역더채움',
     });

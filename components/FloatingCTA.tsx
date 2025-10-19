@@ -9,6 +9,7 @@ export default function FloatingCTA() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    message: "",
     privacyAgree: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,6 +44,7 @@ export default function FloatingCTA() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
+          message: formData.message,
           source: source,
           project: '염창역더채움',
         }),
@@ -74,6 +76,7 @@ export default function FloatingCTA() {
       setFormData({
         name: "",
         phone: "",
+        message: "",
         privacyAgree: false,
       });
       setIsOpen(false);
@@ -86,8 +89,9 @@ export default function FloatingCTA() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = 'checked' in e.target ? e.target.checked : false;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
@@ -170,6 +174,17 @@ export default function FloatingCTA() {
                 />
               </div>
 
+              <div>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="문의내용을 입력해주세요 (선택사항)"
+                  rows={4}
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors resize-none"
+                />
+              </div>
+
               <div className="flex items-start gap-2 py-2">
                 <input
                   type="checkbox"
@@ -211,7 +226,7 @@ export default function FloatingCTA() {
         <div
           className={`
             bg-white shadow-2xl transition-all duration-300 ease-in-out overflow-hidden
-            ${isOpen ? 'h-[380px]' : 'h-0'}
+            ${isOpen ? 'h-[500px]' : 'h-0'}
           `}
         >
           <div className="p-6 h-full overflow-y-auto">
@@ -240,6 +255,17 @@ export default function FloatingCTA() {
                   placeholder="전화번호 (숫자만 입력)"
                   required
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+                />
+              </div>
+
+              <div>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="문의내용을 입력해주세요 (선택사항)"
+                  rows={3}
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm resize-none"
                 />
               </div>
 
