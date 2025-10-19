@@ -7,6 +7,7 @@ interface Consultation {
   id: string;
   name: string;
   phone: string;
+  message?: string;
   source: string;
   project: string;
   created_at: string;
@@ -69,11 +70,12 @@ export default function AdminDashboard() {
 
   const exportToCSV = () => {
     const csv = [
-      ["번호", "이름", "전화번호", "분양출처", "유입 경로", "신청일시"],
+      ["번호", "이름", "전화번호", "문의내용", "분양출처", "유입 경로", "신청일시"],
       ...consultations.map((item, index) => [
         index + 1,
         item.name,
         item.phone,
+        item.message || '-',
         item.project || '염창역더채움',
         item.source,
         new Date(item.created_at).toLocaleString("ko-KR"),
@@ -92,12 +94,12 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">관리자 대시보드</h1>
+      <header className="bg-white shadow sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex justify-between items-center">
+          <h1 className="text-lg sm:text-2xl font-bold text-gray-900">관리자 대시보드</h1>
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            className="px-3 py-1.5 sm:px-4 sm:py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition-colors"
           >
             로그아웃
           </button>
@@ -142,19 +144,19 @@ export default function AdminDashboard() {
         )}
 
         {/* 필터 및 검색 */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white rounded-lg shadow p-4 sm:p-6 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <input
               type="text"
               placeholder="이름 또는 전화번호 검색"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-3 sm:px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <select
               value={projectFilter}
               onChange={(e) => setProjectFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-3 sm:px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">모든 분양출처</option>
               <option value="염창역더채움">염창역더채움</option>
@@ -162,26 +164,29 @@ export default function AdminDashboard() {
             <select
               value={sourceFilter}
               onChange={(e) => setSourceFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-3 sm:px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">모든 유입 경로</option>
               <option value="daangn">당근</option>
               <option value="naver">네이버</option>
               <option value="kakao">카카오</option>
               <option value="website">직접 방문</option>
+              <option value="landing-page">랜딩페이지</option>
+              <option value="플로팅폼">플로팅폼</option>
             </select>
             <button
               onClick={exportToCSV}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              className="px-3 sm:px-4 py-2 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
             >
-              CSV 다운로드
+              📥 CSV 다운로드
             </button>
           </div>
         </div>
 
-        {/* 상담 목록 테이블 */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
+        {/* 상담 목록 - 데스크톱 테이블 */}
+        <div className="hidden lg:block bg-white rounded-lg shadow overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -192,6 +197,9 @@ export default function AdminDashboard() {
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   전화번호
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  문의내용
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   분양출처
@@ -207,13 +215,13 @@ export default function AdminDashboard() {
             <tbody className="bg-white divide-y divide-gray-200">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan={7} className="px-6 py-4 text-center text-gray-500">
                     로딩 중...
                   </td>
                 </tr>
               ) : consultations.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan={7} className="px-6 py-4 text-center text-gray-500">
                     데이터가 없습니다.
                   </td>
                 </tr>
@@ -228,6 +236,11 @@ export default function AdminDashboard() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {item.phone}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600 max-w-xs">
+                      <div className="line-clamp-2" title={item.message || '-'}>
+                        {item.message || '-'}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                       <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
@@ -247,9 +260,71 @@ export default function AdminDashboard() {
               )}
             </tbody>
           </table>
+          </div>
+        </div>
 
-          {/* 페이지네이션 */}
-          {totalPages > 1 && (
+        {/* 상담 목록 - 모바일 카드 */}
+        <div className="lg:hidden space-y-4">
+          {loading ? (
+            <div className="bg-white rounded-lg shadow p-6 text-center text-gray-500">
+              로딩 중...
+            </div>
+          ) : consultations.length === 0 ? (
+            <div className="bg-white rounded-lg shadow p-6 text-center text-gray-500">
+              데이터가 없습니다.
+            </div>
+          ) : (
+            consultations.map((item, index) => (
+              <div key={item.id} className="bg-white rounded-lg shadow p-4">
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-gray-500">
+                      #{(page - 1) * 50 + index + 1}
+                    </span>
+                    <span className="text-base font-bold text-gray-900">{item.name}</span>
+                  </div>
+                  <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
+                    {item.project || '염창역더채움'}
+                  </span>
+                </div>
+
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500 w-16">전화:</span>
+                    <a href={`tel:${item.phone}`} className="text-blue-600 font-medium">
+                      {item.phone}
+                    </a>
+                  </div>
+
+                  {item.message && (
+                    <div className="flex gap-2">
+                      <span className="text-gray-500 w-16 flex-shrink-0">문의:</span>
+                      <p className="text-gray-700 break-words">{item.message}</p>
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500 w-16">경로:</span>
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
+                      {item.source}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500 w-16">일시:</span>
+                    <span className="text-gray-600 text-xs">
+                      {new Date(item.created_at).toLocaleString("ko-KR")}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* 페이지네이션 */}
+        {totalPages > 1 && (
+          <div className="mt-6">
             <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
               <div className="flex-1 flex justify-between sm:hidden">
                 <button
@@ -294,8 +369,8 @@ export default function AdminDashboard() {
                 </div>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </main>
     </div>
   );
