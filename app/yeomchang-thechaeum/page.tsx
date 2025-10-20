@@ -536,13 +536,15 @@ export default function LandingPage() {
         <footer className="bg-[#2c2c2c] px-6 py-8 mb-20 text-center">
           <div className="mb-4">
             <h3 className="text-white font-bold text-base mb-2">염창역 더채움</h3>
-            <p className="text-white/60 text-xs mb-1">서울특별시 강서구 염창동 262-5</p>
-            <p className="text-white/60 text-xs">스마일분양 / 문의: 1666-0952</p>
+            <p className="text-white/60 text-xs mb-1">제이펙스 스튜디오(Jpex Studio)</p>
+            <p className="text-white/60 text-xs mb-1">문의: 010-2174-5072</p>
+            <p className="text-white/60 text-xs mb-1">대표: 윤지수</p>
+            <p className="text-white/60 text-xs">사업자등록번호: 560-45-01327</p>
           </div>
 
           <div className="border-t border-white/20 pt-4 mt-4">
             <p className="text-white/40 text-xs">
-              © 2025 스마일분양 / 염창역 더채움
+              COPYRIGHT 제이펙스 스튜디오(Jpex Studio). ALL RIGHTS RESERVED.
             </p>
           </div>
         </footer>
