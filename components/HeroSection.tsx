@@ -1,19 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 export default function HeroSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch((err) => {
-        console.log("Auto-play prevented:", err);
-      });
-    }
-  }, []);
 
   const scrollToNext = () => {
     const element = document.getElementById("value-proposition");
@@ -31,19 +21,16 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-screen min-h-[600px] overflow-hidden">
-      {/* Fullscreen Video Background */}
+      {/* Fullscreen Image Background */}
       <div className="absolute inset-0">
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-          onLoadedData={() => setIsVideoLoaded(true)}
-        >
-          <source src="/videos/hero-video-1.mp4" type="video/mp4" />
-        </video>
+        <Image
+          src="/images/yeomchang-thechaeum-unit-interior-03.jpg"
+          alt="염창역 더채움 거실"
+          fill
+          className="object-cover"
+          priority
+          quality={90}
+        />
 
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
