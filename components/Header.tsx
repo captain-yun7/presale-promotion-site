@@ -123,88 +123,82 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <button
-              onClick={() => scrollToSection("complex-info")}
-              className={`font-semibold text-base lg:text-lg transition-colors ${
-                isScrolled
-                  ? "text-gray-700 hover:text-primary"
-                  : "text-white hover:text-secondary"
-              }`}
-            >
-              단지정보
-            </button>
-            <button
-              onClick={() => scrollToSection("location")}
-              className={`font-semibold text-base lg:text-lg transition-colors ${
-                isScrolled
-                  ? "text-gray-700 hover:text-primary"
-                  : "text-white hover:text-secondary"
-              }`}
-            >
-              입지환경
-            </button>
-            <button
-              onClick={() => scrollToSection("unit-types")}
-              className={`font-semibold text-base lg:text-lg transition-colors ${
-                isScrolled
-                  ? "text-gray-700 hover:text-primary"
-                  : "text-white hover:text-secondary"
-              }`}
-            >
-              세대정보
-            </button>
-            <button
-              onClick={() => scrollToSection("showroom")}
-              className={`font-semibold text-base lg:text-lg transition-colors ${
-                isScrolled
-                  ? "text-gray-700 hover:text-primary"
-                  : "text-white hover:text-secondary"
-              }`}
-            >
-              오시는길
-            </button>
-            <a
-              href="/yeomchang-thechaeum/blog"
-              className={`font-semibold text-base lg:text-lg transition-colors ${
-                isScrolled
-                  ? "text-gray-700 hover:text-primary"
-                  : "text-white hover:text-secondary"
-              }`}
-            >
-              블로그
-            </a>
-            <a
-              href="tel:1666-0952"
-              className="bg-luxury-gold text-luxury-charcoal px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
-            >
+          <nav className="hidden md:flex items-center">
+            <div className="flex items-center space-x-16">
+              <button
+                onClick={() => scrollToSection("complex-info")}
+                className={`font-semibold text-base lg:text-lg transition-colors ${
+                  isScrolled
+                    ? "text-gray-700 hover:text-primary"
+                    : "text-white hover:text-secondary"
+                }`}
+              >
+                단지정보
+              </button>
+              <button
+                onClick={() => scrollToSection("location")}
+                className={`font-semibold text-base lg:text-lg transition-colors ${
+                  isScrolled
+                    ? "text-gray-700 hover:text-primary"
+                    : "text-white hover:text-secondary"
+                }`}
+              >
+                입지환경
+              </button>
+              <button
+                onClick={() => scrollToSection("unit-types")}
+                className={`font-semibold text-base lg:text-lg transition-colors ${
+                  isScrolled
+                    ? "text-gray-700 hover:text-primary"
+                    : "text-white hover:text-secondary"
+                }`}
+              >
+                세대정보
+              </button>
+              <button
+                onClick={() => scrollToSection("showroom")}
+                className={`font-semibold text-base lg:text-lg transition-colors ${
+                  isScrolled
+                    ? "text-gray-700 hover:text-primary"
+                    : "text-white hover:text-secondary"
+                }`}
+              >
+                오시는길
+              </button>
+            </div>
+            <div className="flex items-center gap-3 ml-8">
+              <a
+                href="tel:1666-0952"
+                className="bg-luxury-gold text-luxury-charcoal px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
+              >
               <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
               <span className="hidden lg:inline">1666-0952</span>
               <span className="lg:hidden">전화</span>
             </a>
-            <style jsx>{`
-              @keyframes pulse-glow {
-                0%, 100% {
-                  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-                  transform: scale(1);
+              <style jsx>{`
+                @keyframes pulse-glow {
+                  0%, 100% {
+                    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+                    transform: scale(1);
+                  }
+                  50% {
+                    box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+                    transform: scale(1.05);
+                  }
                 }
-                50% {
-                  box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
-                  transform: scale(1.05);
+                .consult-button {
+                  animation: pulse-glow 3s ease-in-out infinite;
                 }
-              }
-              .consult-button {
-                animation: pulse-glow 3s ease-in-out infinite;
-              }
-            `}</style>
-            <button
-              onClick={() => setIsConsultOpen(!isConsultOpen)}
-              className="consult-button bg-primary-600 text-white px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-primary-700 transition-all shadow-lg"
-            >
-              무료상담신청
-            </button>
+              `}</style>
+              <button
+                onClick={() => setIsConsultOpen(!isConsultOpen)}
+                className="consult-button bg-primary-600 text-white px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-primary-700 transition-all shadow-lg"
+              >
+                무료상담신청
+              </button>
+            </div>
           </nav>
 
           {/* Mobile Actions */}
@@ -271,12 +265,6 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
             >
               오시는길
             </button>
-            <a
-              href="/yeomchang-thechaeum/blog"
-              className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
-            >
-              블로그
-            </a>
             <a
               href="tel:1666-0952"
               className="block w-full text-center mt-2 bg-luxury-gold text-luxury-charcoal px-4 py-3 rounded-full font-bold text-base hover:bg-luxury-gold/90 flex items-center justify-center gap-2"

@@ -112,12 +112,6 @@ export default function FloatingCTA() {
       {/* 데스크톱 버전 - 우측 하단 고정 */}
       <div className="hidden md:flex fixed bottom-8 right-8 z-[1000] flex-col gap-3">
         <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="bg-luxury-gold text-luxury-charcoal px-6 py-4 rounded-full font-black text-base shadow-2xl hover:bg-luxury-gold/90 transition-all flex items-center gap-2 animate-pulse"
-        >
-          🔥 무료상담신청
-        </button>
-        <button
           onClick={openKakaoTalk}
           className="bg-[#FEE500] text-[#3C1E1E] px-6 py-4 rounded-full font-bold text-base shadow-xl hover:bg-[#FAE100] transition-all flex items-center gap-2"
         >

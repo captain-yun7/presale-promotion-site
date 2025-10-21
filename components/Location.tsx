@@ -170,8 +170,10 @@ export default function Location() {
         scaleControl: false,
         logoControl: false,
         mapDataControl: false,
-        minZoom: 11,
-        maxZoom: 15,
+        minZoom: 12,
+        maxZoom: 12,
+        scrollWheel: false,
+        disableDoubleClickZoom: true,
       };
 
       const map = new window.naver.maps.Map('naver-map', mapOptions);
@@ -184,15 +186,6 @@ export default function Location() {
         title: "염창역 더채움 (분양위치)",
         icon: {
           content: `
-            <style>
-              @keyframes pulse {
-                0%, 100% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(1.1); opacity: 0.8; }
-              }
-              .main-marker {
-                animation: pulse 2s ease-in-out infinite;
-              }
-            </style>
             <div style="display: flex; flex-direction: column; align-items: center;">
               <div style="
                 background: #EF4444;
@@ -207,20 +200,14 @@ export default function Location() {
               ">
                 염창역 더채움
               </div>
-              <div class="main-marker" style="
-                background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-                color: white;
-                width: 48px;
-                height: 48px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 4px 8px rgba(239,68,68,0.5), 0 0 0 2px rgba(239,68,68,0.3);
-                border: 2px solid white;
+              <div style="
+                position: relative;
+                width: 35px;
+                height: 50px;
               ">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                <svg width="35" height="50" viewBox="0 0 50 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M25 0C11.2 0 0 11.2 0 25C0 43.75 25 70 25 70C25 70 50 43.75 50 25C50 11.2 38.8 0 25 0Z" fill="#DC2626"/>
+                  <circle cx="25" cy="25" r="12" fill="white"/>
                 </svg>
               </div>
             </div>
@@ -543,92 +530,7 @@ export default function Location() {
               )}
 
 
-              {/* Zoom Controls */}
-              {isMapLoaded && (
-                <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-white rounded-lg shadow-md p-1.5 md:p-2 space-y-1 z-10">
-                  <button
-                    onClick={() => {
-                      if (mapRef.current) {
-                        mapRef.current.setZoom(mapRef.current.getZoom() + 1);
-                      }
-                    }}
-                    className="block w-8 h-8 md:w-10 md:h-10 text-base md:text-lg bg-white border border-gray-300 rounded hover:bg-gray-50 font-bold"
-                    title="확대"
-                  >
-                    +
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (mapRef.current) {
-                        mapRef.current.setZoom(mapRef.current.getZoom() - 1);
-                      }
-                    }}
-                    className="block w-8 h-8 md:w-10 md:h-10 text-base md:text-lg bg-white border border-gray-300 rounded hover:bg-gray-50 font-bold"
-                    title="축소"
-                  >
-                    -
-                  </button>
-                </div>
-              )}
             </div>
-          </motion.div>
-
-          {/* Commute Simulator */}
-          <motion.div
-            className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 rounded-3xl p-12 shadow-2xl"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="text-center mb-12">
-              <h3 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                출퇴근 시뮬레이터
-              </h3>
-              <p className="text-gray-200 text-lg">
-                주요 업무지구까지 얼마나 걸릴까요?
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-              {commuteDestinations.map((dest, index) => (
-                <motion.button
-                  key={index}
-                  onClick={() => setSelectedDestination(index)}
-                  className={`p-6 rounded-2xl font-bold transition-all ${
-                    selectedDestination === index
-                      ? "bg-luxury-gold text-luxury-charcoal shadow-xl"
-                      : "bg-white/10 text-white hover:bg-white/20"
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <div className="mb-3 text-luxury-gold">{dest.icon}</div>
-                  <div className="text-sm mb-2">{dest.name}</div>
-                  <div className="text-2xl font-bold">{dest.time}분</div>
-                </motion.button>
-              ))}
-            </div>
-
-            <motion.div
-              className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center"
-              key={selectedDestination}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <p className="text-white text-2xl mb-4">
-                <span className="text-luxury-gold font-bold text-4xl">
-                  {commuteDestinations[selectedDestination].name}
-                </span>
-                까지
-              </p>
-              <p className="text-white text-lg mb-2">평균 소요 시간</p>
-              <p className="text-luxury-gold text-7xl font-bold mb-4">
-                {commuteDestinations[selectedDestination].time}
-                <span className="text-4xl">분</span>
-              </p>
-            </motion.div>
           </motion.div>
         </div>
       </section>
