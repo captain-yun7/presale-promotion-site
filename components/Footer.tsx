@@ -6,10 +6,10 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="text-sm text-gray-500 space-y-2">
             <p className="font-semibold text-gray-400">
-              제이펙스 스튜디오(Jpex Studio)
+              Jpex Studio
             </p>
             <p>
-              문의: 010-2174-5072
+              문의: 1666-0952
             </p>
             <p>
               대표: 윤지수 | 사업자등록번호: 560-45-01327
@@ -26,7 +26,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pb-8 pt-8 text-center text-sm text-gray-500">
-          <p>COPYRIGHT 제이펙스 스튜디오(Jpex Studio). ALL RIGHTS RESERVED.</p>
+          <p>COPYRIGHT Jpex Studio. ALL RIGHTS RESERVED.</p>
         </div>
       </div>
     </footer>
