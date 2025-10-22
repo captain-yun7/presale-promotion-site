@@ -27,7 +27,7 @@ export default function Showroom() {
           </div>
 
           {/* 약도 이미지 */}
-          <div className="max-w-4xl mx-auto mb-6 md:mb-8">
+          <div className="max-w-full md:max-w-md mx-auto mb-6 md:mb-8">
             <div className="relative border-2 border-gray-200 rounded-xl md:rounded-2xl overflow-hidden bg-gray-100">
               <img
                 id="showroom-map"
@@ -44,6 +44,53 @@ export default function Showroom() {
                 }}
               />
             </div>
+          </div>
+
+          {/* 지도 앱 바로가기 */}
+          <div className="flex justify-center gap-3 md:gap-4 mb-6 md:mb-8 px-4">
+            <a
+              href="https://map.naver.com/p/search/서울특별시 강서구 염창동 262-5"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center bg-white hover:bg-gray-50 border-2 border-gray-200 w-20 h-20 md:w-24 md:h-24 rounded-2xl transition-all shadow-lg hover:shadow-xl"
+            >
+              <img
+                src="/naver-map.webp"
+                alt="네이버 지도"
+                className="w-12 h-12 md:w-14 md:h-14 mb-1 object-contain"
+              />
+              <span className="text-xs md:text-sm font-bold text-gray-700">네이버</span>
+            </a>
+
+            <a
+              href="https://map.kakao.com/link/search/서울특별시 강서구 염창동 262-5"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center bg-[#FEE500] hover:bg-[#FDD835] text-[#3C1E1E] w-20 h-20 md:w-24 md:h-24 rounded-2xl transition-all shadow-lg hover:shadow-xl"
+            >
+              <svg className="w-8 h-8 md:w-10 md:h-10 mb-1" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.8 6.7-.2 1-.6 3.7-.7 4.2 0 0 0 .3.2.4.1.1.3.1.4 0 .7-.5 4.2-2.8 4.9-3.3.5.1 1 .1 1.5.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/>
+              </svg>
+              <span className="text-xs md:text-sm font-bold">카카오</span>
+            </a>
+
+            <a
+              href="tmap://search?name=염창역 더채움&lon=126.8752&lat=37.5487"
+              onClick={(e) => {
+                // TMAP 앱이 없을 경우 웹 버전으로 리다이렉트
+                setTimeout(() => {
+                  window.location.href = "https://m.tmap.co.kr/";
+                }, 1500);
+              }}
+              className="flex flex-col items-center justify-center bg-white hover:bg-gray-50 border-2 border-gray-200 w-20 h-20 md:w-24 md:h-24 rounded-2xl transition-all shadow-lg hover:shadow-xl"
+            >
+              <img
+                src="/tmap.svg"
+                alt="TMAP"
+                className="w-12 h-12 md:w-14 md:h-14 mb-1 object-contain"
+              />
+              <span className="text-xs md:text-sm font-bold text-gray-700">TMAP</span>
+            </a>
           </div>
 
           {/* 공유 및 다운로드 버튼 */}
