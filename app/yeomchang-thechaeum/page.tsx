@@ -10,7 +10,13 @@ import Showroom from "@/components/Showroom";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
+import { Metadata } from "next";
 // import SocialProofToast from "@/components/SocialProofToast";
+
+export const metadata: Metadata = {
+  title: "염창역 더채움 분양 홈페이지",
+  description: "목동 염창역 더채움 분양. 9호선 급행 초역세권 투룸 가격에 쓰리룸! ☎1666-0952",
+};
 
 export default function Home() {
   // 구조화된 데이터 (JSON-LD) - 부동산 SEO 최적화

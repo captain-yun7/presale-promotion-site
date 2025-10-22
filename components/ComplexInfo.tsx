@@ -1,6 +1,10 @@
 "use client";
 
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
 export default function ComplexInfo() {
+  const [showAll, setShowAll] = useState(false);
   const features = [
     {
       icon: (
@@ -123,27 +127,27 @@ export default function ComplexInfo() {
       <div className="container-custom">
         {/* Section Title */}
         <div className="text-center mb-10 md:mb-16 px-4">
-          <p className="text-secondary text-sm md:text-base mb-2 md:mb-3 font-medium">Complex Information</p>
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary mb-3 md:mb-4">
+          <p className="text-secondary text-xs md:text-base mb-2 md:mb-3 font-medium">Complex Information</p>
+          <h2 className="text-xl sm:text-2xl md:text-5xl font-bold text-primary mb-3 md:mb-4">
             단지 정보
           </h2>
-          <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
+          <p className="text-gray-600 text-xs md:text-base max-w-2xl mx-auto">
             프리미엄 라이프스타일을 위한 완벽한 주거 환경을 제공합니다
           </p>
         </div>
 
         {/* Complex Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12 mx-4 md:mx-0">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-12 mx-4 md:mx-0">
           {complexData.map((item, index) => (
-            <div key={index} className="relative w-[180px] h-[180px] md:w-full md:h-auto mx-auto md:max-w-none md:pb-[100%]">
-              <div className="absolute inset-0 bg-primary-600 rounded-full shadow-lg flex flex-col items-center justify-center hover:shadow-xl transition-shadow duration-300 p-3 md:p-6">
+            <div key={index} className="relative w-full pb-[100%]">
+              <div className="absolute inset-0 bg-primary-600 rounded-full shadow-lg flex flex-col items-center justify-center hover:shadow-xl transition-shadow duration-300 p-2 md:p-6">
                 <div className="flex flex-col items-center">
-                  <div className="bg-luxury-gold text-luxury-charcoal px-3 py-1.5 md:px-4 md:py-2 rounded-full font-bold text-sm md:text-base mb-3 shadow-lg">
+                  <div className="bg-luxury-gold text-luxury-charcoal px-2 py-1 md:px-4 md:py-2 rounded-full font-bold text-xs md:text-base mb-2 md:mb-3 shadow-lg">
                     {item.label}
                   </div>
-                  <div className="w-12 h-px bg-white/40 mb-3"></div>
-                  <div className="h-16 md:h-20 flex items-start justify-center">
-                    <p className="text-white font-bold text-lg md:text-2xl leading-tight text-center px-2">{item.value}</p>
+                  <div className="w-8 md:w-12 h-px bg-white/40 mb-2 md:mb-3"></div>
+                  <div className="h-10 md:h-20 flex items-start justify-center">
+                    <p className="text-white font-bold text-xs md:text-2xl leading-tight text-center px-1 md:px-2">{item.value}</p>
                   </div>
                 </div>
               </div>
@@ -154,17 +158,71 @@ export default function ComplexInfo() {
         {/* Features Timeline */}
         <div className="relative px-4 md:px-0 max-w-5xl mx-auto">
           {/* Mobile View */}
-          <div className="lg:hidden space-y-6">
-            {features.map((feature, index) => (
-              <div key={index} className="bg-luxury-gold rounded-2xl p-6 shadow-lg">
-                <h3 className="text-xl font-bold text-primary-600 leading-tight mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-base text-gray-700 leading-relaxed font-semibold">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
+          <div className="lg:hidden">
+            <div className="space-y-4">
+              {/* 처음 3개 항목 - 항상 표시 */}
+              {features.slice(0, 3).map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  className="bg-luxury-gold rounded-2xl p-4 md:p-6 shadow-lg"
+                >
+                  <h3 className="text-base md:text-xl font-bold text-primary-600 leading-snug md:leading-tight mb-2 md:mb-3">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-gray-700 leading-relaxed font-semibold">
+                    {feature.description}
+                  </p>
+                </motion.div>
+              ))}
+
+              {/* 나머지 3개 항목 - 토글 */}
+              <AnimatePresence>
+                {showAll && features.slice(3).map((feature, index) => (
+                  <motion.div
+                    key={index + 3}
+                    initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                    animate={{ opacity: 1, height: "auto", marginTop: "1rem" }}
+                    exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="bg-luxury-gold rounded-2xl p-4 md:p-6 shadow-lg overflow-hidden"
+                  >
+                    <h3 className="text-base md:text-xl font-bold text-primary-600 leading-snug md:leading-tight mb-2 md:mb-3">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-gray-700 leading-relaxed font-semibold">
+                      {feature.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {/* 더보기 버튼 */}
+            <div className="flex justify-center mt-6">
+              <motion.button
+                onClick={() => setShowAll(!showAll)}
+                className="flex items-center gap-2 px-6 py-3 border-2 border-luxury-gold text-luxury-charcoal font-bold rounded-full hover:bg-luxury-gold transition-all shadow-md"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="text-sm md:text-base">
+                  {showAll ? "접기" : "더 많은 특징 보기"}
+                </span>
+                <motion.svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  animate={{ rotate: showAll ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </motion.svg>
+              </motion.button>
+            </div>
           </div>
 
           {/* Desktop Timeline View */}

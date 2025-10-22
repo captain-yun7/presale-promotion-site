@@ -162,18 +162,25 @@ export default function Location() {
 
     try {
       // 지도 중심 좌표 - 염창역 더채움 중심
+      // 모바일에서는 줌 레벨을 한 단계 축소 (11), 데스크탑은 12 유지
+      const isMobile = window.innerWidth < 768;
+      const zoomLevel = isMobile ? 11 : 12;
+
       const mapOptions = {
         center: new window.naver.maps.LatLng(projectLocation.lat, projectLocation.lng),
-        zoom: 12,
+        zoom: zoomLevel,
         zoomControl: false,
         mapTypeControl: false,
         scaleControl: false,
         logoControl: false,
         mapDataControl: false,
-        minZoom: 12,
-        maxZoom: 12,
+        minZoom: zoomLevel,
+        maxZoom: zoomLevel,
         scrollWheel: false,
         disableDoubleClickZoom: true,
+        draggable: false,
+        pinchZoom: false,
+        disableKineticPan: true,
       };
 
       const map = new window.naver.maps.Map('naver-map', mapOptions);

@@ -54,6 +54,7 @@ const qnaData = [
 export default function QnA() {
   const [selectedQna, setSelectedQna] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("전체");
+  const [showAllQna, setShowAllQna] = useState(false);
 
   const categories = ["전체", "분양", "입주", "시설"];
 
@@ -74,13 +75,13 @@ export default function QnA() {
           transition={{ duration: 0.8 }}
         >
           <div className="text-center mb-12">
-            <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
+            <p className="text-luxury-gold text-xs md:text-lg mb-2 md:mb-3 font-medium tracking-wide">
               FAQ
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+            <h2 className="text-xl md:text-4xl font-bold text-primary mb-3 md:mb-4">
               자주 묻는 질문
             </h2>
-            <p className="text-gray-600 text-lg mb-8">
+            <p className="text-gray-600 text-xs md:text-lg mb-6 md:mb-8">
               고객님들이 가장 궁금해하시는 내용입니다
             </p>
 
@@ -103,7 +104,8 @@ export default function QnA() {
           </div>
 
           <div className="space-y-4">
-            {filteredQna.map((item, index) => (
+            {/* 처음 3개 FAQ - 항상 표시 */}
+            {filteredQna.slice(0, 3).map((item, index) => (
               <motion.div
                 key={item.id}
                 className="border-2 border-gray-200 rounded-2xl overflow-hidden hover:border-luxury-gold transition-all"
@@ -116,23 +118,23 @@ export default function QnA() {
                   onClick={() =>
                     setSelectedQna(selectedQna === item.id ? null : item.id)
                   }
-                  className="w-full p-6 flex items-center justify-between text-left hover:bg-luxury-cream transition-colors"
+                  className="w-full p-4 md:p-6 flex items-center justify-between text-left hover:bg-luxury-cream transition-colors"
                 >
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-luxury-gold text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2">
+                      <span className="bg-luxury-gold text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-semibold">
                         Q
                       </span>
-                      <span className="text-sm bg-primary-100 text-primary-700 px-3 py-1 rounded-full">
+                      <span className="text-xs md:text-sm bg-primary-100 text-primary-700 px-2 md:px-3 py-0.5 md:py-1 rounded-full">
                         {item.category}
                       </span>
                     </div>
-                    <h4 className="text-lg font-bold text-luxury-charcoal">
+                    <h4 className="text-sm md:text-lg font-bold text-luxury-charcoal leading-snug md:leading-normal">
                       {item.question}
                     </h4>
                   </div>
                   <motion.svg
-                    className="w-6 h-6 text-luxury-gold ml-4 flex-shrink-0"
+                    className="w-5 h-5 md:w-6 md:h-6 text-luxury-gold ml-2 md:ml-4 flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -157,18 +159,111 @@ export default function QnA() {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden"
                 >
-                  <div className="p-6 bg-luxury-cream border-t-2 border-gray-200">
-                    <div className="flex items-start gap-3">
-                      <span className="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-semibold flex-shrink-0">
+                  <div className="p-4 md:p-6 bg-luxury-cream border-t-2 border-gray-200">
+                    <div className="flex items-start gap-2 md:gap-3">
+                      <span className="bg-primary-600 text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-semibold flex-shrink-0">
                         A
                       </span>
-                      <p className="text-gray-700 leading-relaxed">{item.answer}</p>
+                      <p className="text-gray-700 text-xs md:text-base leading-relaxed">{item.answer}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+
+            {/* 나머지 FAQ - 토글 */}
+            {showAllQna && filteredQna.slice(3).map((item, index) => (
+              <motion.div
+                key={item.id}
+                className="border-2 border-gray-200 rounded-2xl overflow-hidden hover:border-luxury-gold transition-all"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <button
+                  onClick={() =>
+                    setSelectedQna(selectedQna === item.id ? null : item.id)
+                  }
+                  className="w-full p-4 md:p-6 flex items-center justify-between text-left hover:bg-luxury-cream transition-colors"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2">
+                      <span className="bg-luxury-gold text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-semibold">
+                        Q
+                      </span>
+                      <span className="text-xs md:text-sm bg-primary-100 text-primary-700 px-2 md:px-3 py-0.5 md:py-1 rounded-full">
+                        {item.category}
+                      </span>
+                    </div>
+                    <h4 className="text-sm md:text-lg font-bold text-luxury-charcoal leading-snug md:leading-normal">
+                      {item.question}
+                    </h4>
+                  </div>
+                  <motion.svg
+                    className="w-5 h-5 md:w-6 md:h-6 text-luxury-gold ml-2 md:ml-4 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    animate={{ rotate: selectedQna === item.id ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </motion.svg>
+                </button>
+
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: selectedQna === item.id ? "auto" : 0,
+                    opacity: selectedQna === item.id ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <div className="p-4 md:p-6 bg-luxury-cream border-t-2 border-gray-200">
+                    <div className="flex items-start gap-2 md:gap-3">
+                      <span className="bg-primary-600 text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-semibold flex-shrink-0">
+                        A
+                      </span>
+                      <p className="text-gray-700 text-xs md:text-base leading-relaxed">{item.answer}</p>
                     </div>
                   </div>
                 </motion.div>
               </motion.div>
             ))}
           </div>
+
+          {/* 더보기 버튼 - 필터링된 항목이 3개 이상일 때만 표시 */}
+          {filteredQna.length > 3 && (
+            <div className="flex justify-center mt-6">
+              <motion.button
+                onClick={() => setShowAllQna(!showAllQna)}
+                className="flex items-center gap-2 px-6 py-3 border-2 border-luxury-gold text-luxury-charcoal font-bold rounded-full hover:bg-luxury-gold transition-all shadow-md"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="text-sm md:text-base">
+                  {showAllQna ? "접기" : "더 많은 질문 보기"}
+                </span>
+                <motion.svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  animate={{ rotate: showAllQna ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </motion.svg>
+              </motion.button>
+            </div>
+          )}
         </motion.div>
 
         {/* Timeline */}

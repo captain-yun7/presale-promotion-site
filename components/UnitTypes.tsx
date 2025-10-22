@@ -103,34 +103,36 @@ export default function UnitTypes() {
     <section id="unit-types" className="section-padding bg-white">
       <div className="container-custom">
         {/* Section Title */}
-        <div className="text-center mb-16">
-          <p className="text-luxury-gold text-lg mb-3 font-medium">투룸값에 쓰리룸 산다!</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+        <div className="text-center mb-12 md:mb-16 px-4">
+          <p className="text-luxury-gold text-xs md:text-lg mb-2 md:mb-3 font-medium">투룸값에 쓰리룸 산다!</p>
+          <h2 className="text-xl md:text-5xl font-bold text-primary mb-3 md:mb-4">
             세대 정보
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-xs md:text-lg max-w-2xl mx-auto leading-relaxed">
             파격 할인으로 안전마진 확실, 실거주와 투자 모두 최적의 쓰리룸 아파텔
           </p>
         </div>
 
         {/* Unit Type Tabs */}
-        <div className="flex justify-center mb-12 gap-2 md:gap-4 overflow-x-auto">
-          {unitTypes.map((unit, index) => (
-            <button
-              key={unit.id}
-              onClick={() => {
-                setSelectedUnit(index);
-                setSelectedImage(0);
-              }}
-              className={`px-5 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg transition-all whitespace-nowrap flex-shrink-0 ${
-                selectedUnit === index
-                  ? "bg-primary text-white shadow-lg"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              {unit.type}형
-            </button>
-          ))}
+        <div className="mb-12 overflow-x-auto scrollbar-hide">
+          <div className="flex justify-center gap-2 md:gap-4 px-4 md:px-0 min-w-max mx-auto w-fit">
+            {unitTypes.map((unit, index) => (
+              <button
+                key={unit.id}
+                onClick={() => {
+                  setSelectedUnit(index);
+                  setSelectedImage(0);
+                }}
+                className={`px-4 py-2 md:px-8 md:py-4 rounded-full font-bold text-xs md:text-lg transition-all whitespace-nowrap flex-shrink-0 ${
+                  selectedUnit === index
+                    ? "bg-primary text-white shadow-lg"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {unit.type}형
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Unit Details */}
@@ -162,46 +164,46 @@ export default function UnitTypes() {
 
           {/* Unit Information */}
           <div>
-            <div className="bg-gray-50 rounded-2xl p-8">
-              <h3 className="text-3xl font-bold text-primary mb-6">
+            <div className="bg-gray-50 rounded-2xl p-4 md:p-8">
+              <h3 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">
                 {unitTypes[selectedUnit].type}형
               </h3>
 
               {/* Specifications */}
-              <div className="space-y-3 mb-8">
-                <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-600">전용면적</span>
-                  <span className="font-bold text-primary text-lg">
+              <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
+                <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-200">
+                  <span className="text-gray-600 text-xs md:text-base">전용면적</span>
+                  <span className="font-bold text-primary text-sm md:text-lg">
                     {unitTypes[selectedUnit].specs.exclusive}
                   </span>
                 </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-600">공용면적</span>
-                  <span className="font-bold text-primary text-lg">
+                <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-200">
+                  <span className="text-gray-600 text-xs md:text-base">공용면적</span>
+                  <span className="font-bold text-primary text-sm md:text-lg">
                     {unitTypes[selectedUnit].specs.common}
                   </span>
                 </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-600">공급면적</span>
-                  <span className="font-bold text-primary text-lg">
+                <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-200">
+                  <span className="text-gray-600 text-xs md:text-base">공급면적</span>
+                  <span className="font-bold text-primary text-sm md:text-lg">
                     {unitTypes[selectedUnit].supply}
                   </span>
                 </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-600">기타면적</span>
-                  <span className="font-bold text-primary text-lg">
+                <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-200">
+                  <span className="text-gray-600 text-xs md:text-base">기타면적</span>
+                  <span className="font-bold text-primary text-sm md:text-lg">
                     {unitTypes[selectedUnit].specs.service}
                   </span>
                 </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-600">계약면적</span>
-                  <span className="font-bold text-primary text-lg">
+                <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-200">
+                  <span className="text-gray-600 text-xs md:text-base">계약면적</span>
+                  <span className="font-bold text-primary text-sm md:text-lg">
                     {unitTypes[selectedUnit].specs.other}
                   </span>
                 </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-600">전용률</span>
-                  <span className="font-bold text-primary text-lg">
+                <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-200">
+                  <span className="text-gray-600 text-xs md:text-base">전용률</span>
+                  <span className="font-bold text-primary text-sm md:text-lg">
                     {unitTypes[selectedUnit].specs.ratio}
                   </span>
                 </div>
@@ -209,12 +211,12 @@ export default function UnitTypes() {
 
               {/* Features */}
               <div>
-                <h4 className="font-bold text-lg mb-4 text-primary">주요 특징</h4>
-                <ul className="space-y-3">
+                <h4 className="font-bold text-base md:text-lg mb-3 md:mb-4 text-primary">주요 특징</h4>
+                <ul className="space-y-2 md:space-y-3">
                   {unitTypes[selectedUnit].features.map((feature, index) => (
                     <li key={index} className="flex items-start text-gray-700">
                       <svg
-                        className="w-5 h-5 text-secondary mr-3 flex-shrink-0 mt-0.5"
+                        className="w-4 h-4 md:w-5 md:h-5 text-secondary mr-2 md:mr-3 flex-shrink-0 mt-0.5"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -224,7 +226,7 @@ export default function UnitTypes() {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="text-sm">{feature}</span>
+                      <span className="text-xs md:text-sm leading-relaxed">{feature}</span>
                     </li>
                   ))}
                 </ul>

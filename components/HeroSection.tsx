@@ -24,7 +24,7 @@ export default function HeroSection() {
       {/* Fullscreen Image Background */}
       <div className="absolute inset-0">
         <Image
-          src="/images/yeomchang-thechaeum-unit-interior-03.jpg"
+          src="/images/yeomchang-thechaeum-view.jpg"
           alt="염창역 더채움 거실"
           fill
           className="object-cover"

@@ -142,7 +142,7 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="이름을 입력해주세요"
                   required
-                  className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-base"
+                  className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm md:text-base placeholder:text-xs md:placeholder:text-sm"
                 />
               </div>
 
@@ -158,7 +158,7 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="전화번호를 입력해주세요 (숫자만)"
                   required
-                  className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-base"
+                  className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm md:text-base placeholder:text-xs md:placeholder:text-sm"
                 />
               </div>
 
@@ -173,7 +173,7 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="문의하실 내용을 입력해주세요 (선택사항)"
                   rows={5}
-                  className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-base resize-none"
+                  className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm md:text-base placeholder:text-xs md:placeholder:text-sm resize-none"
                 />
               </div>
 
