@@ -149,7 +149,7 @@ export default function HeroSection() {
 
   return (
     <>
-    <section className="relative h-screen min-h-[700px] lg:min-h-[800px] overflow-hidden">
+    <section className="relative h-screen lg:h-screen overflow-hidden">
       {/* 슬라이드 배경 */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -334,11 +334,9 @@ export default function HeroSection() {
       </div>
 
 
-    </section>
-
-    {/* 모바일: 하단 고정 폼 (섹션 외부) */}
-    <div className="lg:hidden fixed bottom-4 left-0 right-0 z-50 px-4 pointer-events-none">
-      <div className="pointer-events-auto bg-white rounded-2xl p-5 shadow-2xl border-2 border-luxury-gold">
+      {/* 모바일: 하단 상담 폼 (섹션 내부) */}
+      <div className="lg:hidden absolute bottom-4 left-0 right-0 z-50 px-4">
+        <div className="bg-white rounded-2xl p-5 shadow-2xl border-2 border-luxury-gold">
         <h3 className="text-lg font-bold text-gray-900 mb-2">
           무료 상담 신청
         </h3>
@@ -400,6 +398,7 @@ export default function HeroSection() {
         </form>
       </div>
     </div>
+    </section>
     </>
   );
 }
