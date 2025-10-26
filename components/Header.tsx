@@ -123,50 +123,49 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center">
-            <div className="flex items-center space-x-16">
-              <Link
-                href="/yeomchang-thechaeum/location"
-                className={`font-semibold text-base lg:text-lg transition-colors ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-primary"
-                    : "text-white hover:text-secondary"
-                }`}
-              >
-                입지환경
-              </Link>
-              <Link
-                href="/yeomchang-thechaeum/units"
-                className={`font-semibold text-base lg:text-lg transition-colors ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-primary"
-                    : "text-white hover:text-secondary"
-                }`}
-              >
-                세대정보
-              </Link>
-              <Link
-                href="/yeomchang-thechaeum/showroom"
-                className={`font-semibold text-base lg:text-lg transition-colors ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-primary"
-                    : "text-white hover:text-secondary"
-                }`}
-              >
-                오시는길
-              </Link>
-              <Link
-                href="/yeomchang-thechaeum/contact"
-                className={`font-semibold text-base lg:text-lg transition-colors ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-primary"
-                    : "text-white hover:text-secondary"
-                }`}
-              >
-                FAQ
-              </Link>
-            </div>
-            <div className="flex items-center gap-3 ml-auto">
+          <nav className="hidden md:flex items-center gap-10 lg:gap-16">
+            <Link
+              href="/yeomchang-thechaeum/location"
+              className={`font-semibold text-base lg:text-lg transition-colors ${
+                isScrolled
+                  ? "text-gray-700 hover:text-primary"
+                  : "text-white hover:text-secondary"
+              }`}
+            >
+              입지환경
+            </Link>
+            <Link
+              href="/yeomchang-thechaeum/units"
+              className={`font-semibold text-base lg:text-lg transition-colors ${
+                isScrolled
+                  ? "text-gray-700 hover:text-primary"
+                  : "text-white hover:text-secondary"
+              }`}
+            >
+              세대정보
+            </Link>
+            <Link
+              href="/yeomchang-thechaeum/showroom"
+              className={`font-semibold text-base lg:text-lg transition-colors ${
+                isScrolled
+                  ? "text-gray-700 hover:text-primary"
+                  : "text-white hover:text-secondary"
+              }`}
+            >
+              오시는길
+            </Link>
+            <Link
+              href="/yeomchang-thechaeum/contact"
+              className={`font-semibold text-base lg:text-lg transition-colors ${
+                isScrolled
+                  ? "text-gray-700 hover:text-primary"
+                  : "text-white hover:text-secondary"
+              }`}
+            >
+              FAQ
+            </Link>
+
+            <div className="flex items-center gap-3 ml-16">
               <a
                 href="tel:1666-0952"
                 className="bg-luxury-gold text-luxury-charcoal px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
@@ -177,27 +176,6 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
               <span className="hidden lg:inline">1666-0952</span>
               <span className="lg:hidden">전화</span>
             </a>
-              <style jsx>{`
-                @keyframes pulse-glow {
-                  0%, 100% {
-                    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-                    transform: scale(1);
-                  }
-                  50% {
-                    box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
-                    transform: scale(1.05);
-                  }
-                }
-                .consult-button {
-                  animation: pulse-glow 3s ease-in-out infinite;
-                }
-              `}</style>
-              <button
-                onClick={() => setIsConsultOpen(!isConsultOpen)}
-                className="consult-button bg-primary-600 text-white px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-primary-700 transition-all shadow-lg"
-              >
-                무료상담신청
-              </button>
             </div>
           </nav>
 
