@@ -252,15 +252,6 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
               </svg>
               1666-0952
             </a>
-            <button
-              onClick={() => {
-                setIsConsultOpen(true);
-                setIsMobileMenuOpen(false);
-              }}
-              className="block w-full text-center mt-2 bg-primary-600 text-white px-4 py-3 rounded-full font-bold text-base hover:bg-primary-700"
-            >
-              무료상담 신청
-            </button>
           </nav>
         )}
       </div>
