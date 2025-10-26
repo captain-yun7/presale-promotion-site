@@ -32,6 +32,20 @@ export default function HeroSection() {
       ),
     },
     {
+      image: "/images/yeomchang-thechaeum-unit-interior-02.jpg",
+      tag: "회사보유분 특별분양",
+      title: "초특가 분양",
+      subtitle: (
+        <>
+          - <span className="text-luxury-gold font-bold">투룸 가격</span>에 <span className="text-luxury-gold font-bold">쓰리룸</span> 실현
+          <br />
+          - 시세 대비 <span className="text-luxury-gold font-bold">파격 가격</span>
+          <br />
+          - <span className="text-luxury-gold font-bold">선착순 마감</span> 임박
+        </>
+      ),
+    },
+    {
       image: "/images/yeomchang-thechaeum-exterior-view.jpg",
       tag: "9호선 급행 초역세권",
       title: "출퇴근 15분 컷",
