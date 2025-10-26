@@ -197,7 +197,7 @@ export default function HeroSection() {
                       }}
                       className="bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-charcoal px-8 py-5 rounded-full font-bold text-lg shadow-xl"
                     >
-                      ⚡ 30초 상담신청
+                      무료 상담 신청
                     </button>
                   </div>
                 </motion.div>
@@ -229,10 +229,10 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <h3 className="text-2xl font-bold text-luxury-charcoal mb-2">
-                  빠른 상담 신청
+                  무료 상담 신청
                 </h3>
                 <p className="text-sm text-gray-600 mb-5">
-                  30초 신청하고 분양가표 즉시 받기
+                  분양가 확인 · 방문 일정 예약 · 1:1 전문 상담
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -294,7 +294,7 @@ export default function HeroSection() {
                         : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90 hover:shadow-xl transform hover:scale-[1.02]'
                     }`}
                   >
-                    {isSubmitting ? '처리 중...' : '⚡ 상담 신청하기'}
+                    {isSubmitting ? '처리 중...' : '무료 상담 신청하기'}
                   </button>
 
                   <div className="grid grid-cols-2 gap-3 mt-4">
@@ -337,8 +337,11 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.5 }}
         >
           <h3 className="text-lg font-bold text-luxury-charcoal mb-3">
-            빠른 상담 신청
+            무료 상담 신청
           </h3>
+          <p className="text-xs text-gray-600 mb-3">
+            분양가 확인 · 방문 예약 · 전문 상담
+          </p>
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <input
@@ -389,7 +392,7 @@ export default function HeroSection() {
                   : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90'
               }`}
             >
-              {isSubmitting ? '처리 중...' : '⚡ 상담 신청하기'}
+              {isSubmitting ? '처리 중...' : '무료 상담 신청하기'}
             </button>
           </form>
         </motion.div>
