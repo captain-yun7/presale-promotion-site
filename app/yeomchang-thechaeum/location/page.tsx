@@ -14,7 +14,7 @@ export default function LocationPage() {
     <>
       <Header forceScrolled />
       <main className="pt-20">
-        <Location />
+        <Location disableAnimation={true} />
       </main>
       <Footer />
       <FloatingCTA />

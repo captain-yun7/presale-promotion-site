@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { getStoredUTMParams } from "@/lib/utm-tracking";
 
-export default function Contact() {
+export default function Contact({ disableAnimation = false }: { disableAnimation?: boolean }) {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -105,8 +105,8 @@ export default function Contact() {
       <div className="container-custom relative z-10">
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={disableAnimation ? false : { opacity: 0, y: 30 }}
+          whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
@@ -124,8 +124,8 @@ export default function Contact() {
         <div className="max-w-2xl mx-auto">
           <motion.div
             className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl border-2 border-luxury-gold/20 hover:border-luxury-gold/40 transition-all duration-300"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={disableAnimation ? false : { opacity: 0, y: 50 }}
+            whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >

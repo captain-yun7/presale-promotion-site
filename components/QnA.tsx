@@ -51,7 +51,7 @@ const qnaData = [
 //   { date: "2026.01.15", event: "계약 체결", status: "scheduled" },
 // ];
 
-export default function QnA() {
+export default function QnA({ disableAnimation = false }: { disableAnimation?: boolean }) {
   const [selectedQna, setSelectedQna] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [showAllQna, setShowAllQna] = useState(false);
@@ -69,8 +69,8 @@ export default function QnA() {
         {/* Q&A Section */}
         <motion.div
           className="bg-white rounded-3xl p-12 shadow-xl mb-16"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={disableAnimation ? false : { opacity: 0, y: 50 }}
+          whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
@@ -109,8 +109,8 @@ export default function QnA() {
               <motion.div
                 key={item.id}
                 className="border-2 border-gray-200 rounded-2xl overflow-hidden hover:border-luxury-gold transition-all"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={disableAnimation ? false : { opacity: 0, y: 20 }}
+                whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
@@ -176,7 +176,7 @@ export default function QnA() {
               <motion.div
                 key={item.id}
                 className="border-2 border-gray-200 rounded-2xl overflow-hidden hover:border-luxury-gold transition-all"
-                initial={{ opacity: 0, height: 0 }}
+                initial={disableAnimation ? false : { opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -269,8 +269,8 @@ export default function QnA() {
         {/* Timeline */}
         {/* <motion.div
           className="bg-gradient-to-br from-luxury-charcoal via-gray-800 to-luxury-charcoal rounded-3xl p-12 shadow-2xl"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={disableAnimation ? false : { opacity: 0, y: 50 }}
+          whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
@@ -291,8 +291,8 @@ export default function QnA() {
                 <motion.div
                   key={index}
                   className="relative flex flex-col items-center gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={disableAnimation ? false : { opacity: 0, y: 20 }}
+                  whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
@@ -321,8 +321,8 @@ export default function QnA() {
 
           <motion.div
             className="mt-16 text-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={disableAnimation ? false : { opacity: 0 }}
+            whileInView={disableAnimation ? false : { opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >

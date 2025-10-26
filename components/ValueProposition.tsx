@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export default function ValueProposition() {
+export default function ValueProposition({ disableAnimation = false }: { disableAnimation?: boolean }) {
   const valuePoints = [
     {
       title: "9호선 급행 초역세권",
@@ -65,8 +65,8 @@ export default function ValueProposition() {
         {/* Section Title */}
         <motion.div
           className="text-center mb-12 md:mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={disableAnimation ? false : { opacity: 0, y: 30 }}
+          whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
@@ -87,8 +87,8 @@ export default function ValueProposition() {
             <motion.div
               key={index}
               className="relative group"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={disableAnimation ? false : { opacity: 0, y: 50 }}
+              whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >

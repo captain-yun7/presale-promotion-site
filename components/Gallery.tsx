@@ -35,7 +35,7 @@ const images = [
   { id: 17, src: '/images/yeomchang-thechaeum-unit-interior-16.jpg', alt: '염창역 더채움 쓰리룸 아파텔 내부 16' },
 ];
 
-export default function Gallery() {
+export default function Gallery({ disableAnimation = false }: { disableAnimation?: boolean }) {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
 
@@ -46,8 +46,8 @@ export default function Gallery() {
           {/* Section Title */}
           <motion.div
             className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={disableAnimation ? false : { opacity: 0, y: 30 }}
+            whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
@@ -64,8 +64,8 @@ export default function Gallery() {
 
           {/* Main Swiper */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={disableAnimation ? false : { opacity: 0, y: 30 }}
+            whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
@@ -172,7 +172,7 @@ export default function Gallery() {
       {selectedImage !== null && (
         <motion.div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
+          initial={disableAnimation ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={() => setSelectedImage(null)}

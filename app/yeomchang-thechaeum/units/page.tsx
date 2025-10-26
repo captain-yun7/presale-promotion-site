@@ -15,8 +15,8 @@ export default function UnitsPage() {
     <>
       <Header forceScrolled />
       <main className="pt-20">
-        <UnitTypes />
-        <Gallery />
+        <UnitTypes disableAnimation={true} />
+        <Gallery disableAnimation={true} />
       </main>
       <Footer />
       <FloatingCTA />

@@ -131,7 +131,7 @@ const commuteDestinations = [
   },
 ];
 
-export default function Location() {
+export default function Location({ disableAnimation = false }: { disableAnimation?: boolean }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedDestination, setSelectedDestination] = useState(0);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
@@ -422,14 +422,14 @@ export default function Location() {
       {/* Sticky 미니맵 - 임시 주석 처리 */}
       {/* <motion.div
         className="fixed bottom-6 right-6 z-50"
-        initial={{ opacity: 0, y: 50 }}
+        initial={disableAnimation ? false : { opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         {!isMiniMapOpen && (
           <motion.div
             className="flex flex-col items-center gap-2"
-            initial={{ opacity: 0, y: 50 }}
+            initial={disableAnimation ? false : { opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
@@ -452,7 +452,7 @@ export default function Location() {
         {isMiniMapOpen && (
           <motion.div
             className="bg-white rounded-2xl shadow-2xl overflow-hidden"
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={disableAnimation ? false : { opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
@@ -489,8 +489,8 @@ export default function Location() {
           {/* Section Title */}
           <motion.div
             className="text-center mb-10 md:mb-16 px-4"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={disableAnimation ? false : { opacity: 0, y: 30 }}
+            whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
@@ -508,8 +508,8 @@ export default function Location() {
           {/* Interactive Map */}
           <motion.div
             className="bg-white rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden mb-12 md:mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={disableAnimation ? false : { opacity: 0, y: 50 }}
+            whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >

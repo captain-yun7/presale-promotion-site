@@ -15,8 +15,8 @@ export default function ContactPage() {
     <>
       <Header forceScrolled />
       <main className="pt-20">
-        <Contact />
-        <QnA />
+        <Contact disableAnimation={true} />
+        <QnA disableAnimation={true} />
       </main>
       <Footer />
       <FloatingCTA />

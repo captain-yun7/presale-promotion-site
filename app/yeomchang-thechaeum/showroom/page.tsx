@@ -14,7 +14,7 @@ export default function ShowroomPage() {
     <>
       <Header forceScrolled />
       <main className="pt-20">
-        <Showroom />
+        <Showroom disableAnimation={true} />
       </main>
       <Footer />
       <FloatingCTA />

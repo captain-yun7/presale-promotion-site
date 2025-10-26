@@ -2,15 +2,15 @@
 
 import { motion } from "framer-motion";
 
-export default function Showroom() {
+export default function Showroom({ disableAnimation = false }: { disableAnimation?: boolean }) {
   return (
     <section id="showroom" className="section-padding bg-gray-50">
       <div className="container-custom">
         {/* 홍보관 오시는 길 약도 */}
         <motion.div
           className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-12 shadow-2xl"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={disableAnimation ? false : { opacity: 0, y: 50 }}
+          whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >

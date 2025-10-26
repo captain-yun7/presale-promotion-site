@@ -94,7 +94,7 @@ const unitTypes = [
   },
 ];
 
-export default function UnitTypes() {
+export default function UnitTypes({ disableAnimation = false }: { disableAnimation?: boolean }) {
   const [selectedUnit, setSelectedUnit] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
