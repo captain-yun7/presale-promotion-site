@@ -166,7 +166,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
                 FAQ
               </Link>
             </div>
-            <div className="flex items-center gap-3 ml-8">
+            <div className="flex items-center gap-3 ml-auto">
               <a
                 href="tel:1666-0952"
                 className="bg-luxury-gold text-luxury-charcoal px-4 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base hover:bg-luxury-gold/90 transition-all shadow-lg flex items-center gap-2"
