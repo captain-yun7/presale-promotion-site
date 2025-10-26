@@ -163,7 +163,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
                     : "text-white hover:text-secondary"
                 }`}
               >
-                빠른상담
+                FAQ
               </Link>
             </div>
             <div className="flex items-center gap-3 ml-8">
@@ -263,7 +263,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
               href="/yeomchang-thechaeum/contact"
               className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
-              빠른상담
+              FAQ
             </Link>
             <a
               href="tel:1666-0952"
