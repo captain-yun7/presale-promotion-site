@@ -105,10 +105,10 @@ export default function Contact({ disableAnimation = false }: { disableAnimation
       <div className="container-custom relative z-10">
         <motion.div
           className="text-center mb-16"
-          initial={disableAnimation ? false : { opacity: 0, y: 30 }}
-          whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
+          initial={disableAnimation ? {} : { opacity: 0, y: 30 }}
+          whileInView={disableAnimation ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={disableAnimation ? {} : { duration: 0.8 }}
         >
           <p className="text-luxury-gold text-lg mb-3 font-medium tracking-wide">
             CONTACT
@@ -124,8 +124,8 @@ export default function Contact({ disableAnimation = false }: { disableAnimation
         <div className="max-w-2xl mx-auto">
           <motion.div
             className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl border-2 border-luxury-gold/20 hover:border-luxury-gold/40 transition-all duration-300"
-            initial={disableAnimation ? false : { opacity: 0, y: 50 }}
-            whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
+            initial={disableAnimation ? {} : { opacity: 0, y: 50 }}
+            whileInView={disableAnimation ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >

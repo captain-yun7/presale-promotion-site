@@ -40,8 +40,8 @@ export default function Gallery({ disableAnimation = false }: { disableAnimation
           {/* Section Title */}
           <motion.div
             className="text-center mb-16"
-            initial={disableAnimation ? false : { opacity: 0, y: 30 }}
-            whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
+            initial={disableAnimation ? {} : { opacity: 0, y: 30 }}
+            whileInView={disableAnimation ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
@@ -58,8 +58,8 @@ export default function Gallery({ disableAnimation = false }: { disableAnimation
 
           {/* Main Swiper */}
           <motion.div
-            initial={disableAnimation ? false : { opacity: 0, y: 30 }}
-            whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
+            initial={disableAnimation ? {} : { opacity: 0, y: 30 }}
+            whileInView={disableAnimation ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
@@ -166,7 +166,7 @@ export default function Gallery({ disableAnimation = false }: { disableAnimation
       {selectedImage !== null && (
         <motion.div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
-          initial={disableAnimation ? false : { opacity: 0 }}
+          initial={disableAnimation ? {} : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={() => setSelectedImage(null)}

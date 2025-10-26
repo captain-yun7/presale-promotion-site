@@ -65,8 +65,8 @@ export default function ValueProposition({ disableAnimation = false }: { disable
         {/* Section Title */}
         <motion.div
           className="text-center mb-12 md:mb-16"
-          initial={disableAnimation ? false : { opacity: 0, y: 30 }}
-          whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
+          initial={disableAnimation ? {} : { opacity: 0, y: 30 }}
+          whileInView={disableAnimation ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
@@ -87,8 +87,8 @@ export default function ValueProposition({ disableAnimation = false }: { disable
             <motion.div
               key={index}
               className="relative group"
-              initial={disableAnimation ? false : { opacity: 0, y: 50 }}
-              whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
+              initial={disableAnimation ? {} : { opacity: 0, y: 50 }}
+              whileInView={disableAnimation ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >

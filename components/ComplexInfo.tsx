@@ -164,7 +164,7 @@ export default function ComplexInfo({ disableAnimation = false }: { disableAnima
               {features.slice(0, 3).map((feature, index) => (
                 <motion.div
                   key={index}
-                  initial={disableAnimation ? false : { opacity: 0, y: 20 }}
+                  initial={disableAnimation ? {} : { opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                   className="bg-luxury-gold rounded-2xl p-4 md:p-6 shadow-lg"
@@ -183,7 +183,7 @@ export default function ComplexInfo({ disableAnimation = false }: { disableAnima
                 {showAll && features.slice(3).map((feature, index) => (
                   <motion.div
                     key={index + 3}
-                    initial={disableAnimation ? false : { opacity: 0, height: 0, marginTop: 0 }}
+                    initial={disableAnimation ? {} : { opacity: 0, height: 0, marginTop: 0 }}
                     animate={{ opacity: 1, height: "auto", marginTop: "1rem" }}
                     exit={{ opacity: 0, height: 0, marginTop: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}

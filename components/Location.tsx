@@ -422,14 +422,14 @@ export default function Location({ disableAnimation = false }: { disableAnimatio
       {/* Sticky 미니맵 - 임시 주석 처리 */}
       {/* <motion.div
         className="fixed bottom-6 right-6 z-50"
-        initial={disableAnimation ? false : { opacity: 0, y: 50 }}
+        initial={disableAnimation ? {} : { opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         {!isMiniMapOpen && (
           <motion.div
             className="flex flex-col items-center gap-2"
-            initial={disableAnimation ? false : { opacity: 0, y: 50 }}
+            initial={disableAnimation ? {} : { opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
@@ -452,7 +452,7 @@ export default function Location({ disableAnimation = false }: { disableAnimatio
         {isMiniMapOpen && (
           <motion.div
             className="bg-white rounded-2xl shadow-2xl overflow-hidden"
-            initial={disableAnimation ? false : { opacity: 0, scale: 0.8 }}
+            initial={disableAnimation ? {} : { opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
@@ -489,8 +489,8 @@ export default function Location({ disableAnimation = false }: { disableAnimatio
           {/* Section Title */}
           <motion.div
             className="text-center mb-10 md:mb-16 px-4"
-            initial={disableAnimation ? false : { opacity: 0, y: 30 }}
-            whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
+            initial={disableAnimation ? {} : { opacity: 0, y: 30 }}
+            whileInView={disableAnimation ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
@@ -508,8 +508,8 @@ export default function Location({ disableAnimation = false }: { disableAnimatio
           {/* Interactive Map */}
           <motion.div
             className="bg-white rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden mb-12 md:mb-16"
-            initial={disableAnimation ? false : { opacity: 0, y: 50 }}
-            whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
+            initial={disableAnimation ? {} : { opacity: 0, y: 50 }}
+            whileInView={disableAnimation ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >

@@ -9,8 +9,8 @@ export default function Showroom({ disableAnimation = false }: { disableAnimatio
         {/* 홍보관 오시는 길 약도 */}
         <motion.div
           className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-12 shadow-2xl"
-          initial={disableAnimation ? false : { opacity: 0, y: 50 }}
-          whileInView={disableAnimation ? false : { opacity: 1, y: 0 }}
+          initial={disableAnimation ? {} : { opacity: 0, y: 50 }}
+          whileInView={disableAnimation ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
