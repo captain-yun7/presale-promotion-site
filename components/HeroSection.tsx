@@ -179,7 +179,7 @@ export default function HeroSection() {
                   <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
                     {slides[currentSlide].title.split(' ').map((word, i) => (
                       <span key={i}>
-                        {word.includes('더채움') ? (
+                        {word.includes('더채움') || word.includes('15분') ? (
                           <span className="text-luxury-gold">{word}</span>
                         ) : (
                           word
