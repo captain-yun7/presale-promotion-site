@@ -51,9 +51,6 @@ export default function HeroSection() {
     return () => clearInterval(timer);
   }, [slides.length]);
 
-  const goToInfoPage = () => {
-    window.location.href = "/yeomchang-thechaeum/info";
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -329,28 +326,6 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* More Info Button */}
-      <motion.div
-        className="absolute bottom-6 md:bottom-8 left-0 right-0 z-20 cursor-pointer flex items-center justify-center"
-        onClick={goToInfoPage}
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <button className="flex flex-col items-center justify-center gap-1 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full hover:bg-white/20 transition-all">
-          <span className="text-white text-xs tracking-wider font-semibold">상세정보 보기</span>
-          <svg
-            className="w-5 h-5 text-luxury-gold"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </button>
-      </motion.div>
 
       {/* 모바일: 하단 고정 폼 */}
       <div className="lg:hidden absolute bottom-20 left-0 right-0 z-30 px-4">

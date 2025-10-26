@@ -125,18 +125,8 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center">
             <div className="flex items-center space-x-16">
-              <button
-                onClick={() => scrollToSection("complex-info")}
-                className={`font-semibold text-base lg:text-lg transition-colors ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-primary"
-                    : "text-white hover:text-secondary"
-                }`}
-              >
-                단지정보
-              </button>
-              <button
-                onClick={() => scrollToSection("location")}
+              <Link
+                href="/yeomchang-thechaeum/location"
                 className={`font-semibold text-base lg:text-lg transition-colors ${
                   isScrolled
                     ? "text-gray-700 hover:text-primary"
@@ -144,9 +134,9 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
                 }`}
               >
                 입지환경
-              </button>
-              <button
-                onClick={() => scrollToSection("unit-types")}
+              </Link>
+              <Link
+                href="/yeomchang-thechaeum/units"
                 className={`font-semibold text-base lg:text-lg transition-colors ${
                   isScrolled
                     ? "text-gray-700 hover:text-primary"
@@ -154,9 +144,9 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
                 }`}
               >
                 세대정보
-              </button>
-              <button
-                onClick={() => scrollToSection("showroom")}
+              </Link>
+              <Link
+                href="/yeomchang-thechaeum/showroom"
                 className={`font-semibold text-base lg:text-lg transition-colors ${
                   isScrolled
                     ? "text-gray-700 hover:text-primary"
@@ -164,9 +154,9 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
                 }`}
               >
                 오시는길
-              </button>
-              <button
-                onClick={() => scrollToSection("contact")}
+              </Link>
+              <Link
+                href="/yeomchang-thechaeum/contact"
                 className={`font-semibold text-base lg:text-lg transition-colors ${
                   isScrolled
                     ? "text-gray-700 hover:text-primary"
@@ -174,7 +164,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
                 }`}
               >
                 빠른상담
-              </button>
+              </Link>
             </div>
             <div className="flex items-center gap-3 ml-8">
               <a
@@ -251,36 +241,30 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <nav className="md:hidden bg-white shadow-lg rounded-lg p-3 mb-3">
-            <button
-              onClick={() => scrollToSection("complex-info")}
-              className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
-            >
-              단지정보
-            </button>
-            <button
-              onClick={() => scrollToSection("location")}
+            <Link
+              href="/yeomchang-thechaeum/location"
               className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
               입지환경
-            </button>
-            <button
-              onClick={() => scrollToSection("unit-types")}
+            </Link>
+            <Link
+              href="/yeomchang-thechaeum/units"
               className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
               세대정보
-            </button>
-            <button
-              onClick={() => scrollToSection("showroom")}
+            </Link>
+            <Link
+              href="/yeomchang-thechaeum/showroom"
               className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
               오시는길
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
+            </Link>
+            <Link
+              href="/yeomchang-thechaeum/contact"
               className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
             >
               빠른상담
-            </button>
+            </Link>
             <a
               href="tel:1666-0952"
               className="block w-full text-center mt-2 bg-luxury-gold text-luxury-charcoal px-4 py-3 rounded-full font-bold text-base hover:bg-luxury-gold/90 flex items-center justify-center gap-2"
