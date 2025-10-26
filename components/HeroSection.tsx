@@ -21,7 +21,7 @@ export default function HeroSection() {
       image: "/images/yeomchang-thechaeum-view.jpg",
       tag: "투룸값에 쓰리룸 산다!",
       title: "염창역 더채움",
-      subtitle: "한강벨트라인 황금노선\n9호선 급행 초역세권 쓰리룸 아파텔",
+      subtitle: "9호선 급행 초역세권 쓰리룸 오피스텔\n투룸 가격에 쓰리룸!!!",
     },
     {
       image: "/images/yeomchang-thechaeum-exterior-view.jpg",
@@ -30,15 +30,9 @@ export default function HeroSection() {
       subtitle: "여의도 3정거장 · 김포공항 2정거장\n강남 20분 · 목동 5분",
     },
     {
-      image: "/images/yeomchang-thechaeum-entrance-lobby.jpg",
-      tag: "한강 5분 거리",
-      title: "한강공원이 내 집 앞",
-      subtitle: "염창한강공원 도보 5분\n자전거 라이딩 · 조깅 · 산책로",
-    },
-    {
       image: "/images/yeomchang-thechaeum-unit-interior-01.jpg",
       tag: "4無 혜택",
-      title: "규제 없는 자유",
+      title: "대출규제 영향 無",
       subtitle: "주택수 · 대출 · 자금조달 · 실거주\n4가지 규제 완전 FREE",
     },
   ];
