@@ -337,14 +337,25 @@ export default function HeroSection() {
       {/* 모바일: 하단 상담 폼 (섹션 내부) */}
       <div className="lg:hidden absolute bottom-4 left-0 right-0 z-50 px-4">
         <div className="bg-white rounded-2xl p-5 shadow-2xl border-2 border-luxury-gold">
-        <h3 className="text-lg font-bold text-gray-900 mb-2">
-          무료 상담 신청
-        </h3>
-        <p className="text-sm text-gray-700 mb-4">
-          분양가 확인 · 방문 예약 · 전문 상담
-        </p>
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h3 className="text-lg font-bold text-gray-900 mb-1">
+              무료 상담 신청
+            </h3>
+            <p className="text-xs text-gray-700">
+              분양가 확인 · 방문 예약 · 전문 상담
+            </p>
+          </div>
+          <Image
+            src="/thechaeum-logo.png"
+            alt="염창역 더채움"
+            width={80}
+            height={22}
+            className="h-6 w-auto"
+          />
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-2.5">
+        <form onSubmit={handleSubmit} className="space-y-2.5 mt-4">
           <input
             type="text"
             name="name"
