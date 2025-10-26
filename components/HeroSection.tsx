@@ -148,6 +148,7 @@ export default function HeroSection() {
   };
 
   return (
+    <>
     <section className="relative h-screen min-h-[700px] lg:min-h-[800px] overflow-hidden">
       {/* 슬라이드 배경 */}
       <AnimatePresence mode="wait">
@@ -333,76 +334,72 @@ export default function HeroSection() {
       </div>
 
 
-      {/* 모바일: 하단 고정 폼 */}
-      <div className="lg:hidden absolute bottom-4 left-0 right-0 z-30 px-4">
-        <motion.div
-          id="consultation-form"
-          className="bg-white/98 backdrop-blur-lg rounded-2xl p-5 shadow-2xl border-2 border-luxury-gold/40"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          <h3 className="text-base font-bold text-luxury-charcoal mb-2">
-            무료 상담 신청
-          </h3>
-          <p className="text-xs text-gray-600 mb-4">
-            분양가 확인 · 방문 예약 · 전문 상담
-          </p>
-
-          <form onSubmit={handleSubmit} className="space-y-2.5">
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="이름"
-              required
-              className="w-full px-3.5 py-2.5 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm text-gray-900 placeholder:text-gray-500"
-            />
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="전화번호 (숫자만)"
-              required
-              className="w-full px-3.5 py-2.5 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm text-gray-900 placeholder:text-gray-500"
-            />
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="문의내용"
-              rows={2}
-              className="w-full px-3.5 py-2.5 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm resize-none text-gray-900 placeholder:text-gray-500"
-            />
-            <div className="flex items-start gap-2">
-              <input
-                type="checkbox"
-                id="privacyAgreeMobile"
-                name="privacyAgree"
-                checked={formData.privacyAgree}
-                onChange={handleChange}
-                className="mt-1 w-4 h-4 text-luxury-gold border-gray-300 rounded"
-              />
-              <label htmlFor="privacyAgreeMobile" className="text-xs text-gray-700">
-                개인정보 수집 및 이용 동의
-              </label>
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-3.5 rounded-xl font-bold text-sm shadow-lg ${
-                isSubmitting
-                  ? 'bg-gray-400 text-gray-200'
-                  : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90'
-              }`}
-            >
-              {isSubmitting ? '처리 중...' : '무료 상담 신청하기'}
-            </button>
-          </form>
-        </motion.div>
-      </div>
     </section>
+
+    {/* 모바일: 하단 고정 폼 (섹션 외부) */}
+    <div className="lg:hidden fixed bottom-4 left-0 right-0 z-50 px-4 pointer-events-none">
+      <div className="pointer-events-auto bg-white rounded-2xl p-5 shadow-2xl border-2 border-luxury-gold">
+        <h3 className="text-lg font-bold text-gray-900 mb-2">
+          무료 상담 신청
+        </h3>
+        <p className="text-sm text-gray-700 mb-4">
+          분양가 확인 · 방문 예약 · 전문 상담
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-2.5">
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="이름"
+            required
+            className="w-full px-3.5 py-2.5 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm text-gray-900"
+          />
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="전화번호 (숫자만)"
+            required
+            className="w-full px-3.5 py-2.5 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm text-gray-900"
+          />
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            placeholder="문의내용"
+            rows={2}
+            className="w-full px-3.5 py-2.5 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm resize-none text-gray-900"
+          />
+          <div className="flex items-start gap-2">
+            <input
+              type="checkbox"
+              id="privacyAgreeMobile"
+              name="privacyAgree"
+              checked={formData.privacyAgree}
+              onChange={handleChange}
+              className="mt-1 w-4 h-4 text-luxury-gold border-gray-300 rounded"
+            />
+            <label htmlFor="privacyAgreeMobile" className="text-xs text-gray-700">
+              개인정보 수집 및 이용 동의
+            </label>
+          </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`w-full py-3.5 rounded-xl font-bold text-sm shadow-lg ${
+              isSubmitting
+                ? 'bg-gray-400 text-gray-200'
+                : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90'
+            }`}
+          >
+            {isSubmitting ? '처리 중...' : '무료 상담 신청하기'}
+          </button>
+        </form>
+      </div>
+    </div>
+    </>
   );
 }
