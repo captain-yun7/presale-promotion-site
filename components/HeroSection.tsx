@@ -346,13 +346,16 @@ export default function HeroSection() {
               분양가 확인 · 방문 예약 · 전문 상담
             </p>
           </div>
-          <Image
-            src="/thechaeum-logo.png"
-            alt="염창역 더채움"
-            width={80}
-            height={22}
-            className="h-6 w-auto"
-          />
+          <div className="bg-gray-800 px-3 py-2 rounded-lg">
+            <Image
+              src="/thechaeum-logo.png"
+              alt="염창역 더채움"
+              width={100}
+              height={28}
+              className="h-7 w-auto flex-shrink-0"
+              priority
+            />
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-2.5 mt-4">
