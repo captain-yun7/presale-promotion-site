@@ -148,7 +148,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative h-screen min-h-[700px] overflow-hidden">
+    <section className="relative h-screen min-h-[700px] lg:min-h-[800px] overflow-hidden">
       {/* 슬라이드 배경 */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -167,17 +167,17 @@ export default function HeroSection() {
             priority={currentSlide === 0}
             quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80 lg:from-black/70 lg:via-black/50 lg:to-black/70" />
         </motion.div>
       </AnimatePresence>
 
       {/* 메인 컨텐츠 */}
-      <div className="relative z-20 h-full flex items-center">
+      <div className="relative z-20 h-full flex items-center pt-20 lg:pt-0">
         <div className="container-custom w-full">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start lg:items-center">
 
             {/* 왼쪽: 슬라이드 카피 */}
-            <div className="lg:pr-8">
+            <div className="lg:pr-8 pb-[380px] lg:pb-0">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSlide}
@@ -186,11 +186,11 @@ export default function HeroSection() {
                   exit={{ opacity: 0, y: -30 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <motion.p className="text-base md:text-lg mb-3 font-medium tracking-wide text-luxury-gold">
+                  <motion.p className="text-base md:text-lg lg:text-xl mb-3 lg:mb-4 font-bold tracking-wide text-luxury-gold">
                     {slides[currentSlide].tag}
                   </motion.p>
 
-                  <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+                  <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 lg:mb-6 leading-tight">
                     {slides[currentSlide].title.split(' ').map((word, i) => (
                       <span key={i}>
                         {word.includes('더채움') || word.includes('15분') ? (
@@ -203,31 +203,9 @@ export default function HeroSection() {
                     ))}
                   </motion.h1>
 
-                  <motion.div className="text-base sm:text-lg md:text-xl text-gray-100 mb-6 leading-relaxed">
+                  <motion.div className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-100 mb-6 lg:mb-8 leading-relaxed font-medium">
                     {slides[currentSlide].subtitle}
                   </motion.div>
-
-                  {/* 모바일: CTA 버튼 */}
-                  <div className="lg:hidden flex flex-col gap-3 mt-8">
-                    <a
-                      href="tel:1666-0952"
-                      className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-2 shadow-xl"
-                    >
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                      </svg>
-                      📞 1666-0952 전화상담
-                    </a>
-                    <button
-                      onClick={() => {
-                        const form = document.getElementById('consultation-form');
-                        form?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      }}
-                      className="bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-charcoal px-8 py-5 rounded-full font-bold text-lg shadow-xl"
-                    >
-                      무료 상담 신청
-                    </button>
-                  </div>
                 </motion.div>
               </AnimatePresence>
 
@@ -356,22 +334,22 @@ export default function HeroSection() {
 
 
       {/* 모바일: 하단 고정 폼 */}
-      <div className="lg:hidden absolute bottom-20 left-0 right-0 z-30 px-4">
+      <div className="lg:hidden absolute bottom-4 left-0 right-0 z-30 px-4">
         <motion.div
           id="consultation-form"
-          className="bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-2xl border-2 border-luxury-gold/30"
+          className="bg-white/98 backdrop-blur-lg rounded-2xl p-5 shadow-2xl border-2 border-luxury-gold/40"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <h3 className="text-lg font-bold text-luxury-charcoal mb-3">
+          <h3 className="text-base font-bold text-luxury-charcoal mb-2">
             무료 상담 신청
           </h3>
-          <p className="text-xs text-gray-600 mb-3">
+          <p className="text-xs text-gray-600 mb-4">
             분양가 확인 · 방문 예약 · 전문 상담
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-2.5">
             <input
               type="text"
               name="name"
@@ -379,7 +357,7 @@ export default function HeroSection() {
               onChange={handleChange}
               placeholder="이름"
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+              className="w-full px-3.5 py-2.5 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm text-gray-900 placeholder:text-gray-500"
             />
             <input
               type="tel"
@@ -388,7 +366,7 @@ export default function HeroSection() {
               onChange={handleChange}
               placeholder="전화번호 (숫자만)"
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+              className="w-full px-3.5 py-2.5 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm text-gray-900 placeholder:text-gray-500"
             />
             <textarea
               name="message"
@@ -396,7 +374,7 @@ export default function HeroSection() {
               onChange={handleChange}
               placeholder="문의내용"
               rows={2}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm resize-none"
+              className="w-full px-3.5 py-2.5 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm resize-none text-gray-900 placeholder:text-gray-500"
             />
             <div className="flex items-start gap-2">
               <input
@@ -414,7 +392,7 @@ export default function HeroSection() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full py-4 rounded-xl font-bold text-base ${
+              className={`w-full py-3.5 rounded-xl font-bold text-sm shadow-lg ${
                 isSubmitting
                   ? 'bg-gray-400 text-gray-200'
                   : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90'
