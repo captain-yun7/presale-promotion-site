@@ -43,11 +43,11 @@ export default function HeroSection() {
     },
   ];
 
-  // 자동 슬라이드 (5초마다)
+  // 자동 슬라이드 (8초마다)
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 8000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
