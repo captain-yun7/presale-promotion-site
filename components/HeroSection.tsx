@@ -158,11 +158,11 @@ export default function HeroSection() {
                   exit={{ opacity: 0, y: -30 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <motion.p className="text-luxury-gold text-xl md:text-2xl mb-4 font-medium tracking-wide">
+                  <motion.p className="text-base md:text-lg mb-3 font-medium tracking-wide text-luxury-gold">
                     {slides[currentSlide].tag}
                   </motion.p>
 
-                  <motion.h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight">
+                  <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
                     {slides[currentSlide].title.split(' ').map((word, i) => (
                       <span key={i}>
                         {word.includes('더채움') ? (
@@ -175,7 +175,7 @@ export default function HeroSection() {
                     ))}
                   </motion.h1>
 
-                  <motion.p className="text-xl sm:text-2xl md:text-3xl text-gray-100 mb-8 leading-relaxed whitespace-pre-line">
+                  <motion.p className="text-base sm:text-lg md:text-xl text-gray-100 mb-6 leading-relaxed whitespace-pre-line">
                     {slides[currentSlide].subtitle}
                   </motion.p>
 
@@ -228,10 +228,10 @@ export default function HeroSection() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                <h3 className="text-3xl font-bold text-luxury-charcoal mb-2">
+                <h3 className="text-2xl font-bold text-luxury-charcoal mb-2">
                   빠른 상담 신청
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-sm text-gray-600 mb-5">
                   30초 신청하고 분양가표 즉시 받기
                 </p>
 
@@ -336,7 +336,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <h3 className="text-xl font-bold text-luxury-charcoal mb-4">
+          <h3 className="text-lg font-bold text-luxury-charcoal mb-3">
             빠른 상담 신청
           </h3>
 
