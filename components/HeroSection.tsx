@@ -1,140 +1,345 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+import { getStoredUTMParams } from "@/lib/utm-tracking";
 
 export default function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    message: "",
+    privacyAgree: false,
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const scrollToNext = () => {
-    const element = document.getElementById("value-proposition");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  // 슬라이드 데이터
+  const slides = [
+    {
+      image: "/images/yeomchang-thechaeum-view.jpg",
+      tag: "투룸값에 쓰리룸 산다!",
+      title: "염창역 더채움",
+      subtitle: "한강벨트라인 황금노선\n9호선 급행 초역세권 쓰리룸 아파텔",
+    },
+    {
+      image: "/images/yeomchang-thechaeum-exterior-view.jpg",
+      tag: "9호선 급행 초역세권",
+      title: "출퇴근 15분 컷",
+      subtitle: "여의도 3정거장 · 김포공항 2정거장\n강남 20분 · 목동 5분",
+    },
+    {
+      image: "/images/yeomchang-thechaeum-entrance-lobby.jpg",
+      tag: "한강 5분 거리",
+      title: "한강공원이 내 집 앞",
+      subtitle: "염창한강공원 도보 5분\n자전거 라이딩 · 조깅 · 산책로",
+    },
+    {
+      image: "/images/yeomchang-thechaeum-unit-interior-01.jpg",
+      tag: "4無 혜택",
+      title: "규제 없는 자유",
+      subtitle: "주택수 · 대출 · 자금조달 · 실거주\n4가지 규제 완전 FREE",
+    },
+  ];
+
+  // 자동 슬라이드 (5초마다)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const goToInfoPage = () => {
+    window.location.href = "/yeomchang-thechaeum/info";
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.phone) {
+      alert("이름과 전화번호를 입력해주세요.");
+      return;
+    }
+
+    if (!formData.privacyAgree) {
+      alert("개인정보 수집 및 이용에 동의해주세요.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const utmParams = getStoredUTMParams();
+      const source = utmParams?.utm_source || 'website';
+
+      const response = await fetch('/api/consultations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          message: formData.message,
+          source: source,
+          project: '염창역더채움',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || '상담 신청에 실패했습니다.');
+      }
+
+      if (!data.data || data.data.length === 0) {
+        throw new Error('상담 신청이 정상 처리되지 않았습니다.');
+      }
+
+      alert(`${formData.name}님의 상담 신청이 접수되었습니다.\n담당자가 빠른 시일 내에 연락드리겠습니다.`);
+      setFormData({
+        name: "",
+        phone: "",
+        message: "",
+        privacyAgree: false,
+      });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : '상담 신청 중 오류가 발생했습니다.';
+      alert(`❌ ${errorMessage}\n\n긴급한 경우 1666-0952로 전화주세요.`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const scrollToContact = () => {
-    const element = document.getElementById("contact");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = 'checked' in e.target ? e.target.checked : false;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
   };
 
   return (
-    <section className="relative h-screen min-h-[600px] overflow-hidden">
-      {/* Fullscreen Image Background */}
-      <div className="absolute inset-0">
-        <Image
-          src="/images/yeomchang-thechaeum-view.jpg"
-          alt="염창역 더채움 거실"
-          fill
-          className="object-cover"
-          priority
-          quality={90}
-        />
+    <section className="relative h-screen min-h-[700px] overflow-hidden">
+      {/* 슬라이드 배경 */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSlide}
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <Image
+            src={slides[currentSlide].image}
+            alt={slides[currentSlide].title}
+            fill
+            className="object-cover"
+            priority={currentSlide === 0}
+            quality={90}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+        </motion.div>
+      </AnimatePresence>
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
-      </div>
-
-      {/* Content */}
+      {/* 메인 컨텐츠 */}
       <div className="relative z-20 h-full flex items-center">
         <div className="container-custom w-full">
-          <div className="max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <motion.p
-                className="text-luxury-gold text-lg md:text-2xl mb-4 md:mb-6 font-medium tracking-wide"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                투룸값에 쓰리룸 산다!
-              </motion.p>
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
-              <motion.h1
-                className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold text-white mb-6 md:mb-9 leading-tight"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-              >
-                염창역 <span className="text-luxury-gold">더채움</span>
-              </motion.h1>
+            {/* 왼쪽: 슬라이드 카피 */}
+            <div className="lg:pr-8">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <motion.p className="text-luxury-gold text-xl md:text-2xl mb-4 font-medium tracking-wide">
+                    {slides[currentSlide].tag}
+                  </motion.p>
 
-              <motion.p
-                className="text-xl sm:text-2xl md:text-3xl text-gray-100 mb-12 md:mb-16 leading-relaxed max-w-3xl"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.8 }}
-              >
-                한강벨트라인 황금노선
-                <br />
-                <span className="text-luxury-gold font-semibold">9호선 급행 초역세권</span> 쓰리룸 아파텔
-              </motion.p>
+                  <motion.h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight">
+                    {slides[currentSlide].title.split(' ').map((word, i) => (
+                      <span key={i}>
+                        {word.includes('더채움') ? (
+                          <span className="text-luxury-gold">{word}</span>
+                        ) : (
+                          word
+                        )}
+                        {i < slides[currentSlide].title.split(' ').length - 1 && ' '}
+                      </span>
+                    ))}
+                  </motion.h1>
 
-              {/* Key Features */}
-              <motion.div
-                className="mt-12 md:mt-16 flex flex-col md:flex-row md:flex-wrap gap-3 md:gap-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 1.2 }}
-              >
-                {[
-                  {
-                    icon: (
-                      <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                  <motion.p className="text-xl sm:text-2xl md:text-3xl text-gray-100 mb-8 leading-relaxed whitespace-pre-line">
+                    {slides[currentSlide].subtitle}
+                  </motion.p>
+
+                  {/* 모바일: CTA 버튼 */}
+                  <div className="lg:hidden flex flex-col gap-3 mt-8">
+                    <a
+                      href="tel:1666-0952"
+                      className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-2 shadow-xl"
+                    >
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                       </svg>
-                    ),
-                    text: "9호선 급행 초역세권"
-                  },
-                  {
-                    icon: (
-                      <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                      </svg>
-                    ),
-                    text: "4無 (주택수·대출·자금조달·실거주)"
-                  },
-                  {
-                    icon: (
-                      <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                      </svg>
-                    ),
-                    text: "한강 5분 거리"
-                  },
-                ].map((feature, index) => (
-                  <motion.div
+                      📞 1666-0952 전화상담
+                    </a>
+                    <button
+                      onClick={() => {
+                        const form = document.getElementById('consultation-form');
+                        form?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
+                      className="bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-charcoal px-8 py-5 rounded-full font-bold text-lg shadow-xl"
+                    >
+                      ⚡ 30초 상담신청
+                    </button>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* 슬라이드 인디케이터 */}
+              <div className="flex gap-2 mt-8">
+                {slides.map((_, index) => (
+                  <button
                     key={index}
-                    className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-5 py-3 md:px-6 md:py-3.5 rounded-full w-fit"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 1.4 + index * 0.1 }}
-                  >
-                    <span className="text-luxury-gold flex-shrink-0">{feature.icon}</span>
-                    <span className="text-white font-semibold text-sm md:text-lg whitespace-nowrap">{feature.text}</span>
-                  </motion.div>
+                    onClick={() => setCurrentSlide(index)}
+                    className={`h-1.5 rounded-full transition-all ${
+                      index === currentSlide
+                        ? 'bg-luxury-gold w-12'
+                        : 'bg-white/30 w-8 hover:bg-white/50'
+                    }`}
+                  />
                 ))}
+              </div>
+            </div>
+
+            {/* 오른쪽: 상담 신청 폼 (데스크톱만) */}
+            <div className="hidden lg:block">
+              <motion.div
+                id="consultation-form"
+                className="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border-2 border-luxury-gold/30"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <h3 className="text-3xl font-bold text-luxury-charcoal mb-2">
+                  빠른 상담 신청
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  30초 신청하고 분양가표 즉시 받기
+                </p>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="이름을 입력해주세요"
+                      required
+                      className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-base"
+                    />
+                  </div>
+
+                  <div>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="전화번호 (숫자만 입력)"
+                      required
+                      className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-base"
+                    />
+                  </div>
+
+                  <div>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="문의내용 (선택사항)"
+                      rows={3}
+                      className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-base resize-none"
+                    />
+                  </div>
+
+                  <div className="flex items-start gap-3 py-2">
+                    <input
+                      type="checkbox"
+                      id="privacyAgree"
+                      name="privacyAgree"
+                      checked={formData.privacyAgree}
+                      onChange={handleChange}
+                      className="mt-1 w-5 h-5 text-luxury-gold border-gray-300 rounded focus:ring-luxury-gold"
+                    />
+                    <label htmlFor="privacyAgree" className="text-sm text-gray-700 leading-relaxed">
+                      개인정보 수집 및 이용에 동의합니다
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`w-full py-5 rounded-xl transition-all font-bold text-lg shadow-lg ${
+                      isSubmitting
+                        ? 'bg-gray-400 cursor-not-allowed text-gray-200'
+                        : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90 hover:shadow-xl transform hover:scale-[1.02]'
+                    }`}
+                  >
+                    {isSubmitting ? '처리 중...' : '⚡ 상담 신청하기'}
+                  </button>
+
+                  <div className="grid grid-cols-2 gap-3 mt-4">
+                    <a
+                      href="tel:1666-0952"
+                      className="py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-colors font-semibold text-sm flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                      </svg>
+                      전화상담
+                    </a>
+                    <a
+                      href="https://open.kakao.com/o/sXGXbTXh"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-4 bg-[#FEE500] hover:bg-[#FDD835] text-[#3C1E1E] rounded-xl transition-colors font-semibold text-sm flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.8 6.7-.2 1-.6 3.7-.7 4.2 0 0 0 .3.2.4.1.1.3.1.4 0 .7-.5 4.2-2.8 4.9-3.3.5.1 1 .1 1.5.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/>
+                      </svg>
+                      카톡상담
+                    </a>
+                  </div>
+                </form>
               </motion.div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Scroll Down Indicator */}
+      {/* More Info Button */}
       <motion.div
-        className="absolute bottom-6 md:bottom-12 left-0 right-0 z-20 cursor-pointer flex items-center justify-center"
-        onClick={scrollToNext}
+        className="absolute bottom-6 md:bottom-8 left-0 right-0 z-20 cursor-pointer flex items-center justify-center"
+        onClick={goToInfoPage}
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="flex flex-col items-center justify-center gap-1 md:gap-2">
-          <span className="text-white text-xs md:text-sm tracking-wider text-center">SCROLL DOWN</span>
+        <button className="flex flex-col items-center justify-center gap-1 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full hover:bg-white/20 transition-all">
+          <span className="text-white text-xs tracking-wider font-semibold">상세정보 보기</span>
           <svg
-            className="w-5 h-5 md:w-6 md:h-6 text-luxury-gold"
+            className="w-5 h-5 text-luxury-gold"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -144,8 +349,76 @@ export default function HeroSection() {
           >
             <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
           </svg>
-        </div>
+        </button>
       </motion.div>
+
+      {/* 모바일: 하단 고정 폼 */}
+      <div className="lg:hidden absolute bottom-20 left-0 right-0 z-30 px-4">
+        <motion.div
+          id="consultation-form"
+          className="bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-2xl border-2 border-luxury-gold/30"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          <h3 className="text-xl font-bold text-luxury-charcoal mb-4">
+            빠른 상담 신청
+          </h3>
+
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="이름"
+              required
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+            />
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="전화번호 (숫자만)"
+              required
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm"
+            />
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="문의내용 (선택)"
+              rows={2}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm resize-none"
+            />
+            <div className="flex items-start gap-2">
+              <input
+                type="checkbox"
+                id="privacyAgreeMobile"
+                name="privacyAgree"
+                checked={formData.privacyAgree}
+                onChange={handleChange}
+                className="mt-1 w-4 h-4 text-luxury-gold border-gray-300 rounded"
+              />
+              <label htmlFor="privacyAgreeMobile" className="text-xs text-gray-700">
+                개인정보 수집 및 이용 동의
+              </label>
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`w-full py-4 rounded-xl font-bold text-base ${
+                isSubmitting
+                  ? 'bg-gray-400 text-gray-200'
+                  : 'bg-luxury-gold text-luxury-charcoal hover:bg-luxury-gold/90'
+              }`}
+            >
+              {isSubmitting ? '처리 중...' : '⚡ 상담 신청하기'}
+            </button>
+          </form>
+        </motion.div>
+      </div>
     </section>
   );
 }
