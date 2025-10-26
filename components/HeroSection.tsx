@@ -21,19 +21,19 @@ export default function HeroSection() {
       image: "/images/yeomchang-thechaeum-view.jpg",
       tag: "투룸값에 쓰리룸 산다!",
       title: "염창역 더채움",
-      subtitle: "9호선 급행 초역세권 쓰리룸 오피스텔\n투룸 가격에 쓰리룸!!!",
+      subtitle: "- 9호선 급행 초역세권 쓰리룸 오피스텔\n- 투룸 가격에 쓰리룸!!!\n- 회사보유분 선착순 특별줍줍분양",
     },
     {
       image: "/images/yeomchang-thechaeum-exterior-view.jpg",
       tag: "9호선 급행 초역세권",
       title: "출퇴근 15분 컷",
-      subtitle: "여의도 3정거장 · 김포공항 2정거장\n강남 20분 · 목동 5분",
+      subtitle: "- 여의도 2정거장\n- 강남 20분",
     },
     {
       image: "/images/yeomchang-thechaeum-unit-interior-01.jpg",
       tag: "4無 혜택",
       title: "대출규제 영향 無",
-      subtitle: "주택수 · 대출 · 자금조달 · 실거주\n4가지 규제 완전 FREE",
+      subtitle: "- 주택수 · 대출 · 자금조달 · 실거주\n- 4가지 규제 완전 FREE",
     },
   ];
 
@@ -259,7 +259,7 @@ export default function HeroSection() {
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder="문의내용 (선택사항)"
+                      placeholder="문의내용"
                       rows={3}
                       className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-base resize-none"
                     />
@@ -360,7 +360,7 @@ export default function HeroSection() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              placeholder="문의내용 (선택)"
+              placeholder="문의내용"
               rows={2}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-luxury-gold focus:outline-none transition-colors text-sm resize-none"
             />
