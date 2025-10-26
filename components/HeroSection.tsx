@@ -15,25 +15,45 @@ export default function HeroSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 슬라이드 데이터
+  // 슬라이드 데이터 (JSX 포함)
   const slides = [
     {
       image: "/images/yeomchang-thechaeum-view.jpg",
       tag: "투룸값에 쓰리룸 산다!",
       title: "염창역 더채움",
-      subtitle: "- 9호선 급행 초역세권 쓰리룸 오피스텔\n- 투룸 가격에 쓰리룸!!!\n- 회사보유분 선착순 특별줍줍분양",
+      subtitle: (
+        <>
+          - 9호선 급행 초역세권 <span className="text-luxury-gold font-bold">쓰리룸</span> 오피스텔
+          <br />
+          - <span className="text-luxury-gold font-bold">투룸 가격</span>에 <span className="text-luxury-gold font-bold">쓰리룸</span>!!!
+          <br />
+          - 회사보유분 <span className="text-luxury-gold font-bold">선착순 특별줍줍분양</span>
+        </>
+      ),
     },
     {
       image: "/images/yeomchang-thechaeum-exterior-view.jpg",
       tag: "9호선 급행 초역세권",
       title: "출퇴근 15분 컷",
-      subtitle: "- 여의도 2정거장\n- 강남 20분",
+      subtitle: (
+        <>
+          - 여의도 <span className="text-luxury-gold font-bold">2정거장</span>
+          <br />
+          - 강남 <span className="text-luxury-gold font-bold">20분</span>
+        </>
+      ),
     },
     {
       image: "/images/yeomchang-thechaeum-unit-interior-01.jpg",
       tag: "4無 혜택",
       title: "대출규제 영향 無",
-      subtitle: "- 주택수 · 대출 · 자금조달 · 실거주\n- 4가지 규제 완전 FREE",
+      subtitle: (
+        <>
+          - 주택수 · 대출 · 자금조달 · 실거주
+          <br />
+          - <span className="text-luxury-gold font-bold">4가지 규제 완전 FREE</span>
+        </>
+      ),
     },
   ];
 
@@ -169,9 +189,9 @@ export default function HeroSection() {
                     ))}
                   </motion.h1>
 
-                  <motion.p className="text-base sm:text-lg md:text-xl text-gray-100 mb-6 leading-relaxed whitespace-pre-line">
+                  <motion.div className="text-base sm:text-lg md:text-xl text-gray-100 mb-6 leading-relaxed">
                     {slides[currentSlide].subtitle}
-                  </motion.p>
+                  </motion.div>
 
                   {/* 모바일: CTA 버튼 */}
                   <div className="lg:hidden flex flex-col gap-3 mt-8">
