@@ -34,7 +34,7 @@ export default function LocationPage() {
             <div className="mb-20 max-w-6xl mx-auto">
               <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl border-4 border-luxury-gold/20">
                 <Image
-                  src="/ref_data/입지환경.png"
+                  src="/지하철노선도.png"
                   alt="염창역 더채움 입지환경"
                   fill
                   className="object-contain bg-white"
