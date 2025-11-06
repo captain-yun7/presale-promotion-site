@@ -17,10 +17,10 @@ export default function HeroSection() {
 
   // 배경 이미지 데이터 (이미지만 변경)
   const slides = [
-    { image: "/images/yeomchang-thechaeum-view.jpg" },
-    { image: "/images/yeomchang-thechaeum-unit-interior-02.jpg" },
-    { image: "/images/yeomchang-thechaeum-exterior-view.jpg" },
-    { image: "/images/yeomchang-thechaeum-unit-interior-01.jpg" },
+    { image: "/images/yeomchang-thechaeum-view.jpg", alt: "염창역 더채움 전경" },
+    { image: "/images/yeomchang-thechaeum-unit-interior-02.jpg", alt: "염창역 더채움 실내" },
+    { image: "/images/yeomchang-thechaeum-exterior-view.jpg", alt: "염창역 더채움 외관" },
+    { image: "/images/yeomchang-thechaeum-unit-interior-01.jpg", alt: "염창역 더채움 인테리어" },
   ];
 
   // 자동 슬라이드 (8초마다)
@@ -114,7 +114,7 @@ export default function HeroSection() {
         >
           <Image
             src={slides[currentSlide].image}
-            alt={slides[currentSlide].title}
+            alt={slides[currentSlide].alt}
             fill
             className="object-cover"
             priority={currentSlide === 0}
@@ -136,12 +136,13 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 lg:mb-8 leading-tight">
-                  현금 <span className="text-luxury-gold">1-2억대</span>로 서울 <span className="text-luxury-gold">3룸</span><br />
-                  내집마련 가능한 곳
+                <motion.h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 lg:mb-6" style={{ lineHeight: '1.3' }}>
+                  현금 <span className="text-luxury-gold">1-2억대</span><br />
+                  한강공원 부근<br />
+                  서울 <span className="text-luxury-gold">3룸</span> 내집마련
                 </motion.h1>
 
-                <motion.p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-luxury-gold mb-8 lg:mb-10 font-bold leading-relaxed">
+                <motion.p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-luxury-gold mb-6 lg:mb-8 font-bold leading-relaxed">
                   9호선 급행 염창역 도보 3분
                 </motion.p>
               </motion.div>
