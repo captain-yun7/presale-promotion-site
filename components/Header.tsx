@@ -125,7 +125,7 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-10 lg:gap-16">
             <Link
-              href="/yeomchang-thechaeum#project-overview"
+              href="/yeomchang-thechaeum/overview"
               className={`font-semibold text-base lg:text-lg transition-colors ${
                 isScrolled
                   ? "text-gray-700 hover:text-primary"
@@ -230,9 +230,8 @@ export default function Header({ forceScrolled = false }: { forceScrolled?: bool
         {isMobileMenuOpen && (
           <nav className="md:hidden bg-white shadow-lg rounded-lg p-3 mb-3">
             <Link
-              href="/yeomchang-thechaeum#project-overview"
+              href="/yeomchang-thechaeum/overview"
               className="block w-full text-left py-2.5 px-2 text-gray-700 hover:text-primary font-semibold text-base active:bg-gray-50 rounded"
-              onClick={() => setIsMobileMenuOpen(false)}
             >
               사업개요
             </Link>
