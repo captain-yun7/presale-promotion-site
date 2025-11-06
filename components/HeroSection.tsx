@@ -19,53 +19,57 @@ export default function HeroSection() {
   const slides = [
     {
       image: "/images/yeomchang-thechaeum-view.jpg",
-      tag: "투룸값에 쓰리룸 산다!",
-      title: "염창역 더채움",
+      tag: "🔥 지금 아니면 못삽니다",
+      title: "투룸값 쓰리룸",
       subtitle: (
         <>
-          - 9호선 급행 초역세권 <span className="text-luxury-gold font-bold">쓰리룸</span> 오피스텔
+          염창역 도보 3분 · 여의도 출근 7분
           <br />
-          - <span className="text-luxury-gold font-bold">투룸 가격</span>에 <span className="text-luxury-gold font-bold">쓰리룸</span>!!!
+          <span className="text-luxury-gold font-bold text-2xl">1억대 쓰리룸</span> 회사보유분 긴급매물
           <br />
-          - 회사보유분 <span className="text-luxury-gold font-bold">선착순 특별줍줍분양</span>
+          이 가격 다시 없습니다
         </>
       ),
     },
     {
       image: "/images/yeomchang-thechaeum-unit-interior-02.jpg",
-      tag: "회사보유분 특별분양",
-      title: "초특가 분양",
+      tag: "⚡ 실평수 19평 아파트급 구조",
+      title: "3룸 + 2욕실",
       subtitle: (
         <>
-          - <span className="text-luxury-gold font-bold">투룸 가격</span>에 <span className="text-luxury-gold font-bold">쓰리룸</span> 실현
+          침실3 · 욕실2 · 발코니 · 창고
           <br />
-          - 시세 대비 <span className="text-luxury-gold font-bold">파격 가격</span>
+          <span className="text-luxury-gold font-bold">삼성 비스포크 풀옵션</span> 가전 포함
           <br />
-          - <span className="text-luxury-gold font-bold">선착순 마감</span> 임박
+          입주하자마자 살 수 있습니다
         </>
       ),
     },
     {
       image: "/images/yeomchang-thechaeum-exterior-view.jpg",
-      tag: "9호선 급행 초역세권",
-      title: "출퇴근 15분 컷",
+      tag: "🚇 서울 중심 올림픽대로 5분",
+      title: "여의도 2정거장",
       subtitle: (
         <>
-          - 여의도 <span className="text-luxury-gold font-bold">2정거장</span>
+          여의도 <span className="text-luxury-gold font-bold">7분</span> · 강남 <span className="text-luxury-gold font-bold">15분</span> · 홍대 <span className="text-luxury-gold font-bold">10분</span>
           <br />
-          - 강남 <span className="text-luxury-gold font-bold">20분</span>
+          9호선 급행역 도보3분 초역세권
+          <br />
+          영천시장 바로옆 생활인프라 완벽
         </>
       ),
     },
     {
       image: "/images/yeomchang-thechaeum-unit-interior-01.jpg",
-      tag: "4無 혜택",
-      title: "대출규제 영향 無",
+      tag: "💰 대출규제 완전 FREE",
+      title: "주택수 안잡혀요",
       subtitle: (
         <>
-          - 주택수 · 대출 · 자금조달 · 실거주
+          오피스텔이라 <span className="text-luxury-gold font-bold">주택수 제외</span>
           <br />
-          - <span className="text-luxury-gold font-bold">4가지 규제 완전 FREE</span>
+          <span className="text-luxury-gold font-bold">DSR · LTV 규제 無</span>
+          <br />
+          다주택자도 투자 가능합니다
         </>
       ),
     },
