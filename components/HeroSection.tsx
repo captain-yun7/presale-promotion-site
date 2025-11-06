@@ -15,64 +15,12 @@ export default function HeroSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 슬라이드 데이터 (JSX 포함)
+  // 배경 이미지 데이터 (이미지만 변경)
   const slides = [
-    {
-      image: "/images/yeomchang-thechaeum-view.jpg",
-      tag: "🔥 지금 아니면 못삽니다",
-      title: "투룸값 쓰리룸",
-      subtitle: (
-        <>
-          염창역 도보 3분 · 여의도 출근 7분
-          <br />
-          <span className="text-luxury-gold font-bold text-2xl">1억대 쓰리룸</span> 회사보유분 긴급매물
-          <br />
-          이 가격 다시 없습니다
-        </>
-      ),
-    },
-    {
-      image: "/images/yeomchang-thechaeum-unit-interior-02.jpg",
-      tag: "⚡ 실평수 19평 아파트급 구조",
-      title: "3룸 + 2욕실",
-      subtitle: (
-        <>
-          침실3 · 욕실2 · 발코니 · 창고
-          <br />
-          <span className="text-luxury-gold font-bold">삼성 비스포크 풀옵션</span> 가전 포함
-          <br />
-          입주하자마자 살 수 있습니다
-        </>
-      ),
-    },
-    {
-      image: "/images/yeomchang-thechaeum-exterior-view.jpg",
-      tag: "🚇 서울 중심 올림픽대로 5분",
-      title: "여의도 2정거장",
-      subtitle: (
-        <>
-          여의도 <span className="text-luxury-gold font-bold">7분</span> · 강남 <span className="text-luxury-gold font-bold">15분</span> · 홍대 <span className="text-luxury-gold font-bold">10분</span>
-          <br />
-          9호선 급행역 도보3분 초역세권
-          <br />
-          영천시장 바로옆 생활인프라 완벽
-        </>
-      ),
-    },
-    {
-      image: "/images/yeomchang-thechaeum-unit-interior-01.jpg",
-      tag: "💰 대출규제 완전 FREE",
-      title: "주택수 안잡혀요",
-      subtitle: (
-        <>
-          오피스텔이라 <span className="text-luxury-gold font-bold">주택수 제외</span>
-          <br />
-          <span className="text-luxury-gold font-bold">DSR · LTV 규제 無</span>
-          <br />
-          다주택자도 투자 가능합니다
-        </>
-      ),
-    },
+    { image: "/images/yeomchang-thechaeum-view.jpg" },
+    { image: "/images/yeomchang-thechaeum-unit-interior-02.jpg" },
+    { image: "/images/yeomchang-thechaeum-exterior-view.jpg" },
+    { image: "/images/yeomchang-thechaeum-unit-interior-01.jpg" },
   ];
 
   // 자동 슬라이드 (8초마다)
@@ -181,53 +129,22 @@ export default function HeroSection() {
         <div className="container-custom w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start lg:items-center">
 
-            {/* 왼쪽: 슬라이드 카피 */}
+            {/* 왼쪽: 고정 메시지 */}
             <div className="lg:pr-8 pb-[380px] lg:pb-0">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentSlide}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <motion.p className="text-base md:text-lg lg:text-xl mb-3 lg:mb-4 font-bold tracking-wide text-luxury-gold">
-                    {slides[currentSlide].tag}
-                  </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 lg:mb-8 leading-tight">
+                  현금 <span className="text-luxury-gold">1-2억대</span>로 서울 <span className="text-luxury-gold">3룸</span><br />
+                  내집마련 가능한 곳
+                </motion.h1>
 
-                  <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 lg:mb-6 leading-tight">
-                    {slides[currentSlide].title.split(' ').map((word, i) => (
-                      <span key={i}>
-                        {word.includes('더채움') || word.includes('15분') ? (
-                          <span className="text-luxury-gold">{word}</span>
-                        ) : (
-                          word
-                        )}
-                        {i < slides[currentSlide].title.split(' ').length - 1 && ' '}
-                      </span>
-                    ))}
-                  </motion.h1>
-
-                  <motion.div className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-100 mb-6 lg:mb-8 leading-relaxed font-medium">
-                    {slides[currentSlide].subtitle}
-                  </motion.div>
-                </motion.div>
-              </AnimatePresence>
-
-              {/* 슬라이드 인디케이터 */}
-              <div className="flex gap-2 mt-8">
-                {slides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`h-1.5 rounded-full transition-all ${
-                      index === currentSlide
-                        ? 'bg-luxury-gold w-12'
-                        : 'bg-white/30 w-8 hover:bg-white/50'
-                    }`}
-                  />
-                ))}
-              </div>
+                <motion.p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-luxury-gold mb-8 lg:mb-10 font-bold leading-relaxed">
+                  9호선 급행 염창역 도보 3분
+                </motion.p>
+              </motion.div>
             </div>
 
             {/* 오른쪽: 상담 신청 폼 (데스크톱만) */}
