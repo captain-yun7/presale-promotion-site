@@ -35,13 +35,79 @@ export default function HeroSection({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 배경 이미지 데이터 (이미지만 변경)
-  const slides = [
-    { image: "/images/yeomchang-thechaeum-view.jpg", alt: "염창역 더채움 전경" },
-    { image: "/images/yeomchang-thechaeum-unit-interior-02.jpg", alt: "염창역 더채움 실내" },
-    { image: "/images/yeomchang-thechaeum-exterior-view.jpg", alt: "염창역 더채움 외관" },
-    { image: "/images/yeomchang-thechaeum-unit-interior-01.jpg", alt: "염창역 더채움 인테리어" },
+  // heroContent가 있으면 동적 데이터 사용, 없으면 기본값 (염창역 더채움)
+  const dynamicTitle = heroContent?.title || projectName;
+  const dynamicSubtitle = heroContent?.subtitle || "프리미엄 주거공간의 새로운 기준";
+  const dynamicDescription = heroContent?.description || "";
+
+  // 염창역 더채움 전용 슬라이드 (기존 검증된 콘텐츠)
+  const yeomchangSlides = [
+    {
+      image: "/images/yeomchang-thechaeum-view.jpg",
+      tag: "투룸값에 쓰리룸 산다!",
+      title: "염창역 더채움",
+      subtitle: (
+        <>
+          - 9호선 급행 초역세권 <span className="text-luxury-gold font-bold">쓰리룸</span> 오피스텔
+          <br />
+          - <span className="text-luxury-gold font-bold">투룸 가격</span>에 <span className="text-luxury-gold font-bold">쓰리룸</span>!!!
+          <br />
+          - 회사보유분 <span className="text-luxury-gold font-bold">선착순 특별줍줍분양</span>
+        </>
+      ),
+    },
+    {
+      image: "/images/yeomchang-thechaeum-unit-interior-02.jpg",
+      tag: "회사보유분 특별분양",
+      title: "초특가 분양",
+      subtitle: (
+        <>
+          - <span className="text-luxury-gold font-bold">투룸 가격</span>에 <span className="text-luxury-gold font-bold">쓰리룸</span> 실현
+          <br />
+          - 시세 대비 <span className="text-luxury-gold font-bold">파격 가격</span>
+          <br />
+          - <span className="text-luxury-gold font-bold">선착순 마감</span> 임박
+        </>
+      ),
+    },
+    {
+      image: "/images/yeomchang-thechaeum-exterior-view.jpg",
+      tag: "9호선 급행 초역세권",
+      title: "출퇴근 15분 컷",
+      subtitle: (
+        <>
+          - 여의도 <span className="text-luxury-gold font-bold">2정거장</span>
+          <br />
+          - 강남 <span className="text-luxury-gold font-bold">20분</span>
+        </>
+      ),
+    },
+    {
+      image: "/images/yeomchang-thechaeum-unit-interior-01.jpg",
+      tag: "4無 혜택",
+      title: "대출규제 영향 無",
+      subtitle: (
+        <>
+          - 주택수 · 대출 · 자금조달 · 실거주
+          <br />
+          - <span className="text-luxury-gold font-bold">4가지 규제 완전 FREE</span>
+        </>
+      ),
+    },
   ];
+
+  // 동적 프로젝트용 슬라이드 (DB 데이터 사용)
+  const dynamicSlides = [
+    {
+      image: "/images/hero-bg.jpg",
+      tag: dynamicDescription || "프리미엄 분양",
+      title: dynamicTitle,
+      subtitle: <>{dynamicSubtitle}</>,
+    },
+  ];
+
+  // 슬라이드 선택: 염창역 더채움은 전용 슬라이드, 나머지는 동적
+  const slides = projectSlug === 'yeomchang-thechaeum' ? yeomchangSlides : dynamicSlides;
 
   // 자동 슬라이드 (8초마다)
   useEffect(() => {
@@ -134,7 +200,7 @@ export default function HeroSection({
         >
           <Image
             src={slides[currentSlide].image}
-            alt={slides[currentSlide].alt}
+            alt={slides[currentSlide].title}
             fill
             className="object-cover"
             priority={currentSlide === 0}
@@ -149,23 +215,53 @@ export default function HeroSection({
         <div className="container-custom w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start lg:items-center">
 
-            {/* 왼쪽: 고정 메시지 */}
+            {/* 왼쪽: 슬라이드 카피 */}
             <div className="lg:pr-8 pb-[380px] lg:pb-0">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                <motion.h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 lg:mb-6" style={{ lineHeight: '1.3' }}>
-                  현금 <span className="text-luxury-gold">1-2억대</span><br />
-                  한강공원 부근<br />
-                  서울 <span className="text-luxury-gold">3룸</span> 내집마련
-                </motion.h1>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <motion.p className="text-base md:text-lg lg:text-xl mb-3 lg:mb-4 font-bold tracking-wide text-luxury-gold">
+                    {slides[currentSlide].tag}
+                  </motion.p>
 
-                <motion.p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-luxury-gold mb-6 lg:mb-8 font-bold leading-relaxed">
-                  9호선 급행 염창역 도보 3분
-                </motion.p>
-              </motion.div>
+                  <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 lg:mb-6 leading-tight">
+                    {slides[currentSlide].title.split(' ').map((word, i) => (
+                      <span key={i}>
+                        {word.includes('더채움') || word.includes('15분') ? (
+                          <span className="text-luxury-gold">{word}</span>
+                        ) : (
+                          word
+                        )}
+                        {i < slides[currentSlide].title.split(' ').length - 1 && ' '}
+                      </span>
+                    ))}
+                  </motion.h1>
+
+                  <motion.div className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-100 mb-6 lg:mb-8 leading-relaxed font-medium">
+                    {slides[currentSlide].subtitle}
+                  </motion.div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* 슬라이드 인디케이터 */}
+              <div className="flex gap-2 mt-8">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`h-1.5 rounded-full transition-all ${
+                      index === currentSlide
+                        ? 'bg-luxury-gold w-12'
+                        : 'bg-white/30 w-8 hover:bg-white/50'
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* 오른쪽: 상담 신청 폼 (데스크톱만) */}
