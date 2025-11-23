@@ -5,7 +5,27 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { getStoredUTMParams } from "@/lib/utm-tracking";
 
-export default function HeroSection() {
+interface HeroProps {
+  projectName?: string;
+  projectSlug?: string;
+  phone?: string;
+  kakaoLink?: string;
+  heroContent?: {
+    title?: string;
+    subtitle?: string;
+    description?: string;
+    ctaText?: string;
+    badges?: string[];
+  };
+}
+
+export default function HeroSection({
+  projectName = "염창역더채움",
+  projectSlug = "염창역더채움",
+  phone = "1666-0952",
+  kakaoLink = "https://open.kakao.com/o/sXGXbTXh",
+  heroContent,
+}: HeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
@@ -61,7 +81,7 @@ export default function HeroSection() {
           phone: formData.phone,
           message: formData.message,
           source: source,
-          project: '염창역더채움',
+          project: projectSlug,
         }),
       });
 
@@ -84,7 +104,7 @@ export default function HeroSection() {
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : '상담 신청 중 오류가 발생했습니다.';
-      alert(`❌ ${errorMessage}\n\n긴급한 경우 1666-0952로 전화주세요.`);
+      alert(`❌ ${errorMessage}\n\n긴급한 경우 ${phone}로 전화주세요.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -228,7 +248,7 @@ export default function HeroSection() {
 
                   <div className="grid grid-cols-2 gap-3 mt-4">
                     <a
-                      href="tel:1666-0952"
+                      href={`tel:${phone}`}
                       className="py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-colors font-semibold text-sm flex items-center justify-center gap-2"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -237,7 +257,7 @@ export default function HeroSection() {
                       전화상담
                     </a>
                     <a
-                      href="https://open.kakao.com/o/sXGXbTXh"
+                      href={kakaoLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="py-4 bg-[#FEE500] hover:bg-[#FDD835] text-[#3C1E1E] rounded-xl transition-colors font-semibold text-sm flex items-center justify-center gap-2"
@@ -271,7 +291,7 @@ export default function HeroSection() {
           <div className="bg-gray-800 px-3 py-2 rounded-lg">
             <Image
               src="/thechaeum-logo.png"
-              alt="염창역 더채움"
+              alt={projectName}
               width={100}
               height={28}
               className="h-7 w-auto flex-shrink-0"

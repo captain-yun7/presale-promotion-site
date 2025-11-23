@@ -77,7 +77,13 @@ export default async function ProjectPage({ params }: Props) {
     )?.content;
   };
 
-  const heroContent = getContent("hero");
+  const heroContent = getContent("hero") as {
+    title?: string;
+    subtitle?: string;
+    description?: string;
+    ctaText?: string;
+    badges?: string[];
+  } | undefined;
 
   // 구조화된 데이터 (JSON-LD)
   const structuredData = {
@@ -105,9 +111,12 @@ export default async function ProjectPage({ params }: Props) {
 
       <Header />
       <main>
-        {/* Hero Section - 추후 동적 데이터로 전환 예정 */}
-        {/* TODO: HeroSection에 heroContent props 전달 */}
-        <HeroSection />
+        <HeroSection
+          projectName={project.name}
+          projectSlug={project.slug}
+          phone={project.phone || "1666-0952"}
+          heroContent={heroContent}
+        />
       </main>
       <Footer />
     </>
