@@ -1858,3 +1858,106 @@ NEXT_PUBLIC_BASE_URL=https://www.smilebunyang.com
 - 클라이언트에서 API 응답을 철저히 검증할 것
 - 중요한 데이터는 백업 로깅 시스템 필수
 - 에러 로깅은 상세할수록 디버깅이 쉬움
+
+---
+
+### 멀티 프로젝트 빌더 시스템 구축
+**완료 시간**: 2025-11-23
+**핵심 요약**: 관리자 페이지를 확장하여 여러 분양 프로젝트를 관리할 수 있는 CMS 빌더 시스템 기반 구축
+
+**구현 내용**:
+
+#### 1. 데이터베이스 스키마 설계 및 생성
+- **파일**: `supabase/migrations/001_multi_project_builder.sql`
+- **테이블 구조**:
+  - `templates`: 프로젝트 템플릿 관리
+  - `projects`: 분양 프로젝트 정보 (slug, 상태, 설정, 테마 등)
+  - `project_contents`: 섹션별 콘텐츠 (hero, location, units, qna 등)
+  - `project_units`: 세대 타입 정보
+  - `project_images`: 이미지 관리
+  - `project_blogs`: 프로젝트별 블로그
+- **기능**: RLS 정책, 인덱스, 자동 updated_at 트리거
+
+#### 2. 시드 데이터 마이그레이션
+- **파일**: `supabase/migrations/002_seed_data.sql`
+- 기본 템플릿 생성 (프리미엄 분양 템플릿)
+- 염창역 더채움 프로젝트 데이터 이전
+- 기존 consultations 테이블과 연결
+
+#### 3. TypeScript 타입 정의
+- **파일**: `lib/supabase.ts` (타입 추가)
+- Template, Project, ProjectContent, ProjectUnit 등 인터페이스 정의
+- ThemeConfig, ProjectSettings, SectionType 등 유틸리티 타입
+
+#### 4. API 라우트 구현
+**프로젝트 관리 API**:
+- `GET/POST /api/admin/projects` - 목록 조회, 생성
+- `GET/PUT/DELETE /api/admin/projects/[id]` - 상세 조회, 수정, 삭제
+- `PUT/DELETE /api/admin/projects/[id]/contents` - 콘텐츠 upsert, 삭제
+
+**템플릿 관리 API**:
+- `GET/POST /api/admin/templates` - 템플릿 목록, 생성
+
+**공개 API**:
+- `GET /api/projects/[slug]` - slug로 프로젝트 데이터 조회
+
+#### 5. 관리자 CMS 페이지
+**프로젝트 목록** (`/admin/projects`):
+- 전체 프로젝트 목록 테이블
+- 상태 필터링 (초안/게시됨/보관됨)
+- 상태 변경, 삭제 기능
+- 페이지네이션
+
+**새 프로젝트 생성** (`/admin/projects/new`):
+- 템플릿 선택 UI
+- 기본 정보 입력 (이름, slug, 주소, 전화번호 등)
+- 자동 slug 생성
+
+**프로젝트 편집기** (`/admin/projects/[id]/edit`):
+- 탭 기반 편집 UI (기본정보, 히어로, 세대타입, 위치, 일정, QnA, 설정)
+- 실시간 저장 기능
+- 테마 커스터마이징 (색상 선택)
+- 기능 토글 (플로팅 CTA, 소셜 프루프, 긴급 배너)
+
+#### 6. 동적 라우팅 구조
+- **파일**: `app/[projectSlug]/page.tsx`
+- slug 기반 동적 프로젝트 페이지
+- generateMetadata로 동적 SEO
+- generateStaticParams로 정적 생성
+- not-found 페이지 처리
+
+**생성된 파일 목록**:
+```
+supabase/migrations/001_multi_project_builder.sql
+supabase/migrations/002_seed_data.sql
+app/api/admin/projects/route.ts
+app/api/admin/projects/[id]/route.ts
+app/api/admin/projects/[id]/contents/route.ts
+app/api/admin/templates/route.ts
+app/api/projects/[slug]/route.ts
+app/admin/projects/page.tsx
+app/admin/projects/new/page.tsx
+app/admin/projects/[id]/edit/page.tsx
+app/[projectSlug]/page.tsx
+app/[projectSlug]/layout.tsx
+app/[projectSlug]/not-found.tsx
+```
+
+**다음 단계 (추후 구현 필요)**:
+1. **Supabase 마이그레이션 실행**: SQL 파일을 Supabase 대시보드에서 실행
+2. **컴포넌트 데이터 연동**: 기존 컴포넌트들이 props로 DB 데이터를 받도록 리팩토링
+3. **이미지 업로드**: Supabase Storage 연동
+4. **템플릿 시스템 완성**: 프로젝트를 템플릿으로 저장하는 기능
+5. **서브 페이지 동적 라우팅**: /[projectSlug]/location, /[projectSlug]/units 등
+
+**환경변수 추가 필요**:
+```
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
+
+---
+
+**작업자**: AI Assistant
+**작업일**: 2025-11-23
+**핵심 목표**: 멀티 프로젝트 관리 시스템 기반 구축
+**변경 파일 수**: 14개 (신규 13, 수정 1)
