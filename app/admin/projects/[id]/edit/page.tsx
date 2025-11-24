@@ -433,7 +433,14 @@ function BasicInfoTab({
   );
 }
 
-// 히어로 탭
+// 히어로 탭 - 슬라이드 편집 포함
+interface SlideData {
+  image: string;
+  tag: string;
+  title: string;
+  subtitleLines: string[];
+}
+
 function HeroTab({
   content,
   onSave,
@@ -446,50 +453,129 @@ function HeroTab({
     subtitle: (content.subtitle as string) || "",
     description: (content.description as string) || "",
     ctaText: (content.ctaText as string) || "무료 상담 신청",
-    ctaLink: (content.ctaLink as string) || "#contact",
+    badges: (content.badges as string[]) || [],
+    slides: (content.slides as SlideData[]) || [],
   });
+
+  const [newBadge, setNewBadge] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(formData);
   };
 
+  // 뱃지 관리
+  const addBadge = () => {
+    if (newBadge.trim()) {
+      setFormData(prev => ({
+        ...prev,
+        badges: [...prev.badges, newBadge.trim()]
+      }));
+      setNewBadge("");
+    }
+  };
+
+  const removeBadge = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      badges: prev.badges.filter((_, i) => i !== index)
+    }));
+  };
+
+  // 슬라이드 관리
+  const addSlide = () => {
+    setFormData(prev => ({
+      ...prev,
+      slides: [...prev.slides, {
+        image: "/images/hero-bg.jpg",
+        tag: "새 슬라이드",
+        title: "제목",
+        subtitleLines: ["설명 라인"]
+      }]
+    }));
+  };
+
+  const removeSlide = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      slides: prev.slides.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateSlide = (index: number, field: keyof SlideData, value: string | string[]) => {
+    setFormData(prev => ({
+      ...prev,
+      slides: prev.slides.map((slide, i) =>
+        i === index ? { ...slide, [field]: value } : slide
+      )
+    }));
+  };
+
+  const moveSlide = (index: number, direction: 'up' | 'down') => {
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= formData.slides.length) return;
+
+    const newSlides = [...formData.slides];
+    [newSlides[index], newSlides[newIndex]] = [newSlides[newIndex], newSlides[index]];
+    setFormData(prev => ({ ...prev, slides: newSlides }));
+  };
+
+  // subtitleLines 관리
+  const addSubtitleLine = (slideIndex: number) => {
+    const newSlides = [...formData.slides];
+    newSlides[slideIndex].subtitleLines.push("");
+    setFormData(prev => ({ ...prev, slides: newSlides }));
+  };
+
+  const removeSubtitleLine = (slideIndex: number, lineIndex: number) => {
+    const newSlides = [...formData.slides];
+    newSlides[slideIndex].subtitleLines = newSlides[slideIndex].subtitleLines.filter((_, i) => i !== lineIndex);
+    setFormData(prev => ({ ...prev, slides: newSlides }));
+  };
+
+  const updateSubtitleLine = (slideIndex: number, lineIndex: number, value: string) => {
+    const newSlides = [...formData.slides];
+    newSlides[slideIndex].subtitleLines[lineIndex] = value;
+    setFormData(prev => ({ ...prev, slides: newSlides }));
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6 space-y-4">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">제목</label>
-        <input
-          type="text"
-          value={formData.title}
-          onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-          className="w-full border rounded-lg px-3 py-2"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">부제목</label>
-        <input
-          type="text"
-          value={formData.subtitle}
-          onChange={(e) => setFormData((prev) => ({ ...prev, subtitle: e.target.value }))}
-          className="w-full border rounded-lg px-3 py-2"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">설명</label>
-        <textarea
-          value={formData.description}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, description: e.target.value }))
-          }
-          rows={3}
-          className="w-full border rounded-lg px-3 py-2"
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* 기본 정보 */}
+      <div className="bg-white shadow rounded-lg p-6 space-y-4">
+        <h3 className="text-lg font-medium border-b pb-2">기본 정보</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">기본 제목</label>
+            <input
+              type="text"
+              value={formData.title}
+              onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+              className="w-full border rounded-lg px-3 py-2"
+              placeholder="슬라이드가 없을 때 표시"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">기본 부제목</label>
+            <input
+              type="text"
+              value={formData.subtitle}
+              onChange={(e) => setFormData((prev) => ({ ...prev, subtitle: e.target.value }))}
+              className="w-full border rounded-lg px-3 py-2"
+            />
+          </div>
+        </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            CTA 버튼 텍스트
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">설명</label>
+          <input
+            type="text"
+            value={formData.description}
+            onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+            className="w-full border rounded-lg px-3 py-2"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">CTA 버튼 텍스트</label>
           <input
             type="text"
             value={formData.ctaText}
@@ -497,22 +583,159 @@ function HeroTab({
             className="w-full border rounded-lg px-3 py-2"
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            CTA 버튼 링크
-          </label>
+      </div>
+
+      {/* 뱃지 */}
+      <div className="bg-white shadow rounded-lg p-6 space-y-4">
+        <h3 className="text-lg font-medium border-b pb-2">뱃지</h3>
+        <div className="flex flex-wrap gap-2 mb-3">
+          {formData.badges.map((badge, index) => (
+            <span key={index} className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+              {badge}
+              <button type="button" onClick={() => removeBadge(index)} className="text-blue-600 hover:text-blue-800">
+                &times;
+              </button>
+            </span>
+          ))}
+        </div>
+        <div className="flex gap-2">
           <input
             type="text"
-            value={formData.ctaLink}
-            onChange={(e) => setFormData((prev) => ({ ...prev, ctaLink: e.target.value }))}
-            className="w-full border rounded-lg px-3 py-2"
+            value={newBadge}
+            onChange={(e) => setNewBadge(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addBadge())}
+            placeholder="새 뱃지 추가"
+            className="flex-1 border rounded-lg px-3 py-2"
           />
+          <button type="button" onClick={addBadge} className="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
+            추가
+          </button>
         </div>
       </div>
+
+      {/* 슬라이드 */}
+      <div className="bg-white shadow rounded-lg p-6 space-y-4">
+        <div className="flex justify-between items-center border-b pb-2">
+          <h3 className="text-lg font-medium">슬라이드 ({formData.slides.length}개)</h3>
+          <button type="button" onClick={addSlide} className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+            + 슬라이드 추가
+          </button>
+        </div>
+
+        {formData.slides.length === 0 ? (
+          <p className="text-gray-500 text-center py-8">슬라이드가 없습니다. 기본 정보가 표시됩니다.</p>
+        ) : (
+          <div className="space-y-4">
+            {formData.slides.map((slide, slideIndex) => (
+              <div key={slideIndex} className="border rounded-lg p-4 bg-gray-50">
+                <div className="flex justify-between items-start mb-3">
+                  <span className="font-medium text-sm text-gray-600">슬라이드 {slideIndex + 1}</span>
+                  <div className="flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() => moveSlide(slideIndex, 'up')}
+                      disabled={slideIndex === 0}
+                      className="px-2 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+                    >
+                      ↑
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveSlide(slideIndex, 'down')}
+                      disabled={slideIndex === formData.slides.length - 1}
+                      className="px-2 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+                    >
+                      ↓
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => removeSlide(slideIndex)}
+                      className="px-2 py-1 text-xs bg-red-100 text-red-600 rounded hover:bg-red-200"
+                    >
+                      삭제
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">이미지 경로</label>
+                    <input
+                      type="text"
+                      value={slide.image}
+                      onChange={(e) => updateSlide(slideIndex, 'image', e.target.value)}
+                      className="w-full border rounded px-2 py-1.5 text-sm"
+                      placeholder="/images/hero-bg.jpg"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">태그</label>
+                    <input
+                      type="text"
+                      value={slide.tag}
+                      onChange={(e) => updateSlide(slideIndex, 'tag', e.target.value)}
+                      className="w-full border rounded px-2 py-1.5 text-sm"
+                      placeholder="투룸값에 쓰리룸 산다!"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-3">
+                  <label className="block text-xs font-medium text-gray-600 mb-1">타이틀</label>
+                  <input
+                    type="text"
+                    value={slide.title}
+                    onChange={(e) => updateSlide(slideIndex, 'title', e.target.value)}
+                    className="w-full border rounded px-2 py-1.5 text-sm"
+                    placeholder="염창역 더채움"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex justify-between items-center mb-1">
+                    <label className="block text-xs font-medium text-gray-600">설명 라인</label>
+                    <button
+                      type="button"
+                      onClick={() => addSubtitleLine(slideIndex)}
+                      className="text-xs text-blue-600 hover:text-blue-800"
+                    >
+                      + 라인 추가
+                    </button>
+                  </div>
+                  <div className="space-y-2">
+                    {slide.subtitleLines.map((line, lineIndex) => (
+                      <div key={lineIndex} className="flex gap-2">
+                        <input
+                          type="text"
+                          value={line}
+                          onChange={(e) => updateSubtitleLine(slideIndex, lineIndex, e.target.value)}
+                          className="flex-1 border rounded px-2 py-1.5 text-sm"
+                          placeholder="&lt;highlight&gt;강조&lt;/highlight&gt; 태그 사용 가능"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeSubtitleLine(slideIndex, lineIndex)}
+                          className="px-2 text-red-500 hover:text-red-700"
+                        >
+                          &times;
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    * &lt;highlight&gt;텍스트&lt;/highlight&gt;로 골드색 강조
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="flex justify-end">
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
         >
           저장
         </button>
@@ -570,6 +793,17 @@ function UnitsTab({
 }
 
 // 위치 탭
+interface TransportItem {
+  type: string;
+  name: string;
+  time: string;
+}
+
+interface FacilityItem {
+  category: string;
+  items: string[];
+}
+
 function LocationTab({
   content,
   onSave,
@@ -580,6 +814,9 @@ function LocationTab({
   const [formData, setFormData] = useState({
     title: (content.title as string) || "프리미엄 입지",
     address: (content.address as string) || "",
+    mapCoordinates: (content.mapCoordinates as { lat: number; lng: number }) || { lat: 37.5465, lng: 126.8768 },
+    transport: (content.transport as TransportItem[]) || [],
+    facilities: (content.facilities as FacilityItem[]) || [],
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -587,33 +824,203 @@ function LocationTab({
     onSave(formData);
   };
 
+  // 교통 정보 관리
+  const addTransport = () => {
+    setFormData(prev => ({
+      ...prev,
+      transport: [...prev.transport, { type: "지하철", name: "", time: "" }]
+    }));
+  };
+
+  const removeTransport = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      transport: prev.transport.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateTransport = (index: number, field: keyof TransportItem, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      transport: prev.transport.map((item, i) =>
+        i === index ? { ...item, [field]: value } : item
+      )
+    }));
+  };
+
+  // 주변시설 관리
+  const addFacility = () => {
+    setFormData(prev => ({
+      ...prev,
+      facilities: [...prev.facilities, { category: "교육", items: [] }]
+    }));
+  };
+
+  const removeFacility = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      facilities: prev.facilities.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateFacilityCategory = (index: number, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      facilities: prev.facilities.map((item, i) =>
+        i === index ? { ...item, category: value } : item
+      )
+    }));
+  };
+
+  const updateFacilityItems = (index: number, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      facilities: prev.facilities.map((item, i) =>
+        i === index ? { ...item, items: value.split(',').map(s => s.trim()).filter(Boolean) } : item
+      )
+    }));
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6 space-y-4">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">섹션 제목</label>
-        <input
-          type="text"
-          value={formData.title}
-          onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-          className="w-full border rounded-lg px-3 py-2"
-        />
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* 기본 정보 */}
+      <div className="bg-white shadow rounded-lg p-6 space-y-4">
+        <h3 className="text-lg font-medium border-b pb-2">기본 정보</h3>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">섹션 제목</label>
+          <input
+            type="text"
+            value={formData.title}
+            onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+            className="w-full border rounded-lg px-3 py-2"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">주소</label>
+          <input
+            type="text"
+            value={formData.address}
+            onChange={(e) => setFormData((prev) => ({ ...prev, address: e.target.value }))}
+            className="w-full border rounded-lg px-3 py-2"
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">위도</label>
+            <input
+              type="number"
+              step="0.0001"
+              value={formData.mapCoordinates.lat}
+              onChange={(e) => setFormData((prev) => ({
+                ...prev,
+                mapCoordinates: { ...prev.mapCoordinates, lat: parseFloat(e.target.value) }
+              }))}
+              className="w-full border rounded-lg px-3 py-2"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">경도</label>
+            <input
+              type="number"
+              step="0.0001"
+              value={formData.mapCoordinates.lng}
+              onChange={(e) => setFormData((prev) => ({
+                ...prev,
+                mapCoordinates: { ...prev.mapCoordinates, lng: parseFloat(e.target.value) }
+              }))}
+              className="w-full border rounded-lg px-3 py-2"
+            />
+          </div>
+        </div>
       </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">주소</label>
-        <input
-          type="text"
-          value={formData.address}
-          onChange={(e) => setFormData((prev) => ({ ...prev, address: e.target.value }))}
-          className="w-full border rounded-lg px-3 py-2"
-        />
+
+      {/* 교통 정보 */}
+      <div className="bg-white shadow rounded-lg p-6 space-y-4">
+        <div className="flex justify-between items-center border-b pb-2">
+          <h3 className="text-lg font-medium">교통 정보</h3>
+          <button type="button" onClick={addTransport} className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+            + 추가
+          </button>
+        </div>
+        {formData.transport.length === 0 ? (
+          <p className="text-gray-500 text-center py-4">교통 정보가 없습니다.</p>
+        ) : (
+          <div className="space-y-3">
+            {formData.transport.map((item, index) => (
+              <div key={index} className="flex gap-2 items-center">
+                <select
+                  value={item.type}
+                  onChange={(e) => updateTransport(index, 'type', e.target.value)}
+                  className="border rounded px-2 py-1.5 text-sm"
+                >
+                  <option value="지하철">지하철</option>
+                  <option value="버스">버스</option>
+                  <option value="도로">도로</option>
+                </select>
+                <input
+                  type="text"
+                  value={item.name}
+                  onChange={(e) => updateTransport(index, 'name', e.target.value)}
+                  placeholder="역/정류장 이름"
+                  className="flex-1 border rounded px-2 py-1.5 text-sm"
+                />
+                <input
+                  type="text"
+                  value={item.time}
+                  onChange={(e) => updateTransport(index, 'time', e.target.value)}
+                  placeholder="도보 2분"
+                  className="w-24 border rounded px-2 py-1.5 text-sm"
+                />
+                <button type="button" onClick={() => removeTransport(index)} className="text-red-500 hover:text-red-700">
+                  &times;
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-      <p className="text-sm text-gray-500">
-        * 교통정보, 주변시설 등 상세 편집 기능은 추후 추가 예정입니다.
-      </p>
+
+      {/* 주변시설 */}
+      <div className="bg-white shadow rounded-lg p-6 space-y-4">
+        <div className="flex justify-between items-center border-b pb-2">
+          <h3 className="text-lg font-medium">주변시설</h3>
+          <button type="button" onClick={addFacility} className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+            + 추가
+          </button>
+        </div>
+        {formData.facilities.length === 0 ? (
+          <p className="text-gray-500 text-center py-4">주변시설 정보가 없습니다.</p>
+        ) : (
+          <div className="space-y-3">
+            {formData.facilities.map((item, index) => (
+              <div key={index} className="flex gap-2 items-start">
+                <input
+                  type="text"
+                  value={item.category}
+                  onChange={(e) => updateFacilityCategory(index, e.target.value)}
+                  placeholder="카테고리"
+                  className="w-24 border rounded px-2 py-1.5 text-sm"
+                />
+                <input
+                  type="text"
+                  value={item.items.join(', ')}
+                  onChange={(e) => updateFacilityItems(index, e.target.value)}
+                  placeholder="시설1, 시설2, 시설3 (쉼표 구분)"
+                  className="flex-1 border rounded px-2 py-1.5 text-sm"
+                />
+                <button type="button" onClick={() => removeFacility(index)} className="text-red-500 hover:text-red-700 mt-1">
+                  &times;
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="flex justify-end">
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
         >
           저장
         </button>
@@ -623,6 +1030,12 @@ function LocationTab({
 }
 
 // 일정 탭
+interface ScheduleItem {
+  label: string;
+  date: string;
+  description?: string;
+}
+
 function ScheduleTab({
   content,
   onSave,
@@ -632,6 +1045,7 @@ function ScheduleTab({
 }) {
   const [formData, setFormData] = useState({
     title: (content.title as string) || "분양 일정",
+    items: (content.items as ScheduleItem[]) || [],
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -639,24 +1053,96 @@ function ScheduleTab({
     onSave(formData);
   };
 
+  const addItem = () => {
+    setFormData(prev => ({
+      ...prev,
+      items: [...prev.items, { label: "", date: "", description: "" }]
+    }));
+  };
+
+  const removeItem = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      items: prev.items.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateItem = (index: number, field: keyof ScheduleItem, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      items: prev.items.map((item, i) =>
+        i === index ? { ...item, [field]: value } : item
+      )
+    }));
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6 space-y-4">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">섹션 제목</label>
-        <input
-          type="text"
-          value={formData.title}
-          onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-          className="w-full border rounded-lg px-3 py-2"
-        />
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="bg-white shadow rounded-lg p-6 space-y-4">
+        <h3 className="text-lg font-medium border-b pb-2">기본 정보</h3>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">섹션 제목</label>
+          <input
+            type="text"
+            value={formData.title}
+            onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+            className="w-full border rounded-lg px-3 py-2"
+          />
+        </div>
       </div>
-      <p className="text-sm text-gray-500">
-        * 일정 항목 편집 기능은 추후 추가 예정입니다.
-      </p>
+
+      <div className="bg-white shadow rounded-lg p-6 space-y-4">
+        <div className="flex justify-between items-center border-b pb-2">
+          <h3 className="text-lg font-medium">일정 항목</h3>
+          <button type="button" onClick={addItem} className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+            + 추가
+          </button>
+        </div>
+        {formData.items.length === 0 ? (
+          <p className="text-gray-500 text-center py-4">일정 항목이 없습니다.</p>
+        ) : (
+          <div className="space-y-3">
+            {formData.items.map((item, index) => (
+              <div key={index} className="border rounded-lg p-3 bg-gray-50">
+                <div className="flex justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-600">항목 {index + 1}</span>
+                  <button type="button" onClick={() => removeItem(index)} className="text-red-500 hover:text-red-700 text-sm">
+                    삭제
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    value={item.label}
+                    onChange={(e) => updateItem(index, 'label', e.target.value)}
+                    placeholder="항목명 (예: 청약 접수)"
+                    className="border rounded px-2 py-1.5 text-sm"
+                  />
+                  <input
+                    type="text"
+                    value={item.date}
+                    onChange={(e) => updateItem(index, 'date', e.target.value)}
+                    placeholder="날짜 (예: 2024년 3월 1일)"
+                    className="border rounded px-2 py-1.5 text-sm"
+                  />
+                </div>
+                <input
+                  type="text"
+                  value={item.description || ''}
+                  onChange={(e) => updateItem(index, 'description', e.target.value)}
+                  placeholder="설명 (선택사항)"
+                  className="w-full border rounded px-2 py-1.5 text-sm mt-2"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="flex justify-end">
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
         >
           저장
         </button>
@@ -666,6 +1152,11 @@ function ScheduleTab({
 }
 
 // QnA 탭
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 function QnATab({
   content,
   onSave,
@@ -675,6 +1166,7 @@ function QnATab({
 }) {
   const [formData, setFormData] = useState({
     title: (content.title as string) || "자주 묻는 질문",
+    items: (content.items as FAQItem[]) || [],
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -682,24 +1174,87 @@ function QnATab({
     onSave(formData);
   };
 
+  const addItem = () => {
+    setFormData(prev => ({
+      ...prev,
+      items: [...prev.items, { question: "", answer: "" }]
+    }));
+  };
+
+  const removeItem = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      items: prev.items.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateItem = (index: number, field: keyof FAQItem, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      items: prev.items.map((item, i) =>
+        i === index ? { ...item, [field]: value } : item
+      )
+    }));
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6 space-y-4">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">섹션 제목</label>
-        <input
-          type="text"
-          value={formData.title}
-          onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-          className="w-full border rounded-lg px-3 py-2"
-        />
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="bg-white shadow rounded-lg p-6 space-y-4">
+        <h3 className="text-lg font-medium border-b pb-2">기본 정보</h3>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">섹션 제목</label>
+          <input
+            type="text"
+            value={formData.title}
+            onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+            className="w-full border rounded-lg px-3 py-2"
+          />
+        </div>
       </div>
-      <p className="text-sm text-gray-500">
-        * FAQ 항목 편집 기능은 추후 추가 예정입니다.
-      </p>
+
+      <div className="bg-white shadow rounded-lg p-6 space-y-4">
+        <div className="flex justify-between items-center border-b pb-2">
+          <h3 className="text-lg font-medium">FAQ 항목</h3>
+          <button type="button" onClick={addItem} className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+            + 추가
+          </button>
+        </div>
+        {formData.items.length === 0 ? (
+          <p className="text-gray-500 text-center py-4">FAQ 항목이 없습니다.</p>
+        ) : (
+          <div className="space-y-3">
+            {formData.items.map((item, index) => (
+              <div key={index} className="border rounded-lg p-3 bg-gray-50">
+                <div className="flex justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-600">Q{index + 1}</span>
+                  <button type="button" onClick={() => removeItem(index)} className="text-red-500 hover:text-red-700 text-sm">
+                    삭제
+                  </button>
+                </div>
+                <input
+                  type="text"
+                  value={item.question}
+                  onChange={(e) => updateItem(index, 'question', e.target.value)}
+                  placeholder="질문"
+                  className="w-full border rounded px-2 py-1.5 text-sm mb-2"
+                />
+                <textarea
+                  value={item.answer}
+                  onChange={(e) => updateItem(index, 'answer', e.target.value)}
+                  placeholder="답변"
+                  rows={3}
+                  className="w-full border rounded px-2 py-1.5 text-sm resize-none"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="flex justify-end">
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
         >
           저장
         </button>
