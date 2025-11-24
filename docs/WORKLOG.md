@@ -1961,3 +1961,37 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 **작업일**: 2025-11-23
 **핵심 목표**: 멀티 프로젝트 관리 시스템 기반 구축
 **변경 파일 수**: 14개 (신규 13, 수정 1)
+
+## 2025-11-24: HeroSection 완전 동적화
+
+### 변경 사항
+1. **SQL 마이그레이션 추가** (`003_hero_slides_data.sql`)
+   - 염창역 더채움 프로젝트의 슬라이드 데이터를 DB로 이관
+   - `<highlight>` 태그 기반 텍스트 하이라이트 구조
+
+2. **HeroSection 리팩토링**
+   - 하드코딩된 슬라이드 제거
+   - `heroContent.slides` 배열에서 동적으로 슬라이드 렌더링
+   - `parseHighlight()` 함수로 `<highlight>` 태그를 JSX로 변환
+   - 템플릿 + 페이지 기반 구조 완성
+
+### 핵심 구조
+```typescript
+interface SlideData {
+  image: string;
+  tag: string;
+  title: string;
+  subtitleLines: string[];  // <highlight>태그</highlight> 지원
+}
+```
+
+### 다음 단계
+1. Supabase에서 `003_hero_slides_data.sql` 실행
+2. 관리자 페이지에 슬라이드 편집 UI 추가
+
+---
+
+**작업자**: AI Assistant
+**작업일**: 2025-11-24
+**핵심 목표**: 템플릿 + 페이지 기반 완전 동적화
+**변경 파일 수**: 2개 (신규 1, 수정 1)

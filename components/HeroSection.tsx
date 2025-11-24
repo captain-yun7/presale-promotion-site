@@ -5,6 +5,13 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { getStoredUTMParams } from "@/lib/utm-tracking";
 
+interface SlideData {
+  image: string;
+  tag: string;
+  title: string;
+  subtitleLines: string[];
+}
+
 interface HeroProps {
   projectName?: string;
   projectSlug?: string;
@@ -16,7 +23,20 @@ interface HeroProps {
     description?: string;
     ctaText?: string;
     badges?: string[];
+    slides?: SlideData[];
   };
+}
+
+// subtitleLines의 <highlight> 태그를 JSX로 변환
+function parseHighlight(text: string) {
+  const parts = text.split(/(<highlight>.*?<\/highlight>)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('<highlight>')) {
+      const content = part.replace(/<\/?highlight>/g, '');
+      return <span key={i} className="text-luxury-gold font-bold">{content}</span>;
+    }
+    return part;
+  });
 }
 
 export default function HeroSection({
@@ -35,79 +55,18 @@ export default function HeroSection({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // heroContent가 있으면 동적 데이터 사용, 없으면 기본값 (염창역 더채움)
-  const dynamicTitle = heroContent?.title || projectName;
-  const dynamicSubtitle = heroContent?.subtitle || "프리미엄 주거공간의 새로운 기준";
-  const dynamicDescription = heroContent?.description || "";
-
-  // 염창역 더채움 전용 슬라이드 (기존 검증된 콘텐츠)
-  const yeomchangSlides = [
-    {
-      image: "/images/yeomchang-thechaeum-view.jpg",
-      tag: "투룸값에 쓰리룸 산다!",
-      title: "염창역 더채움",
-      subtitle: (
-        <>
-          - 9호선 급행 초역세권 <span className="text-luxury-gold font-bold">쓰리룸</span> 오피스텔
-          <br />
-          - <span className="text-luxury-gold font-bold">투룸 가격</span>에 <span className="text-luxury-gold font-bold">쓰리룸</span>!!!
-          <br />
-          - 회사보유분 <span className="text-luxury-gold font-bold">선착순 특별줍줍분양</span>
-        </>
-      ),
-    },
-    {
-      image: "/images/yeomchang-thechaeum-unit-interior-02.jpg",
-      tag: "회사보유분 특별분양",
-      title: "초특가 분양",
-      subtitle: (
-        <>
-          - <span className="text-luxury-gold font-bold">투룸 가격</span>에 <span className="text-luxury-gold font-bold">쓰리룸</span> 실현
-          <br />
-          - 시세 대비 <span className="text-luxury-gold font-bold">파격 가격</span>
-          <br />
-          - <span className="text-luxury-gold font-bold">선착순 마감</span> 임박
-        </>
-      ),
-    },
-    {
-      image: "/images/yeomchang-thechaeum-exterior-view.jpg",
-      tag: "9호선 급행 초역세권",
-      title: "출퇴근 15분 컷",
-      subtitle: (
-        <>
-          - 여의도 <span className="text-luxury-gold font-bold">2정거장</span>
-          <br />
-          - 강남 <span className="text-luxury-gold font-bold">20분</span>
-        </>
-      ),
-    },
-    {
-      image: "/images/yeomchang-thechaeum-unit-interior-01.jpg",
-      tag: "4無 혜택",
-      title: "대출규제 영향 無",
-      subtitle: (
-        <>
-          - 주택수 · 대출 · 자금조달 · 실거주
-          <br />
-          - <span className="text-luxury-gold font-bold">4가지 규제 완전 FREE</span>
-        </>
-      ),
-    },
-  ];
-
-  // 동적 프로젝트용 슬라이드 (DB 데이터 사용)
-  const dynamicSlides = [
+  // 기본 슬라이드 (heroContent.slides가 없을 때 사용)
+  const defaultSlides: SlideData[] = [
     {
       image: "/images/hero-bg.jpg",
-      tag: dynamicDescription || "프리미엄 분양",
-      title: dynamicTitle,
-      subtitle: <>{dynamicSubtitle}</>,
+      tag: heroContent?.description || "프리미엄 분양",
+      title: heroContent?.title || projectName,
+      subtitleLines: [heroContent?.subtitle || "프리미엄 주거공간의 새로운 기준"],
     },
   ];
 
-  // 슬라이드 선택: 염창역 더채움은 전용 슬라이드, 나머지는 동적
-  const slides = projectSlug === 'yeomchang-thechaeum' ? yeomchangSlides : dynamicSlides;
+  // slides 데이터 사용 (DB에서 가져온 데이터 우선)
+  const slides = heroContent?.slides || defaultSlides;
 
   // 자동 슬라이드 (8초마다)
   useEffect(() => {
@@ -243,7 +202,12 @@ export default function HeroSection({
                   </motion.h1>
 
                   <motion.div className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-100 mb-6 lg:mb-8 leading-relaxed font-medium">
-                    {slides[currentSlide].subtitle}
+                    {slides[currentSlide].subtitleLines.map((line, i) => (
+                      <span key={i}>
+                        - {parseHighlight(line)}
+                        {i < slides[currentSlide].subtitleLines.length - 1 && <br />}
+                      </span>
+                    ))}
                   </motion.div>
                 </motion.div>
               </AnimatePresence>
