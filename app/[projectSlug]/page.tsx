@@ -83,6 +83,12 @@ export default async function ProjectPage({ params }: Props) {
     description?: string;
     ctaText?: string;
     badges?: string[];
+    slides?: Array<{
+      image: string;
+      tag: string;
+      title: string;
+      subtitleLines: string[];
+    }>;
   } | undefined;
 
   // 구조화된 데이터 (JSON-LD)
