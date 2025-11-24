@@ -163,7 +163,8 @@ export default function HeroSection({
             fill
             className="object-cover"
             priority={currentSlide === 0}
-            quality={90}
+            quality={95}
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80 lg:from-black/70 lg:via-black/50 lg:to-black/70" />
         </motion.div>

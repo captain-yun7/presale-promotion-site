@@ -289,6 +289,7 @@ function BasicInfoTab({
   const [formData, setFormData] = useState({
     name: project.name,
     slug: project.slug,
+    status: project.status || "draft",
     address: project.address || "",
     phone: project.phone || "",
     email: project.email || "",
@@ -309,7 +310,7 @@ function BasicInfoTab({
 
   return (
     <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6 space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             프로젝트 이름
@@ -331,6 +332,20 @@ function BasicInfoTab({
             onChange={(e) => setFormData((prev) => ({ ...prev, slug: e.target.value }))}
             className="w-full border rounded-lg px-3 py-2"
           />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            상태
+          </label>
+          <select
+            value={formData.status}
+            onChange={(e) => setFormData((prev) => ({ ...prev, status: e.target.value }))}
+            className="w-full border rounded-lg px-3 py-2"
+          >
+            <option value="draft">초안</option>
+            <option value="published">게시됨</option>
+            <option value="archived">보관됨</option>
+          </select>
         </div>
       </div>
 
