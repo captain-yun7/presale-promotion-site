@@ -61,6 +61,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const [activeTab, setActiveTab] = useState("basic");
 
   useEffect(() => {
@@ -87,6 +88,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
 
   const saveProject = async (updates: Partial<Project>) => {
     setSaving(true);
+    setSaveSuccess(false);
     try {
       const res = await fetch(`/api/admin/projects/${id}`, {
         method: "PUT",
@@ -97,6 +99,8 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
       if (res.ok) {
         const data = await res.json();
         setProject((prev) => (prev ? { ...prev, ...data.project } : null));
+        setSaveSuccess(true);
+        setTimeout(() => setSaveSuccess(false), 3000);
       } else {
         const data = await res.json();
         alert(data.error || "저장에 실패했습니다.");
@@ -111,6 +115,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
 
   const saveContent = async (sectionType: string, content: Record<string, unknown>) => {
     setSaving(true);
+    setSaveSuccess(false);
     try {
       const res = await fetch(`/api/admin/projects/${id}/contents`, {
         method: "PUT",
@@ -120,11 +125,14 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
 
       if (res.ok) {
         fetchProject(); // Refresh to get updated contents
+        setSaveSuccess(true);
+        setTimeout(() => setSaveSuccess(false), 3000);
       } else {
         alert("콘텐츠 저장에 실패했습니다.");
       }
     } catch (error) {
       console.error("Error saving content:", error);
+      alert("저장 중 오류가 발생했습니다.");
     } finally {
       setSaving(false);
     }
@@ -206,8 +214,16 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {saving && (
-          <div className="fixed top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg">
+          <div className="fixed top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg z-50">
             저장 중...
+          </div>
+        )}
+        {saveSuccess && (
+          <div className="fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg z-50 flex items-center gap-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            저장 완료!
           </div>
         )}
 
