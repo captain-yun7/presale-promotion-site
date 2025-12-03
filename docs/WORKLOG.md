@@ -2027,3 +2027,37 @@ interface SlideData {
 **작업자**: AI Assistant
 **작업일**: 2025-11-24
 **변경 파일**: app/admin/projects/[id]/edit/page.tsx
+
+
+---
+
+### 텔레그램 알림 연동 기능 추가
+**작업일**: 2025-12-03
+**핵심 요약**: 상담 신청 시 텔레그램으로 실시간 알림 전송 기능 구현
+
+**상세 내용**:
+1. **환경변수 설정 추가**
+   - `TELEGRAM_BOT_TOKEN`: 텔레그램 봇 토큰
+   - `TELEGRAM_CHAT_ID`: 알림을 받을 채팅 ID
+
+2. **텔레그램 유틸리티 함수 생성** (`lib/telegram.ts`)
+   - `sendTelegramMessage()`: 일반 메시지 전송
+   - `sendConsultationNotification()`: 상담 알림 포맷팅 및 전송
+   - HTML 파싱 모드 지원
+
+3. **상담 신청 API 연동** (`app/api/consultations/route.ts`)
+   - 상담 저장 후 텔레그램 알림 비동기 전송
+   - 알림 실패해도 상담 신청은 정상 처리
+
+### 텔레그램 봇 설정 방법
+1. @BotFather에서 봇 생성 후 토큰 발급
+2. 봇을 채널/그룹에 추가하거나 개인 채팅 시작
+3. Chat ID 확인: `https://api.telegram.org/bot<TOKEN>/getUpdates`
+4. `.env`에 `TELEGRAM_BOT_TOKEN`과 `TELEGRAM_CHAT_ID` 설정
+
+**변경 파일**:
+- `.env.example` (환경변수 템플릿)
+- `lib/telegram.ts` (신규 생성)
+- `app/api/consultations/route.ts` (알림 연동)
+
+**작업자**: AI Assistant
