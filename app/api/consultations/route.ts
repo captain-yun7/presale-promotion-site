@@ -30,16 +30,16 @@ export async function POST(request: Request) {
 
     console.log('[Consultation API] ✅ Supabase 저장 성공:', result);
 
-    // 텔레그램 알림 전송 (비동기, 실패해도 상담 신청은 성공 처리)
-    sendConsultationNotification({
-      name,
-      phone,
-      message,
-      source: source || 'website',
-      project: project || '염창역더채움',
-    }).catch((error) => {
-      console.error('[Consultation API] 텔레그램 알림 전송 실패:', error);
-    });
+    // 텔레그램 알림 전송 (await로 완료 대기, 실패해도 상담 신청은 성공 처리)
+    try {
+      await sendConsultationNotification({
+        name,
+        phone,
+        message,
+      });
+    } catch (telegramError) {
+      console.error('[Consultation API] 텔레그램 알림 전송 실패:', telegramError);
+    }
 
     return NextResponse.json(
       { message: '상담 신청이 완료되었습니다.', data: result },
