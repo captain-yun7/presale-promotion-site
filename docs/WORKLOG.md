@@ -2061,3 +2061,27 @@ interface SlideData {
 - `app/api/consultations/route.ts` (알림 연동)
 
 **작업자**: AI Assistant
+
+---
+
+### HAVEN RÉSIDENCE 신규 분양 프로젝트 페이지 생성
+**완료 시간**: 2026-03-20
+**핵심 요약**: template-010 디자인을 참고한 럭셔리 크림/골드 톤의 프리미엄 레지던스 분양 페이지 신규 생성 (염창 더채움과 완전히 다른 디자인)
+
+**상세 내용**:
+- template-010 (HAVEN RÉSIDENCE) HTML/CSS/JS 템플릿을 Next.js React 컴포넌트로 변환
+- 전용 라우트 `/haven-residence` 생성 (독립 디자인, 기존 공유 컴포넌트 미사용)
+- Cormorant Garamond + Montserrat 폰트, 크림(#FAF8F5)/골드(#B8926A) 컬러 시스템
+- 주요 섹션: Hero, Overview, Premium Services(5대), Location, Gallery(탭 필터), Stats(카운터 애니메이션), Floor Plan(3타입 탭), CTA, Contact(폼+FAQ), Footer
+- 인터랙션: 스크롤 리빌, 패럴랙스, 숫자 카운터, 갤러리 슬라이더, FAQ 아코디언, 모바일 네비게이션
+- 반응형 디자인: 1024px / 810px / 480px 브레이크포인트
+- 홈페이지에 HAVEN RÉSIDENCE 프로젝트 카드 추가
+
+**변경 파일**:
+- `styles/haven.css` (신규 - Haven 전용 디자인 시스템)
+- `app/haven-residence/layout.tsx` (신규 - 레이아웃 + 메타데이터 + 폰트)
+- `app/haven-residence/page.tsx` (신규 - 서버 컴포넌트 + JSON-LD)
+- `app/haven-residence/HavenClient.tsx` (신규 - 전체 클라이언트 컴포넌트)
+- `app/page.tsx` (수정 - 홈페이지 프로젝트 목록에 추가)
+
+**작업자**: AI Assistant

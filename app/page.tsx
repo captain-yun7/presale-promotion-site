@@ -10,7 +10,14 @@ export default function Home() {
       status: "분양중",
       image: "/ref_data/image-00.jpg",
     },
-    // 추후 프로젝트 추가 예정
+    {
+      slug: "haven-residence",
+      name: "HAVEN RÉSIDENCE",
+      location: "서울시 노원구 공릉동",
+      description: "49층 768세대, 프리미엄 웰니스 레지던스",
+      status: "관심고객 등록중",
+      image: "",
+    },
   ];
 
   return (
