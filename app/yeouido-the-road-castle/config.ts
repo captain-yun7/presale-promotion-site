@@ -4,7 +4,7 @@ const config: ProjectConfig = {
   meta: {
     name: "여의도 더로드캐슬",
     slug: "yeouido-the-road-castle",
-    description: "대방역 도보 2분, 여의도 생활권 신축 오피스텔. 7년전 분양가, 즉시 입주 가능. 선착순 6세대 특별분양.",
+    description: "대방역 도보 2분, 여의도 생활권 신축 소형아파트. 7년전 분양가, 즉시 입주 가능. 선착순 6세대 특별분양.",
     phone: "1666-0952",
     address: "서울시 영등포구 대방동",
     url: "https://smilebunyang.com/yeouido-the-road-castle",
@@ -39,11 +39,11 @@ const config: ProjectConfig = {
 
   overview: {
     title: '서울 중심<br /><strong>초역세권 신축</strong><br />7년전 분양가',
-    description: "대방역 1호선·신림선 더블역세권 도보 2분. 2026년 1월 준공 완료, 즉시 입주 가능한 신축 오피스텔입니다. 토지거래허가 제외, 청약통장 없이 누구나 매입 가능합니다.",
+    description: "대방역 1호선·신림선 더블역세권 도보 2분. 2026년 1월 준공 완료, 즉시 입주 가능한 신축 소형아파트입니다. 토지거래허가 제외, 청약통장 없이 누구나 매입 가능합니다.",
     infoItems: [
       { label: "Location", value: "대방역 도보 2분" },
       { label: "Status", value: "준공완료 · 즉시입주" },
-      { label: "Type", value: "신축 2룸 오피스텔" },
+      { label: "Type", value: "신축 2룸 소형아파트" },
       { label: "Finance", value: "대출 70%~ 가능" },
     ],
     images: [
