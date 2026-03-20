@@ -2085,3 +2085,26 @@ interface SlideData {
 - `app/page.tsx` (수정 - 홈페이지 프로젝트 목록에 추가)
 
 **작업자**: AI Assistant
+
+---
+
+### 24. Claude Code 커스텀 스킬 5종 생성
+**완료 시간**: 2026-03-20
+**핵심 요약**: 프로젝트 반복 작업 자동화를 위한 Claude Code 커스텀 스킬(슬래시 커맨드) 5종 생성
+
+**상세 내용**:
+- `.claude/skills/` 디렉토리 생성 및 5개 스킬 파일 작성
+- `/new-project`: 새 분양 프로젝트 페이지 생성 (디렉토리/page/layout/client/CSS 자동 생성)
+- `/new-template`: docs/template 기반 정적 HTML 프로젝트 템플릿 생성
+- `/check-seo`: SEO 메타데이터, JSON-LD, 시맨틱 HTML, 모바일 SEO 점검
+- `/review-page`: 페이지 품질 종합 점검 (기능, CRO, UI/UX, 코드, 접근성)
+- `/worklog`: docs/WORKLOG.md 자동 작업 기록
+
+**생성 파일**:
+- `.claude/skills/new-project.md`
+- `.claude/skills/new-template.md`
+- `.claude/skills/check-seo.md`
+- `.claude/skills/review-page.md`
+- `.claude/skills/worklog.md`
+
+**작업자**: AI Assistant
