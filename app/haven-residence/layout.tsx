@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Metadata } from "next";
-import "../../styles/haven.css";
+import "../../styles/themes/premium-cream.css";
 
 export const metadata: Metadata = {
   title: "HAVEN RÉSIDENCE — 새로운 삶의 기준 | 서울 노원구 프리미엄 레지던스",

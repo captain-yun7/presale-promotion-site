@@ -2108,3 +2108,45 @@ interface SlideData {
 - `.claude/skills/worklog.md`
 
 **작업자**: AI Assistant
+
+---
+
+### 25. 템플릿 컴포넌트 아키텍처 구축 (Phase 1)
+**완료 시간**: 2026-03-20
+**핵심 요약**: 분양 프로젝트 페이지를 효율적으로 확장하기 위한 공유 컴포넌트 + 테마 시스템 구축
+
+**상세 내용**:
+- `lib/types/project.ts`: 프로젝트 설정 타입 정의 (13개 인터페이스)
+- `components/premium/`: 공유 섹션 컴포넌트 13개 생성
+  - hooks: useCounter, useScrollReveal
+  - PremiumHeader, PremiumHero, PremiumOverview, PremiumServices
+  - PremiumLocation, PremiumGallery, PremiumStats, PremiumFloorPlan
+  - PremiumCTA, PremiumContact (Supabase/텔레그램 연동), PremiumFooter
+  - PremiumPage (조합 컴포넌트)
+- `styles/themes/premium-cream.css`: 크림/골드 테마 (기존 haven.css 이관)
+- HAVEN RÉSIDENCE 마이그레이션: HavenClient.tsx 1024줄 → 6줄 + config.ts
+
+**생성 파일**: 16개 (컴포넌트 13, 타입 1, 테마 1, config 1)
+
+---
+
+### 26. 여의도 더로드캐슬 프로젝트 페이지 생성 (Phase 2)
+**완료 시간**: 2026-03-20
+**핵심 요약**: 새 템플릿 컴포넌트 아키텍처를 활용한 첫 번째 신규 프로젝트 페이지 생성
+
+**상세 내용**:
+- `app/yeouido-the-road-castle/`: 프로젝트 디렉토리 생성
+  - config.ts: 프로젝트 데이터 (메타, 히어로, 개요, 특장점, 갤러리, FAQ 등)
+  - page.tsx: 서버 컴포넌트 + JSON-LD 구조화 데이터
+  - layout.tsx: 메타데이터 + 폰트 + 테마 CSS
+  - YeouidoClient.tsx: 6줄 클라이언트 컴포넌트
+- 실내사진 13장 + 조감도 2장을 public/images/에 정리하여 복사
+- 갤러리에 실제 이미지 연동 (next/image 사용)
+- 홈페이지 프로젝트 목록에 추가 (`app/page.tsx`)
+
+**핵심 데이터**:
+- 대방역 도보 2분 더블역세권 오피스텔
+- 7년전 분양가, 즉시 입주 가능, 선착순 6세대
+- 대표전화: 1666-0952
+
+**작업자**: AI Assistant

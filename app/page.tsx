@@ -18,6 +18,14 @@ export default function Home() {
       status: "관심고객 등록중",
       image: "",
     },
+    {
+      slug: "yeouido-the-road-castle",
+      name: "여의도 더로드캐슬",
+      location: "서울시 영등포구 대방동",
+      description: "대방역 2분 더블역세권, 7년전 분양가 신축 2룸. 선착순 6세대",
+      status: "특별분양중",
+      image: "/images/yeouido-the-road-castle/exterior/aerial-02.png",
+    },
   ];
 
   return (
