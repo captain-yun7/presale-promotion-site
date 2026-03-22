@@ -73,27 +73,9 @@ export default function PremiumContact({ config, meta, theme }: Props) {
               </div>
             </div>
 
-            <div className={`${p}-form-row`}>
-              <div className={`${p}-form-group`}>
-                <label className={`${p}-form-label`}>Email</label>
-                <input type="email" name="email" className={`${p}-form-input`} placeholder="이메일 (선택)" />
-              </div>
-              {config.unitOptions && (
-                <div className={`${p}-form-group`}>
-                  <label className={`${p}-form-label`}>Unit Type</label>
-                  <select name="unit_type" className={`${p}-form-select`}>
-                    <option value="">관심 타입 선택</option>
-                    {config.unitOptions.map((opt) => (
-                      <option key={opt.value} value={opt.value}>{opt.label}</option>
-                    ))}
-                  </select>
-                </div>
-              )}
-            </div>
-
             <div className={`${p}-form-group`}>
-              <label className={`${p}-form-label`}>Message</label>
-              <textarea name="message" className={`${p}-form-textarea`} placeholder="문의 사항을 입력해주세요 (선택)" />
+              <label className={`${p}-form-label`}>Message<span className="required">*</span></label>
+              <textarea name="message" className={`${p}-form-textarea`} placeholder="문의 사항을 입력해주세요" required />
             </div>
 
             <div className={`${p}-form-checkbox`}>
