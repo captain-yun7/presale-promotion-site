@@ -1,23 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+import { sql } from '@/lib/db';
 
 // GET: 템플릿 목록 조회
 export async function GET() {
   try {
-    const { data, error } = await supabase
-      .from('templates')
-      .select('*')
-      .order('is_default', { ascending: false })
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    const data = await sql`
+      SELECT * FROM templates
+      ORDER BY is_default DESC, created_at DESC
+    `;
 
     return NextResponse.json({ templates: data });
   } catch (error) {
@@ -44,11 +34,11 @@ export async function POST(request: NextRequest) {
 
     // 기존 프로젝트에서 템플릿 생성
     if (project_id) {
-      const { data: project } = await supabase
-        .from('projects')
-        .select('settings, theme')
-        .eq('id', project_id)
-        .single();
+      const projectRows = await sql`
+        SELECT settings, theme FROM projects WHERE id = ${project_id} LIMIT 1
+      `;
+
+      const project = projectRows[0];
 
       if (!project) {
         return NextResponse.json(
@@ -57,53 +47,34 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const { data: template, error } = await supabase
-        .from('templates')
-        .insert([
-          {
-            name,
-            description,
-            default_settings: project.settings,
-            default_theme: project.theme,
-          },
-        ])
-        .select()
-        .single();
+      const templateRows = await sql`
+        INSERT INTO templates (name, description, default_settings, default_theme)
+        VALUES (${name}, ${description || null}, ${JSON.stringify(project.settings)}, ${JSON.stringify(project.theme)})
+        RETURNING *
+      `;
 
-      if (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
-      }
-
-      return NextResponse.json({ template }, { status: 201 });
+      return NextResponse.json({ template: templateRows[0] }, { status: 201 });
     }
 
     // 빈 템플릿 생성
-    const { data: template, error } = await supabase
-      .from('templates')
-      .insert([
-        {
-          name,
-          description,
-          default_settings: {
-            showFloatingCTA: true,
-            showSocialProof: true,
-            showUrgencyBanner: true,
-          },
-          default_theme: {
-            primaryColor: '#C9A961',
-            secondaryColor: '#1A1A1A',
-            fontFamily: 'Pretendard',
-          },
-        },
-      ])
-      .select()
-      .single();
+    const defaultSettings = JSON.stringify({
+      showFloatingCTA: true,
+      showSocialProof: true,
+      showUrgencyBanner: true,
+    });
+    const defaultTheme = JSON.stringify({
+      primaryColor: '#C9A961',
+      secondaryColor: '#1A1A1A',
+      fontFamily: 'Pretendard',
+    });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    const templateRows = await sql`
+      INSERT INTO templates (name, description, default_settings, default_theme)
+      VALUES (${name}, ${description || null}, ${defaultSettings}, ${defaultTheme})
+      RETURNING *
+    `;
 
-    return NextResponse.json({ template }, { status: 201 });
+    return NextResponse.json({ template: templateRows[0] }, { status: 201 });
   } catch (error) {
     console.error('Error creating template:', error);
     return NextResponse.json(

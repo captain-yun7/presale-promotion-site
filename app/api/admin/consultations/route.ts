@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { sql } from '@/lib/db';
 
 export async function GET(request: Request) {
   try {
@@ -12,44 +12,119 @@ export async function GET(request: Request) {
 
     const offset = (page - 1) * limit;
 
-    // 기본 쿼리
-    let query = supabase
-      .from('consultations')
-      .select('*', { count: 'exact' });
+    // Build query based on filters
+    let data;
+    let countResult;
 
-    // 검색 필터
-    if (search) {
-      query = query.or(`name.ilike.%${search}%,phone.ilike.%${search}%`);
+    if (search && source && project) {
+      const searchPattern = `%${search}%`;
+      data = await sql`
+        SELECT * FROM consultations
+        WHERE (name ILIKE ${searchPattern} OR phone ILIKE ${searchPattern})
+          AND source = ${source}
+          AND project = ${project}
+        ORDER BY created_at DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM consultations
+        WHERE (name ILIKE ${searchPattern} OR phone ILIKE ${searchPattern})
+          AND source = ${source}
+          AND project = ${project}
+      `;
+    } else if (search && source) {
+      const searchPattern = `%${search}%`;
+      data = await sql`
+        SELECT * FROM consultations
+        WHERE (name ILIKE ${searchPattern} OR phone ILIKE ${searchPattern})
+          AND source = ${source}
+        ORDER BY created_at DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM consultations
+        WHERE (name ILIKE ${searchPattern} OR phone ILIKE ${searchPattern})
+          AND source = ${source}
+      `;
+    } else if (search && project) {
+      const searchPattern = `%${search}%`;
+      data = await sql`
+        SELECT * FROM consultations
+        WHERE (name ILIKE ${searchPattern} OR phone ILIKE ${searchPattern})
+          AND project = ${project}
+        ORDER BY created_at DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM consultations
+        WHERE (name ILIKE ${searchPattern} OR phone ILIKE ${searchPattern})
+          AND project = ${project}
+      `;
+    } else if (source && project) {
+      data = await sql`
+        SELECT * FROM consultations
+        WHERE source = ${source} AND project = ${project}
+        ORDER BY created_at DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM consultations
+        WHERE source = ${source} AND project = ${project}
+      `;
+    } else if (search) {
+      const searchPattern = `%${search}%`;
+      data = await sql`
+        SELECT * FROM consultations
+        WHERE name ILIKE ${searchPattern} OR phone ILIKE ${searchPattern}
+        ORDER BY created_at DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM consultations
+        WHERE name ILIKE ${searchPattern} OR phone ILIKE ${searchPattern}
+      `;
+    } else if (source) {
+      data = await sql`
+        SELECT * FROM consultations
+        WHERE source = ${source}
+        ORDER BY created_at DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM consultations
+        WHERE source = ${source}
+      `;
+    } else if (project) {
+      data = await sql`
+        SELECT * FROM consultations
+        WHERE project = ${project}
+        ORDER BY created_at DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM consultations
+        WHERE project = ${project}
+      `;
+    } else {
+      data = await sql`
+        SELECT * FROM consultations
+        ORDER BY created_at DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM consultations
+      `;
     }
 
-    // 출처 필터
-    if (source) {
-      query = query.eq('source', source);
-    }
-
-    // 프로젝트 필터
-    if (project) {
-      query = query.eq('project', project);
-    }
-
-    // 정렬 및 페이지네이션
-    query = query
-      .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1);
-
-    const { data, error, count } = await query;
-
-    if (error) {
-      throw error;
-    }
+    const count = parseInt(countResult[0].count);
 
     return NextResponse.json({
       data,
       pagination: {
         page,
         limit,
-        total: count || 0,
-        totalPages: Math.ceil((count || 0) / limit),
+        total: count,
+        totalPages: Math.ceil(count / limit),
       },
     });
   } catch (error) {

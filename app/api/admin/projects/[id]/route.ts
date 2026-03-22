@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+import { sql } from '@/lib/db';
 
 // GET: 프로젝트 상세 조회
 export async function GET(
@@ -14,27 +9,40 @@ export async function GET(
   try {
     const { id } = await params;
 
-    const { data: project, error } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        template:templates(id, name, description),
-        contents:project_contents(*),
-        units:project_units(*),
-        images:project_images(*)
-      `)
-      .eq('id', id)
-      .single();
+    // 프로젝트 기본 정보 + 템플릿
+    const projects = await sql`
+      SELECT p.*, row_to_json(t.*) as template
+      FROM projects p
+      LEFT JOIN templates t ON p.template_id = t.id
+      WHERE p.id = ${id}
+      LIMIT 1
+    `;
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    const project = projects[0];
 
     if (!project) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ project });
+    // 관련 데이터 조회
+    const contents = await sql`
+      SELECT * FROM project_contents WHERE project_id = ${id} ORDER BY display_order ASC
+    `;
+    const units = await sql`
+      SELECT * FROM project_units WHERE project_id = ${id} ORDER BY display_order ASC
+    `;
+    const images = await sql`
+      SELECT * FROM project_images WHERE project_id = ${id} ORDER BY display_order ASC
+    `;
+
+    return NextResponse.json({
+      project: {
+        ...project,
+        contents,
+        units,
+        images,
+      },
+    });
   } catch (error) {
     console.error('Error fetching project:', error);
     return NextResponse.json(
@@ -73,14 +81,11 @@ export async function PUT(
 
     // 슬러그 변경 시 중복 확인
     if (slug) {
-      const { data: existing } = await supabase
-        .from('projects')
-        .select('id')
-        .eq('slug', slug)
-        .neq('id', id)
-        .single();
+      const existing = await sql`
+        SELECT id FROM projects WHERE slug = ${slug} AND id != ${id} LIMIT 1
+      `;
 
-      if (existing) {
+      if (existing.length > 0) {
         return NextResponse.json(
           { error: 'Slug already exists' },
           { status: 400 }
@@ -88,32 +93,35 @@ export async function PUT(
       }
     }
 
-    const updateData: Record<string, unknown> = {};
-    if (name !== undefined) updateData.name = name;
-    if (slug !== undefined) updateData.slug = slug;
-    if (status !== undefined) updateData.status = status;
-    if (address !== undefined) updateData.address = address;
-    if (phone !== undefined) updateData.phone = phone;
-    if (email !== undefined) updateData.email = email;
-    if (total_units !== undefined) updateData.total_units = total_units;
-    if (sale_start_date !== undefined) updateData.sale_start_date = sale_start_date;
-    if (sale_end_date !== undefined) updateData.sale_end_date = sale_end_date;
-    if (move_in_date !== undefined) updateData.move_in_date = move_in_date;
-    if (settings !== undefined) updateData.settings = settings;
-    if (theme !== undefined) updateData.theme = theme;
-    if (meta_title !== undefined) updateData.meta_title = meta_title;
-    if (meta_description !== undefined) updateData.meta_description = meta_description;
-    if (og_image !== undefined) updateData.og_image = og_image;
+    // Build SET clauses dynamically
+    // Since neon tagged template doesn't support dynamic column sets easily,
+    // we update all fields using COALESCE-like approach
+    const projectRows = await sql`
+      UPDATE projects SET
+        name = COALESCE(${name !== undefined ? name : null}, name),
+        slug = COALESCE(${slug !== undefined ? slug : null}, slug),
+        status = COALESCE(${status !== undefined ? status : null}, status),
+        address = ${address !== undefined ? address : null},
+        phone = ${phone !== undefined ? phone : null},
+        email = ${email !== undefined ? email : null},
+        total_units = ${total_units !== undefined ? total_units : null},
+        sale_start_date = ${sale_start_date !== undefined ? sale_start_date : null},
+        sale_end_date = ${sale_end_date !== undefined ? sale_end_date : null},
+        move_in_date = ${move_in_date !== undefined ? move_in_date : null},
+        settings = COALESCE(${settings !== undefined ? JSON.stringify(settings) : null}::jsonb, settings),
+        theme = COALESCE(${theme !== undefined ? JSON.stringify(theme) : null}::jsonb, theme),
+        meta_title = ${meta_title !== undefined ? meta_title : null},
+        meta_description = ${meta_description !== undefined ? meta_description : null},
+        og_image = ${og_image !== undefined ? og_image : null},
+        updated_at = NOW()
+      WHERE id = ${id}
+      RETURNING *
+    `;
 
-    const { data: project, error } = await supabase
-      .from('projects')
-      .update(updateData)
-      .eq('id', id)
-      .select()
-      .single();
+    const project = projectRows[0];
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    if (!project) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
     return NextResponse.json({ project });
@@ -134,14 +142,7 @@ export async function DELETE(
   try {
     const { id } = await params;
 
-    const { error } = await supabase
-      .from('projects')
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    await sql`DELETE FROM projects WHERE id = ${id}`;
 
     return NextResponse.json({ success: true });
   } catch (error) {

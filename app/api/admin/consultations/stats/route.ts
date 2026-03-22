@@ -1,44 +1,38 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { sql } from '@/lib/db';
 
 export async function GET() {
   try {
     // 전체 상담 수
-    const { count: totalCount } = await supabase
-      .from('consultations')
-      .select('*', { count: 'exact', head: true });
+    const totalResult = await sql`SELECT COUNT(*) as count FROM consultations`;
+    const totalCount = parseInt(totalResult[0].count);
 
     // 오늘 상담 수
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const { count: todayCount } = await supabase
-      .from('consultations')
-      .select('*', { count: 'exact', head: true })
-      .gte('created_at', today.toISOString());
+    const todayResult = await sql`
+      SELECT COUNT(*) as count FROM consultations
+      WHERE created_at >= ${today.toISOString()}
+    `;
+    const todayCount = parseInt(todayResult[0].count);
 
     // 출처별 통계
-    const { data: sourceStats } = await supabase
-      .from('consultations')
-      .select('source');
-
+    const sourceStats = await sql`SELECT source FROM consultations`;
     const sourceCounts = sourceStats?.reduce((acc: Record<string, number>, item) => {
       acc[item.source || 'unknown'] = (acc[item.source || 'unknown'] || 0) + 1;
       return acc;
     }, {});
 
     // 프로젝트별 통계
-    const { data: projectStats } = await supabase
-      .from('consultations')
-      .select('project');
-
+    const projectStats = await sql`SELECT project FROM consultations`;
     const projectCounts = projectStats?.reduce((acc: Record<string, number>, item) => {
       acc[item.project || '염창역더채움'] = (acc[item.project || '염창역더채움'] || 0) + 1;
       return acc;
     }, {});
 
     return NextResponse.json({
-      totalCount: totalCount || 0,
-      todayCount: todayCount || 0,
+      totalCount,
+      todayCount,
       sourceCounts: sourceCounts || {},
       projectCounts: projectCounts || {},
     });

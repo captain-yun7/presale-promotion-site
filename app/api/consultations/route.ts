@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { submitConsultation } from '@/lib/supabase';
+import { submitConsultation } from '@/lib/db';
 import { sendConsultationNotification } from '@/lib/telegram';
 
 export async function POST(request: Request) {
@@ -19,8 +19,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Submit to Supabase
-    console.log('[Consultation API] Supabase에 데이터 저장 시도...');
+    // Submit to database
+    console.log('[Consultation API] 데이터베이스에 데이터 저장 시도...');
     const result = await submitConsultation({
       name,
       phone,
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       project: projectName,
     });
 
-    console.log('[Consultation API] ✅ Supabase 저장 성공:', result);
+    console.log('[Consultation API] 데이터베이스 저장 성공:', result);
 
     // 텔레그램 알림 전송 (await로 완료 대기, 실패해도 상담 신청은 성공 처리)
     try {
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('[Consultation API] ❌ 심각한 오류 발생:');
+    console.error('[Consultation API] 심각한 오류 발생:');
     console.error('Error type:', error instanceof Error ? error.constructor.name : typeof error);
     console.error('Error message:', error instanceof Error ? error.message : String(error));
     console.error('Full error:', error);

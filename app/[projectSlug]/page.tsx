@@ -1,13 +1,9 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { createClient } from "@supabase/supabase-js";
+import { sql } from "@/lib/db";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import Footer from "@/components/Footer";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // 캐싱 비활성화 - 항상 최신 데이터 fetch
 export const dynamic = 'force-dynamic';
@@ -21,12 +17,14 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { projectSlug } = await params;
 
-  const { data: project } = await supabase
-    .from("projects")
-    .select("name, meta_title, meta_description, og_image")
-    .eq("slug", projectSlug)
-    .eq("status", "published")
-    .single();
+  const rows = await sql`
+    SELECT name, meta_title, meta_description, og_image
+    FROM projects
+    WHERE slug = ${projectSlug} AND status = 'published'
+    LIMIT 1
+  `;
+
+  const project = rows[0];
 
   if (!project) {
     return {
@@ -47,23 +45,44 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // 프로젝트 데이터 가져오기
 async function getProject(slug: string) {
-  const { data: project, error } = await supabase
-    .from("projects")
-    .select(`
-      *,
-      contents:project_contents(*),
-      units:project_units(*),
-      images:project_images(*)
-    `)
-    .eq("slug", slug)
-    .eq("status", "published")
-    .single();
+  const projects = await sql`
+    SELECT * FROM projects
+    WHERE slug = ${slug} AND status = 'published'
+    LIMIT 1
+  `;
 
-  if (error || !project) {
-    return null;
-  }
+  const project = projects[0] as Record<string, unknown> | undefined;
+  if (!project) return null;
 
-  return project;
+  const contents = await sql`
+    SELECT * FROM project_contents WHERE project_id = ${project.id} ORDER BY display_order ASC
+  `;
+  const units = await sql`
+    SELECT * FROM project_units WHERE project_id = ${project.id} ORDER BY display_order ASC
+  `;
+  const images = await sql`
+    SELECT * FROM project_images WHERE project_id = ${project.id} ORDER BY display_order ASC
+  `;
+
+  return {
+    ...project,
+    contents: contents as Array<{ section_type: string; content: Record<string, unknown> }>,
+    units,
+    images,
+  } as {
+    id: string;
+    slug: string;
+    name: string;
+    phone?: string;
+    address?: string;
+    meta_description?: string;
+    meta_title?: string;
+    og_image?: string;
+    contents: Array<{ section_type: string; content: Record<string, unknown> }>;
+    units: Record<string, unknown>[];
+    images: Record<string, unknown>[];
+    [key: string]: unknown;
+  };
 }
 
 export default async function ProjectPage({ params }: Props) {
@@ -77,7 +96,7 @@ export default async function ProjectPage({ params }: Props) {
   // 콘텐츠에서 섹션별 데이터 추출
   const getContent = (type: string) => {
     return project.contents?.find(
-      (c: { section_type: string }) => c.section_type === type
+      (c) => c.section_type === type
     )?.content;
   };
 
@@ -135,10 +154,9 @@ export default async function ProjectPage({ params }: Props) {
 
 // 정적 페이지 생성을 위한 경로 목록
 export async function generateStaticParams() {
-  const { data: projects } = await supabase
-    .from("projects")
-    .select("slug")
-    .eq("status", "published");
+  const projects = await sql`
+    SELECT slug FROM projects WHERE status = 'published'
+  `;
 
   return (projects || []).map((project) => ({
     projectSlug: project.slug,

@@ -2150,3 +2150,25 @@ interface SlideData {
 - 대표전화: 1666-0952
 
 **작업자**: AI Assistant
+
+---
+
+### Supabase → Neon PostgreSQL 마이그레이션
+**완료 시간**: 2026-03-22
+**핵심 요약**: 데이터베이스 클라이언트를 Supabase에서 Neon serverless driver(`@neondatabase/serverless`)로 전환. 모든 API 라우트와 페이지에서 Supabase query builder 대신 raw SQL 태그드 템플릿 사용.
+
+**변경 파일**:
+- `lib/db.ts` (신규): Neon `sql` 함수 export + 기존 TypeScript 타입/인터페이스 전체 이관 + `submitConsultation`, `submitInquiry` 헬퍼 함수
+- `app/api/consultations/route.ts`: import를 `@/lib/db`로 변경
+- `app/api/projects/[slug]/route.ts`: Supabase 클라이언트 → Neon sql 쿼리
+- `app/api/admin/consultations/route.ts`: 동적 필터 조합별 raw SQL 쿼리로 전환
+- `app/api/admin/consultations/stats/route.ts`: COUNT 쿼리로 전환
+- `app/api/admin/projects/route.ts`: JOIN + 페이지네이션 raw SQL
+- `app/api/admin/projects/[id]/route.ts`: GET/PUT/DELETE 전환, COALESCE 활용 동적 UPDATE
+- `app/api/admin/projects/[id]/contents/route.ts`: upsert → ON CONFLICT DO UPDATE
+- `app/api/admin/templates/route.ts`: 템플릿 CRUD raw SQL 전환
+- `app/[projectSlug]/page.tsx`: SSR 페이지에서 Supabase → Neon sql 쿼리 + TypeScript 타입 보강
+- `.env.example`: Supabase 환경변수 3개 → `DATABASE_URL` 1개로 교체
+- `lib/supabase.ts`: 삭제하지 않고 보존 (점진적 마이그레이션)
+
+**작업자**: AI Assistant

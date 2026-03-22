@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+import { sql } from '@/lib/db';
 
 // PUT: 프로젝트 콘텐츠 업데이트 (upsert)
 export async function PUT(
@@ -23,26 +18,19 @@ export async function PUT(
       );
     }
 
-    const { data, error } = await supabase
-      .from('project_contents')
-      .upsert(
-        {
-          project_id: id,
-          section_type,
-          content: content || {},
-          is_enabled: is_enabled ?? true,
-          display_order: display_order ?? 0,
-        },
-        {
-          onConflict: 'project_id,section_type',
-        }
-      )
-      .select()
-      .single();
+    const rows = await sql`
+      INSERT INTO project_contents (project_id, section_type, content, is_enabled, display_order)
+      VALUES (${id}, ${section_type}, ${JSON.stringify(content || {})}, ${is_enabled ?? true}, ${display_order ?? 0})
+      ON CONFLICT (project_id, section_type)
+      DO UPDATE SET
+        content = EXCLUDED.content,
+        is_enabled = EXCLUDED.is_enabled,
+        display_order = EXCLUDED.display_order,
+        updated_at = NOW()
+      RETURNING *
+    `;
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    const data = rows[0];
 
     return NextResponse.json({ content: data });
   } catch (error) {
@@ -71,15 +59,10 @@ export async function DELETE(
       );
     }
 
-    const { error } = await supabase
-      .from('project_contents')
-      .delete()
-      .eq('project_id', id)
-      .eq('section_type', section_type);
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    await sql`
+      DELETE FROM project_contents
+      WHERE project_id = ${id} AND section_type = ${section_type}
+    `;
 
     return NextResponse.json({ success: true });
   } catch (error) {

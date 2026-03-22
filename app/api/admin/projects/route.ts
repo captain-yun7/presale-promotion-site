@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-import { Project } from '@/lib/supabase';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+import { sql } from '@/lib/db';
 
 // GET: 프로젝트 목록 조회
 export async function GET(request: NextRequest) {
@@ -16,28 +10,42 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '20');
     const offset = (page - 1) * limit;
 
-    let query = supabase
-      .from('projects')
-      .select('*, template:templates(id, name)', { count: 'exact' })
-      .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1);
+    let data;
+    let countResult;
 
     if (status) {
-      query = query.eq('status', status);
+      data = await sql`
+        SELECT p.*, row_to_json(t.*) as template
+        FROM projects p
+        LEFT JOIN templates t ON p.template_id = t.id
+        WHERE p.status = ${status}
+        ORDER BY p.created_at DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM projects WHERE status = ${status}
+      `;
+    } else {
+      data = await sql`
+        SELECT p.*, row_to_json(t.*) as template
+        FROM projects p
+        LEFT JOIN templates t ON p.template_id = t.id
+        ORDER BY p.created_at DESC
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM projects
+      `;
     }
 
-    const { data, error, count } = await query;
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    const count = parseInt(countResult[0].count);
 
     return NextResponse.json({
       projects: data,
       total: count,
       page,
       limit,
-      totalPages: Math.ceil((count || 0) / limit),
+      totalPages: Math.ceil(count / limit),
     });
   } catch (error) {
     console.error('Error fetching projects:', error);
@@ -77,13 +85,11 @@ export async function POST(request: NextRequest) {
     }
 
     // 슬러그 중복 확인
-    const { data: existing } = await supabase
-      .from('projects')
-      .select('id')
-      .eq('slug', slug)
-      .single();
+    const existing = await sql`
+      SELECT id FROM projects WHERE slug = ${slug} LIMIT 1
+    `;
 
-    if (existing) {
+    if (existing.length > 0) {
       return NextResponse.json(
         { error: 'Slug already exists' },
         { status: 400 }
@@ -103,11 +109,10 @@ export async function POST(request: NextRequest) {
     };
 
     if (template_id) {
-      const { data: template } = await supabase
-        .from('templates')
-        .select('default_settings, default_theme')
-        .eq('id', template_id)
-        .single();
+      const templateRows = await sql`
+        SELECT default_settings, default_theme FROM templates WHERE id = ${template_id} LIMIT 1
+      `;
+      const template = templateRows[0];
 
       if (template) {
         defaultSettings = { ...defaultSettings, ...template.default_settings };
@@ -116,33 +121,27 @@ export async function POST(request: NextRequest) {
     }
 
     // 프로젝트 생성
-    const projectData: Partial<Project> = {
-      name,
-      slug,
-      template_id,
-      status: 'draft',
-      address,
-      phone,
-      email,
-      total_units,
-      sale_start_date,
-      sale_end_date,
-      move_in_date,
-      settings: settings || defaultSettings,
-      theme: theme || defaultTheme,
-      meta_title: meta_title || name,
-      meta_description,
-    };
+    const projectSettings = settings || defaultSettings;
+    const projectTheme = theme || defaultTheme;
+    const projectMetaTitle = meta_title || name;
 
-    const { data: project, error } = await supabase
-      .from('projects')
-      .insert([projectData])
-      .select()
-      .single();
+    const projectRows = await sql`
+      INSERT INTO projects (
+        name, slug, template_id, status, address, phone, email,
+        total_units, sale_start_date, sale_end_date, move_in_date,
+        settings, theme, meta_title, meta_description
+      ) VALUES (
+        ${name}, ${slug}, ${template_id || null}, 'draft',
+        ${address || null}, ${phone || null}, ${email || null},
+        ${total_units || null}, ${sale_start_date || null},
+        ${sale_end_date || null}, ${move_in_date || null},
+        ${JSON.stringify(projectSettings)}, ${JSON.stringify(projectTheme)},
+        ${projectMetaTitle}, ${meta_description || null}
+      )
+      RETURNING *
+    `;
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    const project = projectRows[0];
 
     // 템플릿에서 기본 콘텐츠 복사
     if (template_id) {
@@ -162,26 +161,26 @@ export async function POST(request: NextRequest) {
 // 템플릿에서 기본 콘텐츠 복사 (템플릿 기반 프로젝트에서 복사)
 async function copyTemplateContents(templateId: string, projectId: string) {
   // 템플릿으로 만들어진 기존 프로젝트에서 콘텐츠 구조 복사
-  const { data: templateProject } = await supabase
-    .from('projects')
-    .select('id')
-    .eq('template_id', templateId)
-    .limit(1)
-    .single();
+  const templateProjects = await sql`
+    SELECT id FROM projects WHERE template_id = ${templateId} LIMIT 1
+  `;
 
+  const templateProject = templateProjects[0];
   if (!templateProject) return;
 
   // 콘텐츠 복사
-  const { data: contents } = await supabase
-    .from('project_contents')
-    .select('section_type, content, is_enabled, display_order')
-    .eq('project_id', templateProject.id);
+  const contents = await sql`
+    SELECT section_type, content, is_enabled, display_order
+    FROM project_contents
+    WHERE project_id = ${templateProject.id}
+  `;
 
   if (contents && contents.length > 0) {
-    const newContents = contents.map((c) => ({
-      ...c,
-      project_id: projectId,
-    }));
-    await supabase.from('project_contents').insert(newContents);
+    for (const c of contents) {
+      await sql`
+        INSERT INTO project_contents (project_id, section_type, content, is_enabled, display_order)
+        VALUES (${projectId}, ${c.section_type}, ${JSON.stringify(c.content)}, ${c.is_enabled}, ${c.display_order})
+      `;
+    }
   }
 }
