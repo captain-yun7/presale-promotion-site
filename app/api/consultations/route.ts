@@ -5,9 +5,10 @@ import { sendConsultationNotification } from '@/lib/telegram';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, phone, message, source, project } = body;
+    const { name, phone, message, source, project, project_name, project_slug } = body;
+    const projectName = project_name || project || '염창역더채움';
 
-    console.log('[Consultation API] 상담 신청 요청 받음:', { name, phone, message, source, project });
+    console.log('[Consultation API] 상담 신청 요청 받음:', { name, phone, message, source, project: projectName });
 
     // Validation
     if (!name || !phone) {
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
       phone,
       message,
       source: source || 'website',
-      project: project || '염창역더채움',
+      project: projectName,
     });
 
     console.log('[Consultation API] ✅ Supabase 저장 성공:', result);
@@ -36,6 +37,7 @@ export async function POST(request: Request) {
         name,
         phone,
         message,
+        project: projectName,
       });
     } catch (telegramError) {
       console.error('[Consultation API] 텔레그램 알림 전송 실패:', telegramError);

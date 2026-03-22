@@ -89,7 +89,7 @@ export async function sendConsultationNotification(data: ConsultationData): Prom
 
   const message = `
 🔔 <b>새 상담 신청</b>
-
+${data.project ? `\n🏢 <b>프로젝트:</b> ${data.project}` : ''}
 📅 <b>접수일시:</b> ${formattedDate}
 👤 <b>이름:</b> ${data.name}
 📞 <b>연락처:</b> ${data.phone}
