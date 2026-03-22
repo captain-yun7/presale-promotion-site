@@ -69,7 +69,21 @@ export default function PremiumContact({ config, meta, theme }: Props) {
               </div>
               <div className={`${p}-form-group`}>
                 <label className={`${p}-form-label`}>Phone<span className="required">*</span></label>
-                <input type="tel" name="phone" className={`${p}-form-input`} placeholder="연락처를 입력해주세요" required />
+                <input
+                  type="tel"
+                  name="phone"
+                  className={`${p}-form-input`}
+                  placeholder="010-0000-0000"
+                  required
+                  maxLength={13}
+                  onInput={(e) => {
+                    const input = e.currentTarget;
+                    const nums = input.value.replace(/\D/g, "");
+                    if (nums.length <= 3) input.value = nums;
+                    else if (nums.length <= 7) input.value = `${nums.slice(0, 3)}-${nums.slice(3)}`;
+                    else input.value = `${nums.slice(0, 3)}-${nums.slice(3, 7)}-${nums.slice(7, 11)}`;
+                  }}
+                />
               </div>
             </div>
 
