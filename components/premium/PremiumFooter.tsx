@@ -46,12 +46,21 @@ export default function PremiumFooter({ config, theme }: Props) {
             </div>
           ))}
         </div>
+        {/* 사업자 정보 */}
+        <div className={`${p}-footer-company`}>
+          <p><strong>Jpex Studio</strong></p>
+          <p>문의: 1666-0952</p>
+          <p>대표: 윤지수 | 사업자등록번호: 560-45-01327</p>
+          <p className={`${p}-footer-disclaimer`}>
+            ※ 본 홍보물은 소비자의 이해를 돕기 위한 것으로 실제와 다를 수 있으며, 사업계획승인 변경 및 신고 등에 따라 변경될 수 있습니다.
+          </p>
+          <p className={`${p}-footer-disclaimer`}>
+            ※ 자세한 내용은 분양 카탈로그 및 분양계약서를 참조하시기 바랍니다.
+          </p>
+        </div>
+
         <div className={`${p}-footer-bottom`}>
-          <div className={`${p}-footer-legal`}>
-            <span>서비스 이용약관</span>
-            <span>개인정보처리방침</span>
-          </div>
-          <div className={`${p}-footer-copy`}>{config.copyright}</div>
+          <div className={`${p}-footer-copy`}>COPYRIGHT Jpex Studio. ALL RIGHTS RESERVED.</div>
         </div>
       </div>
     </footer>

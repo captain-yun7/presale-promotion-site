@@ -717,6 +717,16 @@
 .haven-footer-legal a { text-decoration: none; color: inherit; }
 .haven-footer-legal a:hover { color: var(--haven-gold); }
 .haven-footer-copy { color: rgba(255,255,255,.3); }
+.haven-footer-company {
+  padding-top: clamp(24px, 3vw, 40px);
+  margin-top: clamp(24px, 3vw, 40px);
+  border-top: 1px solid rgba(255,255,255,.08);
+  font-size: 13px; line-height: 1.8;
+}
+.haven-footer-company strong { color: rgba(255,255,255,.7); }
+.haven-footer-disclaimer {
+  font-size: 12px; color: rgba(255,255,255,.35); margin-top: 12px;
+}
 
 /* ════════════════════════════════
    Responsive
