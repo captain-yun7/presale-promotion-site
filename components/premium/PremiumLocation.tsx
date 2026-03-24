@@ -21,18 +21,50 @@ export default function PremiumLocation({ config, theme }: Props) {
         Map: new (el: HTMLElement, opts: Record<string, unknown>) => unknown;
         LatLng: new (lat: number, lng: number) => unknown;
         Marker: new (opts: Record<string, unknown>) => unknown;
+        Service: {
+          geocode: (opts: { query: string; callback: (status: string, response: { v2: { addresses: Array<{ x: string; y: string }> } }) => void }) => void;
+        };
       };
     } | undefined;
     if (!naver?.maps) return;
 
-    const center = new naver.maps.LatLng(config.coords.lat, config.coords.lng);
-    const map = new naver.maps.Map(mapRef.current, {
-      center,
-      zoom: 16,
-      zoomControl: true,
-    });
-    new naver.maps.Marker({ position: center, map });
-    mapInstanceRef.current = map;
+    if (config.address) {
+      naver.maps.Service.geocode({
+        query: config.address,
+        callback: (_status, response) => {
+          const items = response?.v2?.addresses;
+          if (items && items.length > 0) {
+            const center = new naver.maps.LatLng(parseFloat(items[0].y), parseFloat(items[0].x));
+            const map = new naver.maps.Map(mapRef.current!, {
+              center,
+              zoom: 16,
+              zoomControl: true,
+            });
+            new naver.maps.Marker({ position: center, map });
+            mapInstanceRef.current = map;
+          } else {
+            // fallback to coords
+            const center = new naver.maps.LatLng(config.coords.lat, config.coords.lng);
+            const map = new naver.maps.Map(mapRef.current!, {
+              center,
+              zoom: 16,
+              zoomControl: true,
+            });
+            new naver.maps.Marker({ position: center, map });
+            mapInstanceRef.current = map;
+          }
+        },
+      });
+    } else {
+      const center = new naver.maps.LatLng(config.coords.lat, config.coords.lng);
+      const map = new naver.maps.Map(mapRef.current, {
+        center,
+        zoom: 16,
+        zoomControl: true,
+      });
+      new naver.maps.Marker({ position: center, map });
+      mapInstanceRef.current = map;
+    }
   };
 
   useEffect(() => {
@@ -46,7 +78,7 @@ export default function PremiumLocation({ config, theme }: Props) {
   return (
     <>
       <Script
-        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}`}
+        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}&submodules=geocoder`}
         strategy="afterInteractive"
         onLoad={initMap}
       />
