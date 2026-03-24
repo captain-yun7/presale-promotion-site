@@ -64,7 +64,7 @@ const config: ProjectConfig = {
 
   location: {
     title: '<strong>도심의 중심</strong>에서 누리는 자연',
-    address: "서울특별시 영등포구 신길동 449-11",
+    address: "서울특별시 영등포구 영등포로 404",
     coords: { lat: 37.4966, lng: 126.9210 },
     details: [
       { icon: "🚇", label: "Subway", value: "6·7호선 태릉입구역 도보 8분" },
