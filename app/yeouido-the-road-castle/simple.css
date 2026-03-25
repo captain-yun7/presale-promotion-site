@@ -161,9 +161,8 @@
 
 /* ── Building Image ── */
 .sp-building-img {
-  max-width: 600px;
+  max-width: 960px;
   margin: 0 auto 40px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -193,26 +192,30 @@
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
 }
 
-/* ── 사업개요 Info Grid ── */
-.sp-info-grid {
-  max-width: 800px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border-top: 2px solid #222;
+/* ── 사업개요 Table ── */
+.sp-table {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 15px;
 }
-.sp-info-item {
-  display: flex;
-  padding: 20px 0;
+.sp-table th,
+.sp-table td {
+  padding: 16px 20px;
+  text-align: left;
   border-bottom: 1px solid #eee;
-  gap: 16px;
 }
-.sp-info-label {
-  width: 80px; flex-shrink: 0;
-  font-size: 14px; font-weight: 700;
-  color: #B8926A;
+.sp-table th {
+  background: #F7F7F7;
+  font-weight: 700;
+  color: #333;
+  white-space: nowrap;
+  width: 110px;
+  font-size: 14px;
 }
-.sp-info-value {
-  font-size: 15px; color: #333;
+.sp-table td {
+  color: #555;
 }
 
 /* ── 핵심포인트 ── */
@@ -409,7 +412,9 @@
 
   .sp-header { padding: 0 16px; }
   .sp-header-tel { font-size: 14px; }
-  .sp-info-grid { grid-template-columns: 1fr; }
+  .sp-table { font-size: 13px; display: block; overflow-x: auto; }
+  .sp-table th { width: 80px; padding: 12px 10px; }
+  .sp-table td { padding: 12px 10px; }
   .sp-options-grid { grid-template-columns: repeat(2, 1fr); }
   .sp-gallery { grid-template-columns: repeat(2, 1fr); }
   .sp-plans-img-grid { grid-template-columns: 1fr; max-width: 400px; }

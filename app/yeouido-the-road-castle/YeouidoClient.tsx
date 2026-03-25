@@ -137,40 +137,34 @@ export default function YeouidoClient() {
             style={{ width: "100%", height: "auto", borderRadius: 12 }}
           />
         </div>
-        <div className="sp-info-grid">
-          <div className="sp-info-item">
-            <span className="sp-info-label">위치</span>
-            <span className="sp-info-value">서울시 영등포구 신길동 449-11</span>
-          </div>
-          <div className="sp-info-item">
-            <span className="sp-info-label">규모</span>
-            <span className="sp-info-value">지하2층 ~ 지상17층, 1개동</span>
-          </div>
-          <div className="sp-info-item">
-            <span className="sp-info-label">세대수</span>
-            <span className="sp-info-value">총 46세대 (아파트) + 오피스텔 6실</span>
-          </div>
-          <div className="sp-info-item">
-            <span className="sp-info-label">타입</span>
-            <span className="sp-info-value">전용 24~27㎡ (전 타입 투룸)</span>
-          </div>
-          <div className="sp-info-item">
-            <span className="sp-info-label">시행</span>
-            <span className="sp-info-value">무궁화신탁</span>
-          </div>
-          <div className="sp-info-item">
-            <span className="sp-info-label">시공</span>
-            <span className="sp-info-value">현강종합건설</span>
-          </div>
-          <div className="sp-info-item">
-            <span className="sp-info-label">입주</span>
-            <span className="sp-info-value">즉시 입주 가능 (준공 완료)</span>
-          </div>
-          <div className="sp-info-item">
-            <span className="sp-info-label">대출</span>
-            <span className="sp-info-value">아파트 70% 대출 가능</span>
-          </div>
-        </div>
+        <table className="sp-table">
+          <tbody>
+            <tr>
+              <th>사업명</th><td>대방역 여의도 더로드캐슬</td>
+              <th>대지위치</th><td>서울특별시 영등포구 신길동 449-11</td>
+            </tr>
+            <tr>
+              <th>지역/지구</th><td>일반상업지역, 제3종일반주거지역</td>
+              <th>건물용도</th><td>공동주택, 오피스텔, 근린생활시설</td>
+            </tr>
+            <tr>
+              <th>건축규모</th><td>지하 2층 ~ 지상 17층, 1개동</td>
+              <th>대지면적</th><td>409.00㎡ (123.723 평)</td>
+            </tr>
+            <tr>
+              <th>건축면적</th><td>211.53 ㎡</td>
+              <th>연면적</th><td>2702.27㎡ (817.437평)</td>
+            </tr>
+            <tr>
+              <th>건폐율</th><td>51.72 %</td>
+              <th>용적률</th><td>542.51%</td>
+            </tr>
+            <tr>
+              <th>세대수</th><td>아파트 총 46세대, 오피스텔 6실, 근린생활시설 6실</td>
+              <th>주차대수</th><td>33 대</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
 
       {/* ── 핵심 포인트 ── */}
@@ -320,7 +314,8 @@ export default function YeouidoClient() {
           />
           <textarea
             name="message"
-            placeholder="문의사항 (선택)"
+            placeholder="문의사항"
+            required
             className="sp-input sp-textarea"
           />
           <label className="sp-checkbox">
