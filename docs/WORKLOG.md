@@ -2172,3 +2172,74 @@ interface SlideData {
 - `lib/supabase.ts`: 삭제하지 않고 보존 (점진적 마이그레이션)
 
 **작업자**: AI Assistant
+
+### 프로모션 기능 추가 및 메인 홈페이지 디자인 개선
+**완료 시간**: 2026-03-25
+**핵심 요약**: 분양 프로모션 사이트에 전환율 향상을 위한 핵심 UI 기능 4종 추가 + 메인 홈페이지 프리미엄 리디자인
+
+**상세 내용**:
+
+#### 신규 컴포넌트 4종 생성
+1. **FloatingActions** (`components/premium/FloatingActions.tsx`)
+   - 모바일: 하단 고정 CTA 바 (전화상담 + 상담신청 버튼)
+   - 데스크톱: 우측 플로팅 버튼 (카카오톡, 전화, 상담)
+   - 빠른 상담 팝업 기능 포함
+
+2. **SocialProofToast** (`components/premium/SocialProofToast.tsx`)
+   - "OO지역 김**님이 상담신청을 완료했습니다" 형태의 사회적 증거 알림
+   - 랜덤 이름/지역/행동/시간 조합, 15~30초 간격 표시
+
+3. **UrgencyBanner** (`components/premium/UrgencyBanner.tsx`)
+   - 상단 고정 긴급성 배너 (마감임박 + 잔여 세대 수 + 펄스 애니메이션)
+
+4. **BackToTop** (`components/premium/BackToTop.tsx`)
+   - 스크롤 시 나타나는 상단 이동 버튼
+
+#### 메인 홈페이지 리디자인
+- 풀스크린 다크 히어로 + 골드 악센트
+- 통계 바, 프로젝트 카드 (이미지 호버 줌, 태그), Why Choose Us 섹션, CTA, 푸터
+- `styles/home.css` 신규 작성
+
+**변경 파일**:
+- `components/premium/FloatingActions.tsx` (신규)
+- `components/premium/SocialProofToast.tsx` (신규)
+- `components/premium/UrgencyBanner.tsx` (신규)
+- `components/premium/BackToTop.tsx` (신규)
+- `components/premium/PremiumPage.tsx` (수정)
+- `app/page.tsx` (전면 리디자인)
+- `app/layout.tsx` (수정)
+- `styles/home.css` (신규)
+- `styles/themes/premium-cream.css` (CSS 추가)
+
+**작업자**: AI Assistant
+
+### 여의도 더로드캐슬 심플 원페이지 리디자인
+**완료 시간**: 2026-03-25
+**핵심 요약**: 참고 사이트(여의도더로드캐슬.kr) 스타일로 심플한 원페이지로 전면 리디자인. PremiumPage 컴포넌트 의존 제거, 큰 글씨 + 깔끔한 섹션 구성.
+
+**상세 내용**:
+
+#### 크롤링으로 추가한 콘텐츠
+- **무상옵션 제품**: 1,900만원 상당 (4도어 냉장고, 시스템에어컨, 세탁기, 건조기, 인덕션, 오븐, 시스템장, 발코니확장)
+- **평면 안내**: E타입(24.91㎡), C타입(25.37㎡), D타입(27.76㎡) + 분양가
+- **지도**: 카카오맵 iframe (신길동 449-11)
+- **사업개요**: 46세대, 무궁화신탁/현강종합건설, 즉시입주
+
+#### 심플 원페이지 구성 (위→아래)
+1. Hero (풀스크린 배경 이미지 + 큰 글자)
+2. 사업개요 (2컬럼 정보 테이블)
+3. 핵심 포인트 4가지 (다크 배경)
+4. 무상옵션 제품 (8개 카드)
+5. 실내 갤러리 (6장)
+6. 평면 안내 (3타입 카드)
+7. 오시는 길 (카카오맵 + 교통정보)
+8. 상담신청 (다크 배경 폼)
+9. 푸터
+10. 모바일 하단 고정바
+
+**변경 파일**:
+- `app/yeouido-the-road-castle/YeouidoClient.tsx` (전면 재작성 — PremiumPage 의존 제거)
+- `app/yeouido-the-road-castle/page.tsx` (Metadata 추가, 간소화)
+- `app/yeouido-the-road-castle/simple.css` (신규 — 심플 원페이지 스타일)
+
+**작업자**: AI Assistant

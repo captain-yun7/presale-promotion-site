@@ -1,0 +1,420 @@
+/* ============================================
+   Simple One-Page — 여의도 더로드캐슬
+   깔끔 · 큰글자 · 원페이지
+   ============================================ */
+
+/* ── Reset ── */
+.sp {
+  font-family: 'Noto Sans KR', -apple-system, sans-serif;
+  color: #222;
+  background: #fff;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+.sp *, .sp *::before, .sp *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Header ── */
+.sp-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 64px;
+  background: transparent;
+  transition: all 0.3s;
+}
+.sp-header.scrolled {
+  background: rgba(255,255,255,0.97);
+  box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+  backdrop-filter: blur(8px);
+}
+.sp-logo {
+  background: none; border: none; cursor: pointer;
+  font-size: 18px; font-weight: 800; color: #fff;
+  transition: color 0.3s;
+  font-family: inherit;
+}
+.sp-header.scrolled .sp-logo { color: #222; }
+.sp-nav {
+  display: flex; gap: 28px;
+}
+.sp-nav button {
+  background: none; border: none; cursor: pointer;
+  font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85);
+  transition: color 0.3s;
+  font-family: inherit;
+}
+.sp-header.scrolled .sp-nav button { color: #555; }
+.sp-nav button:hover { color: #B8926A; }
+.sp-header-tel {
+  font-size: 16px; font-weight: 800; color: #fff;
+  text-decoration: none; transition: color 0.3s;
+}
+.sp-header.scrolled .sp-header-tel { color: #B8926A; }
+
+/* ── Hero ── */
+.sp-hero {
+  position: relative;
+  height: 100vh; min-height: 600px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; color: #fff;
+}
+.sp-hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.sp-hero-dim {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+.sp-hero-content {
+  position: relative; z-index: 1;
+  padding: 0 20px;
+}
+.sp-hero-label {
+  font-size: 16px; font-weight: 500;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 16px;
+}
+.sp-hero-title {
+  font-size: clamp(36px, 6vw, 60px);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.sp-hero-title span {
+  color: #F0C674;
+}
+.sp-hero-sub {
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 36px;
+}
+.sp-hero-btns {
+  display: flex; gap: 12px; justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Buttons ── */
+.sp-btn-big {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 16px 40px;
+  font-size: 18px; font-weight: 800;
+  border: none; border-radius: 8px;
+  cursor: pointer; text-decoration: none;
+  transition: all 0.3s;
+  font-family: inherit;
+  background: #B8926A; color: #fff;
+}
+.sp-btn-big:hover {
+  background: #9B7A57;
+  transform: translateY(-2px);
+}
+.sp-btn-outline {
+  background: transparent !important;
+  border: 2px solid rgba(255,255,255,0.6) !important;
+  color: #fff !important;
+}
+.sp-btn-outline:hover {
+  border-color: #F0C674 !important;
+  color: #F0C674 !important;
+  background: transparent !important;
+}
+
+/* ── Section ── */
+.sp-section {
+  padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 80px);
+}
+.sp-dark {
+  background: #1A1A1A; color: #fff;
+}
+.sp-gray {
+  background: #F7F7F7;
+}
+.sp-title {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+.sp-subtitle {
+  font-size: clamp(16px, 2vw, 20px);
+  text-align: center;
+  color: #888;
+  margin-bottom: 48px;
+  font-weight: 400;
+}
+.sp-dark .sp-subtitle { color: rgba(255,255,255,0.5); }
+.sp-subtitle strong { color: #B8926A; font-weight: 700; }
+.sp-note {
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+  margin-top: 24px;
+}
+
+/* ── Full-width Image Section ── */
+.sp-full-img {
+  width: 100%;
+  line-height: 0;
+}
+
+/* ── Building Image ── */
+.sp-building-img {
+  max-width: 600px;
+  margin: 0 auto 40px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ── View Image (Panorama) ── */
+.sp-view-img {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.sp-view-caption {
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+/* ── Location Map Image (Crawled) ── */
+.sp-location-map-img {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* ── 사업개요 Info Grid ── */
+.sp-info-grid {
+  max-width: 800px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 2px solid #222;
+}
+.sp-info-item {
+  display: flex;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+  gap: 16px;
+}
+.sp-info-label {
+  width: 80px; flex-shrink: 0;
+  font-size: 14px; font-weight: 700;
+  color: #B8926A;
+}
+.sp-info-value {
+  font-size: 15px; color: #333;
+}
+
+/* ── 핵심포인트 ── */
+.sp-points {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1100px; margin: 0 auto;
+}
+.sp-point {
+  text-align: center;
+  padding: 32px 16px;
+}
+.sp-point-num {
+  font-size: 14px; font-weight: 700;
+  color: #B8926A;
+  margin-bottom: 16px;
+  letter-spacing: 0.1em;
+}
+.sp-point h3 {
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.sp-point p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+}
+
+/* ── 무상옵션 이미지 ── */
+.sp-options-img {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ── Gallery ── */
+.sp-gallery {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 1000px; margin: 0 auto;
+}
+.sp-gallery-item {
+  position: relative;
+  aspect-ratio: 3/2;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.sp-gallery-item img {
+  transition: transform 0.4s;
+}
+.sp-gallery-item:hover img {
+  transform: scale(1.05);
+}
+.sp-gallery-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 8px 12px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  color: #fff; font-size: 13px; font-weight: 600;
+}
+
+/* ── 평면 안내 ── */
+.sp-plans-img-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 900px; margin: 0 auto;
+}
+.sp-plan-img-card {
+  text-align: center;
+  background: #F9F9F9;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #eee;
+  transition: all 0.3s;
+}
+.sp-plan-img-card:hover {
+  border-color: #B8926A;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+.sp-plan-img-label {
+  padding: 16px;
+  font-size: 20px; font-weight: 800;
+  color: #333;
+}
+
+/* ── 지도 ── */
+.sp-map-wrap {
+  max-width: 900px; margin: 0 auto 32px;
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.sp-location-info {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.sp-loc-item {
+  padding: 20px 24px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+.sp-loc-item strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.sp-loc-item span {
+  font-size: 14px; color: #666;
+}
+
+/* ── 상담 Form ── */
+.sp-form {
+  max-width: 500px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.sp-input {
+  padding: 16px 20px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  color: #222;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.sp-input::placeholder { color: #999; }
+.sp-input:focus { border-color: #B8926A; }
+.sp-textarea { min-height: 80px; resize: vertical; }
+.sp-checkbox {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: rgba(255,255,255,0.6);
+  cursor: pointer;
+}
+.sp-checkbox input {
+  accent-color: #B8926A; width: 16px; height: 16px;
+}
+.sp-btn-submit {
+  margin-top: 8px;
+}
+.sp-btn-submit.done {
+  background: #5A8B5A !important;
+}
+.sp-tel-guide {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px; color: rgba(255,255,255,0.5);
+}
+.sp-tel-guide a {
+  color: #F0C674; font-weight: 800;
+  text-decoration: none; font-size: 20px;
+  margin-left: 8px;
+}
+
+/* ── Footer ── */
+.sp-footer {
+  padding: 32px 20px;
+  text-align: center;
+  background: #111; color: rgba(255,255,255,0.35);
+  font-size: 12px;
+}
+.sp-footer p { margin-bottom: 6px; }
+
+/* ── Bottom Bar (Mobile) ── */
+.sp-bottom-bar {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 99;
+  grid-template-columns: 1fr 1fr;
+}
+.sp-bb-call, .sp-bb-consult {
+  padding: 16px; text-align: center;
+  font-size: 16px; font-weight: 800;
+  border: none; cursor: pointer; text-decoration: none;
+  font-family: inherit;
+}
+.sp-bb-call {
+  background: #fff; color: #B8926A;
+  border-top: 1px solid #eee;
+}
+.sp-bb-consult {
+  background: #B8926A; color: #fff;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .sp-nav { display: none; }
+  .sp-points { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .sp-bottom-bar { display: grid; }
+  .sp-footer { padding-bottom: 72px; }
+
+  .sp-header { padding: 0 16px; }
+  .sp-header-tel { font-size: 14px; }
+  .sp-info-grid { grid-template-columns: 1fr; }
+  .sp-options-grid { grid-template-columns: repeat(2, 1fr); }
+  .sp-gallery { grid-template-columns: repeat(2, 1fr); }
+  .sp-plans-img-grid { grid-template-columns: 1fr; max-width: 400px; }
+  .sp-location-info { grid-template-columns: 1fr; }
+  .sp-points { grid-template-columns: 1fr; gap: 8px; }
+  .sp-hero-btns { flex-direction: column; padding: 0 20px; }
+  .sp-btn-big { width: 100%; }
+}

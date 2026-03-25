@@ -763,3 +763,272 @@
   .haven-form-row { grid-template-columns: 1fr; }
   .haven-location-infra { grid-template-columns: 1fr; }
 }
+
+/* ============================================
+   NEW FEATURES — Floating Actions, Toast,
+   Urgency Banner, Back to Top
+   ============================================ */
+
+/* ── Floating Bottom Bar (Mobile) ── */
+.haven-floating-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 999;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  transform: translateY(100%);
+  transition: transform 0.4s var(--haven-ease);
+}
+.haven-floating-bar.visible { transform: translateY(0); }
+.haven-floating-bar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px; font-size: 15px; font-weight: 700;
+  text-decoration: none; border: none; cursor: pointer;
+  font-family: inherit;
+}
+.haven-floating-bar-call {
+  background: #fff; color: var(--haven-gold);
+  border-top: 1px solid var(--haven-border);
+}
+.haven-floating-bar-consult {
+  background: var(--haven-gold); color: #fff;
+}
+
+/* ── Floating Side Buttons (Desktop) ── */
+.haven-floating-side {
+  position: fixed; right: 24px; bottom: 100px;
+  z-index: 998;
+  display: flex; flex-direction: column; gap: 10px;
+  opacity: 0; transform: translateX(20px);
+  transition: all 0.4s var(--haven-ease);
+  pointer-events: none;
+}
+.haven-floating-side.visible {
+  opacity: 1; transform: translateX(0);
+  pointer-events: auto;
+}
+.haven-floating-side-btn {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: none; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  transition: all 0.3s;
+  text-decoration: none;
+}
+.haven-floating-side-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+}
+.haven-floating-kakao {
+  background: #FEE500; color: #3C1E1E;
+}
+.haven-floating-phone {
+  background: #fff; color: var(--haven-gold);
+}
+.haven-floating-consult-btn {
+  background: var(--haven-gold); color: #fff;
+}
+
+/* ── Quick Consult Popup ── */
+.haven-quick-consult {
+  position: fixed; right: 24px; bottom: 280px;
+  z-index: 999;
+  width: 280px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+  overflow: hidden;
+  animation: havenPopIn 0.3s var(--haven-ease);
+}
+@keyframes havenPopIn {
+  from { opacity: 0; transform: scale(0.9) translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.haven-quick-consult-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px;
+  background: var(--haven-gold); color: #fff;
+  font-weight: 700; font-size: 14px;
+}
+.haven-quick-consult-header button {
+  background: none; border: none; color: #fff;
+  font-size: 22px; cursor: pointer; line-height: 1;
+}
+.haven-quick-consult-body {
+  padding: 20px;
+}
+.haven-quick-consult-body p {
+  font-size: 13px; color: var(--haven-text-mid);
+  margin: 0 0 16px; text-align: center;
+}
+
+/* ── Social Proof Toast ── */
+.haven-social-toast {
+  position: fixed; bottom: 24px; left: 24px;
+  z-index: 997;
+  display: flex; align-items: flex-start; gap: 12px;
+  background: #fff;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  max-width: 340px;
+  opacity: 0; transform: translateY(20px) scale(0.95);
+  transition: all 0.4s var(--haven-ease);
+  pointer-events: none;
+}
+.haven-social-toast.show {
+  opacity: 1; transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.haven-social-toast-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(122, 139, 111, 0.12);
+  border-radius: 50%;
+  color: var(--haven-sage);
+}
+.haven-social-toast-content { flex: 1; min-width: 0; }
+.haven-social-toast-title {
+  font-size: 14px; font-weight: 700; color: var(--haven-text);
+  margin-bottom: 2px;
+}
+.haven-social-toast-msg {
+  font-size: 13px; color: var(--haven-text-mid);
+  line-height: 1.4;
+}
+.haven-social-toast-time {
+  font-size: 11px; color: var(--haven-text-light);
+  margin-top: 4px;
+}
+.haven-social-toast-close {
+  position: absolute; top: 8px; right: 12px;
+  background: none; border: none; cursor: pointer;
+  font-size: 18px; color: var(--haven-text-light);
+  line-height: 1;
+}
+
+/* ── Urgency Banner ── */
+.haven-urgency-banner {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1001;
+  background: linear-gradient(90deg, #8B2B2B, #A33A3A, #8B2B2B);
+  color: #fff;
+  padding: 0;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+.haven-urgency-banner.pulse {
+  background: linear-gradient(90deg, #A33A3A, #C04848, #A33A3A);
+}
+.haven-urgency-inner {
+  max-width: var(--haven-mw);
+  margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px;
+  padding: 10px var(--haven-px);
+  flex-wrap: wrap;
+}
+.haven-urgency-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.15);
+  padding: 3px 12px;
+  border-radius: 100px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.haven-urgency-dot {
+  width: 6px; height: 6px;
+  background: #FF6B6B;
+  border-radius: 50%;
+  animation: havenBlink 1.2s infinite;
+}
+@keyframes havenBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.haven-urgency-text {
+  font-size: 13px;
+}
+.haven-urgency-text strong {
+  color: #FFD700;
+}
+.haven-urgency-cta {
+  background: #FFD700; color: #1A1A1A;
+  border: none; padding: 5px 16px;
+  border-radius: 100px;
+  font-size: 12px; font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.haven-urgency-cta:hover {
+  background: #fff;
+  transform: scale(1.05);
+}
+.haven-urgency-close {
+  background: none; border: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 20px; cursor: pointer;
+  line-height: 1;
+  margin-left: 8px;
+}
+
+/* Adjust header position when urgency banner is visible */
+.haven-page:has(.haven-urgency-banner) .haven-header {
+  top: 42px;
+}
+
+/* ── Back to Top ── */
+.haven-back-to-top {
+  position: fixed; bottom: 24px; right: 24px;
+  z-index: 996;
+  width: 44px; height: 44px;
+  background: var(--haven-bg);
+  border: 1px solid var(--haven-border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--haven-text-mid);
+  cursor: pointer;
+  opacity: 0; transform: translateY(20px);
+  transition: all 0.3s var(--haven-ease);
+  pointer-events: none;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.haven-back-to-top.visible {
+  opacity: 1; transform: translateY(0);
+  pointer-events: auto;
+}
+.haven-back-to-top:hover {
+  background: var(--haven-gold);
+  color: #fff;
+  border-color: var(--haven-gold);
+}
+
+/* ── Responsive for new features ── */
+@media (max-width: 768px) {
+  .haven-floating-bar { display: grid; }
+  .haven-floating-side { display: none; }
+  .haven-quick-consult { display: none; }
+
+  .haven-social-toast {
+    left: 12px; right: 12px; bottom: 72px;
+    max-width: none;
+  }
+
+  .haven-urgency-inner {
+    font-size: 12px;
+    gap: 8px;
+    justify-content: center;
+    text-align: center;
+  }
+  .haven-urgency-cta { display: none; }
+
+  .haven-back-to-top {
+    bottom: 72px; right: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .haven-urgency-text { font-size: 11px; }
+  .haven-urgency-badge { font-size: 10px; padding: 2px 8px; }
+}

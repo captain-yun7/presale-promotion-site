@@ -12,6 +12,10 @@ import PremiumFloorPlan from "./PremiumFloorPlan";
 import PremiumCTA from "./PremiumCTA";
 import PremiumContact from "./PremiumContact";
 import PremiumFooter from "./PremiumFooter";
+import FloatingActions from "./FloatingActions";
+import SocialProofToast from "./SocialProofToast";
+import UrgencyBanner from "./UrgencyBanner";
+import BackToTop from "./BackToTop";
 import type { ProjectConfig } from "@/lib/types/project";
 
 interface Props {
@@ -23,8 +27,21 @@ export default function PremiumPage({ config }: Props) {
   const p = theme.prefix;
   const revealRef = useScrollReveal(`${p}-reveal`);
 
+  // 긴급성 배너에 사용할 잔여 세대 수 (stats에서 추출하거나 기본값)
+  const remainingStat = config.stats?.find(s => s.label.includes("잔여") || s.label.includes("선착순"));
+  const remainingUnits = remainingStat?.target || 0;
+
   return (
     <div className={`${p}-page`} ref={revealRef}>
+      {/* Urgency Banner */}
+      {remainingUnits > 0 && (
+        <UrgencyBanner
+          theme={theme}
+          remainingUnits={remainingUnits}
+          ctaTargetId={`${p}-contact`}
+        />
+      )}
+
       <PremiumHeader
         brand={footer.brand}
         brandSub={footer.brandSub}
@@ -69,6 +86,15 @@ export default function PremiumPage({ config }: Props) {
 
       <PremiumContact config={contact} meta={meta} theme={theme} />
       <PremiumFooter config={config.footer} theme={theme} />
+
+      {/* Floating UI Elements */}
+      <FloatingActions
+        phone={meta.phone}
+        ctaTargetId={`${p}-contact`}
+        theme={theme}
+      />
+      <SocialProofToast theme={theme} projectName={meta.name} />
+      <BackToTop theme={theme} />
     </div>
   );
 }
