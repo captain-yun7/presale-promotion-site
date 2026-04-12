@@ -288,7 +288,7 @@ export default function YeouidoClient() {
       {/* ── 상담신청 ── */}
       <section className="sp-section sp-dark" id="contact">
         <h2 className="sp-title">상담신청</h2>
-        <p className="sp-subtitle">전문 상담사가 1:1 맞춤 상담해드립니다</p>
+        <p className="sp-subtitle">스마일분양 전문 상담사가 1:1 맞춤 상담해드립니다</p>
         <form className="sp-form" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -337,7 +337,7 @@ export default function YeouidoClient() {
 
       {/* ── 푸터 ── */}
       <footer className="sp-footer">
-        <p>Jpex Studio | 대표: 윤지수 | 사업자등록번호: 560-45-01327</p>
+        <p>스마일분양 | Jpex Studio | 대표: 윤지수 | 사업자등록번호: 560-45-01327</p>
         <p>※ 본 홍보물은 소비자의 이해를 돕기 위한 것으로 실제와 다를 수 있습니다.</p>
         <p>&copy; 2026 여의도 더로드캐슬. All rights reserved.</p>
       </footer>
