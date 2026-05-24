@@ -33,6 +33,16 @@ export default function Home() {
       highlight: "선착순 6세대",
       tags: ["더블역세권", "즉시입주", "7년전분양가"],
     },
+    {
+      slug: "seonyu-noblere",
+      name: "선유노블레르",
+      location: "서울시 영등포구 양평동",
+      description: "9호선 선유도역 도보 5분, 한강생활권 신축 투룸 오피스텔. 지상 9층 46실",
+      status: "분양중",
+      image: "/images/seonyu-noblere/exterior/aerial-river.jpg",
+      highlight: "9호선 초역세권",
+      tags: ["선유도역5분", "한강생활권", "신축투룸"],
+    },
   ];
 
   const stats = [
