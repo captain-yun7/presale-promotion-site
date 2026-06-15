@@ -692,32 +692,12 @@ export default function SeonyuClient() {
       {/* ── 안전마진 ── */}
       <section className="sp-section sp-dark" id="market">
         <span className="sp-eyebrow">Market Analysis · 시세 비교</span>
-        <h2 className="sp-title">인근 신축 시세<br /><strong>6.5억 ~ 8.9억</strong></h2>
+        <h2 className="sp-title">인근 신축 시세<br /><strong>7억대 ~ 9억대</strong></h2>
         <div className="sp-rule" />
         <p className="sp-subtitle">
-          본동 매물 시세부터 인근 동일 평형 비교까지 — 안전마진의 근거
+          인근 동일 평형 신축 오피스텔 시세 비교 — 안전마진의 근거
         </p>
 
-        <div className="sp-margin-hero">
-          <div className="sp-margin-card sp-margin-hero-card">
-            <span className="mc-tag">Same Building · 본동 매물</span>
-            <h3>선유노블레르 본동</h3>
-            <p className="mc-area">오피스텔 · 64㎡ / 전용 49㎡ · 9층 2동 · 46세대</p>
-            <p className="mc-price">매매 <strong>6.5억 ~ 7.7억</strong></p>
-            <p className="mc-meta">풀옵션 쓰리룸 · 신축 컨디션 · 부동산포스 매물</p>
-            <div className="mc-img">
-              <Image
-                src={`${BASE}/market/seonyu-listing.jpg`}
-                alt="선유노블레르 본동 매물 시세"
-                width={1200}
-                height={680}
-                style={{ width: "100%", height: "auto" }}
-              />
-            </div>
-          </div>
-        </div>
-
-        <h3 className="sp-mh">인근 동일 평형 신축 오피스텔 시세 비교</h3>
         <div className="sp-margin-grid">
           <div className="sp-margin-card">
             <h4>한강더채움</h4>
@@ -747,18 +727,11 @@ export default function SeonyuClient() {
             <Image src={`${BASE}/market/healthcare-smyde.png`} alt="헬스케어스마이드 매매 7.4억"
               width={1200} height={560} style={{ width: "100%", height: "auto" }} />
           </div>
-          <div className="sp-margin-card">
-            <h4>여의도 센트럴팰리스</h4>
-            <p className="mc-area">오피스텔 · 10층 · 여의도</p>
-            <p className="mc-price">매매 <strong>5.8억</strong></p>
-            <Image src={`${BASE}/market/yeouido-central.png`} alt="여의도 센트럴팰리스 매매 5.8억"
-              width={1200} height={560} style={{ width: "100%", height: "auto" }} />
-          </div>
           <div className="sp-margin-card sp-margin-summary">
             <span className="mc-tag">Margin · 안전마진</span>
             <h4>분양가 안내</h4>
             <p className="mc-area">
-              인근 동일 평형 신축 오피스텔 시세는 6.5억 ~ 8.9억 사이로 형성되어 있습니다.
+              인근 동일 평형 신축 오피스텔 시세는 <strong>7억대 ~ 9억대</strong> 사이로 형성되어 있습니다.
               선유노블레르 분양가는 합리적 수준으로 책정되어 입주 시점부터 안전마진 확보가 가능합니다.
             </p>
             <p className="mc-cta">
