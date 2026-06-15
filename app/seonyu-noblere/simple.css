@@ -444,9 +444,9 @@
 
 /* ── 평형 카드 ── */
 .sp-type-cards {
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: repeat(2, 1fr);
   gap: 24px;
-  max-width: 1080px; margin: 0 auto;
+  max-width: 760px; margin: 0 auto;
 }
 .sp-type-card {
   background: var(--paper);

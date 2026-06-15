@@ -51,12 +51,10 @@ const GALLERY = [
   { src: `${BASE}/interior/kitchen-01.jpg`, label: "Kitchen 02 · L자 그레이톤" },
   { src: `${BASE}/interior/kitchen-06.jpg`, label: "Kitchen 03 · 인덕션" },
   { src: `${BASE}/interior/bedroom-01.jpg`, label: "Bedroom 01 · 드레스룸" },
-  { src: `${BASE}/interior/bedroom-04.jpg`, label: "Bedroom 02 · 안방" },
+  { src: `${BASE}/interior/bedroom-room.jpg`, label: "Bedroom 02 · 안방" },
   { src: `${BASE}/interior/bathroom-03.jpg`, label: "Bathroom 01 · 레인샤워" },
   { src: `${BASE}/interior/bathroom-01.jpg`, label: "Bathroom 02 · 건식 분리" },
   { src: `${BASE}/interior/closet-01.jpg`, label: "Entry · 현관 수납" },
-  { src: `${BASE}/interior/utility-01.jpg`, label: "Utility · 다용도" },
-  { src: `${BASE}/interior/balcony-01.jpg`, label: "Balcony · 발코니" },
 ];
 
 /* ── 인근 기업 ── */
@@ -562,20 +560,7 @@ export default function SeonyuClient() {
               <li><span>계약면적</span><strong>64.54㎡</strong></li>
               <li><span>대지지분</span><strong>16.578㎡</strong></li>
             </ul>
-            <div className="tc-count"><strong>26</strong>실 · 점유 65.0%</div>
-          </div>
-          <div className="sp-type-card">
-            <span className="tc-tag">A1 TYPE</span>
-            <div className="tc-name">49A<sub style={{ fontSize: "0.5em" }}>1</sub></div>
-            <div className="tc-area">전용 49.01㎡ · 14.83평</div>
-            <ul className="tc-spec">
-              <li><span>공용면적</span><strong>3.03㎡</strong></li>
-              <li><span>공급면적</span><strong>52.04㎡</strong></li>
-              <li><span>기타공용</span><strong>12.51㎡</strong></li>
-              <li><span>계약면적</span><strong>64.55㎡</strong></li>
-              <li><span>대지지분</span><strong>16.590㎡</strong></li>
-            </ul>
-            <div className="tc-count"><strong>1</strong>실 · 점유 2.5%</div>
+            <div className="tc-count"><strong>27</strong>실 · 점유 67.5%</div>
           </div>
           <div className="sp-type-card">
             <span className="tc-tag">B TYPE</span>
