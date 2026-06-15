@@ -141,11 +141,13 @@ export default function SeonyuClient() {
         </button>
         <nav className="sp-nav">
           <button onClick={() => scrollTo("overview")}>사업개요</button>
-          <button onClick={() => scrollTo("points")}>핵심포인트</button>
+          <button onClick={() => scrollTo("points")}>프리미엄</button>
+          <button onClick={() => scrollTo("options")}>무상옵션</button>
           <button onClick={() => scrollTo("units")}>평형안내</button>
           <button onClick={() => scrollTo("plans")}>평면도</button>
           <button onClick={() => scrollTo("gallery")}>실내모습</button>
           <button onClick={() => scrollTo("location")}>입지환경</button>
+          <button onClick={() => scrollTo("market")}>안전마진</button>
           <button onClick={() => scrollTo("contact")}>상담신청</button>
         </nav>
         <a href={`tel:${PHONE}`} className="sp-header-tel">{PHONE}</a>
@@ -164,13 +166,14 @@ export default function SeonyuClient() {
           <div className="sp-hero-dim" />
         </div>
         <div className="sp-hero-content">
-          <p className="sp-hero-label">선유도역 도보 5분 · 9호선 초역세권</p>
+          <p className="sp-hero-label">선유도역 도보 5분 · 9호선 초역세권 · 선착순 특별분양</p>
           <h1 className="sp-hero-title">
-            선유노블레르<br />
-            <span>한강 생활권 신축 오피스텔</span>
+            선유노블레르 <span>쓰리룸</span><br />
+            한강 생활권 신축 오피스텔
           </h1>
           <p className="sp-hero-sub">
-            양화한강공원 · 선유도공원 도보권 · 당산역 환승 3분 · 여의도역 환승 5분
+            전용 49㎡ 쓰리룸 단일 평형 · 빌트인 풀옵션 무상 제공<br />
+            당산역 환승 3분 · 여의도역 환승 5분 · 양화한강공원 도보권
           </p>
           <div className="sp-hero-btns">
             <button className="sp-btn-big" onClick={() => scrollTo("contact")}>
@@ -226,11 +229,11 @@ export default function SeonyuClient() {
         </table>
       </section>
 
-      {/* ── 핵심 포인트 ── */}
+      {/* ── 프리미엄 5가지 ── */}
       <section className="sp-section sp-dark" id="points">
-        <h2 className="sp-title">왜 선유노블레르인가</h2>
-        <p className="sp-subtitle">한강과 가장 가까운 <strong>9호선 초역세권 신축</strong></p>
-        <div className="sp-points">
+        <h2 className="sp-title">프리미엄 5가지</h2>
+        <p className="sp-subtitle">한강과 가장 가까운 <strong>9호선 초역세권 신축 쓰리룸</strong></p>
+        <div className="sp-points sp-points-5">
           <div className="sp-point">
             <div className="sp-point-num">01</div>
             <h3>선유도역 5분</h3>
@@ -243,15 +246,83 @@ export default function SeonyuClient() {
           </div>
           <div className="sp-point">
             <div className="sp-point-num">03</div>
-            <h3>직주근접</h3>
-            <p>여의도·강남·가산디지털<br />차량 30분 내 주요 도심권</p>
+            <h3>빌트인 풀옵션</h3>
+            <p>가전·가구 빌트인 풀옵션<br />무상 제공 · 입주 즉시 생활</p>
           </div>
           <div className="sp-point">
             <div className="sp-point-num">04</div>
+            <h3>안전마진 분양가</h3>
+            <p>인근 시세 7억 안팎 대비<br />합리적 분양가로 안전마진 확보</p>
+          </div>
+          <div className="sp-point">
+            <div className="sp-point-num">05</div>
             <h3>1,200개 사업체</h3>
-            <p>인근 종사자 약 9,000명<br />롯데홈쇼핑·롯데칠성 등 대기업 인접</p>
+            <p>인근 종사자 9,000명<br />임대 수요 확실한 직주근접 입지</p>
           </div>
         </div>
+      </section>
+
+      {/* ── 빌트인 무상옵션 ── */}
+      <section className="sp-section" id="options">
+        <h2 className="sp-title">빌트인 무상옵션</h2>
+        <p className="sp-subtitle">
+          전 호실 <strong>빌트인 풀옵션 무상 제공</strong> · 입주 즉시 생활 가능
+        </p>
+        <div className="sp-options-grid">
+          <div className="sp-option-item">
+            <div className="opt-icon">❄️</div>
+            <h4>냉장고</h4>
+            <p>빌트인 매립형</p>
+          </div>
+          <div className="sp-option-item">
+            <div className="opt-icon">🌀</div>
+            <h4>드럼세탁기</h4>
+            <p>빌트인 세탁기</p>
+          </div>
+          <div className="sp-option-item">
+            <div className="opt-icon">🍳</div>
+            <h4>인덕션</h4>
+            <p>빌트인 3구 인덕션</p>
+          </div>
+          <div className="sp-option-item">
+            <div className="opt-icon">💨</div>
+            <h4>후드</h4>
+            <p>빌트인 슬림 후드</p>
+          </div>
+          <div className="sp-option-item">
+            <div className="opt-icon">🔥</div>
+            <h4>광파오븐</h4>
+            <p>빌트인 광파오븐</p>
+          </div>
+          <div className="sp-option-item">
+            <div className="opt-icon">🚿</div>
+            <h4>식기세척기</h4>
+            <p>빌트인 식기세척기</p>
+          </div>
+          <div className="sp-option-item">
+            <div className="opt-icon">💧</div>
+            <h4>정수기</h4>
+            <p>빌트인 직수형 정수기</p>
+          </div>
+          <div className="sp-option-item">
+            <div className="opt-icon">🌬️</div>
+            <h4>에어컨</h4>
+            <p>천장형 매립 에어컨</p>
+          </div>
+          <div className="sp-option-item">
+            <div className="opt-icon">🪟</div>
+            <h4>전열교환기</h4>
+            <p>24시간 환기 시스템</p>
+          </div>
+          <div className="sp-option-item">
+            <div className="opt-icon">🚪</div>
+            <h4>시스템장</h4>
+            <p>현관 · 침실 시스템장</p>
+          </div>
+        </div>
+        <p className="sp-note">
+          ※ 옵션 구성·브랜드는 시행사 사정에 따라 변경될 수 있으며, 정확한 사양은 상담 시 안내드립니다.
+        </p>
       </section>
 
       {/* ── 평형 안내 ── */}
@@ -264,20 +335,41 @@ export default function SeonyuClient() {
           <div className="sp-type-card">
             <span className="tc-tag">A TYPE</span>
             <div className="tc-name">49A</div>
-            <div className="tc-area">전용 49.01㎡ (14.83평) · 계약 64.54㎡</div>
-            <div className="tc-count"><strong>26실</strong> 공급 · 점유율 65.0%</div>
+            <div className="tc-area">전용 49.01㎡ (14.83평)</div>
+            <ul className="tc-spec">
+              <li><span>공용면적</span><strong>3.03㎡</strong></li>
+              <li><span>공급면적</span><strong>52.04㎡</strong></li>
+              <li><span>기타공용</span><strong>12.50㎡</strong></li>
+              <li><span>계약면적</span><strong>64.54㎡</strong></li>
+              <li><span>대지지분</span><strong>16.578㎡</strong></li>
+            </ul>
+            <div className="tc-count"><strong>26실</strong> · 점유 65.0%</div>
           </div>
           <div className="sp-type-card">
             <span className="tc-tag">A1 TYPE</span>
             <div className="tc-name">49A1</div>
-            <div className="tc-area">전용 49.01㎡ (14.83평) · 계약 64.55㎡</div>
-            <div className="tc-count"><strong>1실</strong> 공급 · 점유율 2.5%</div>
+            <div className="tc-area">전용 49.01㎡ (14.83평)</div>
+            <ul className="tc-spec">
+              <li><span>공용면적</span><strong>3.03㎡</strong></li>
+              <li><span>공급면적</span><strong>52.04㎡</strong></li>
+              <li><span>기타공용</span><strong>12.51㎡</strong></li>
+              <li><span>계약면적</span><strong>64.55㎡</strong></li>
+              <li><span>대지지분</span><strong>16.590㎡</strong></li>
+            </ul>
+            <div className="tc-count"><strong>1실</strong> · 점유 2.5%</div>
           </div>
           <div className="sp-type-card">
             <span className="tc-tag">B TYPE</span>
             <div className="tc-name">49B</div>
-            <div className="tc-area">전용 49.01㎡ (14.83평) · 계약 64.54㎡</div>
-            <div className="tc-count"><strong>13실</strong> 공급 · 점유율 32.5%</div>
+            <div className="tc-area">전용 49.01㎡ (14.83평)</div>
+            <ul className="tc-spec">
+              <li><span>공용면적</span><strong>3.03㎡</strong></li>
+              <li><span>공급면적</span><strong>52.04㎡</strong></li>
+              <li><span>기타공용</span><strong>12.50㎡</strong></li>
+              <li><span>계약면적</span><strong>64.54㎡</strong></li>
+              <li><span>대지지분</span><strong>16.578㎡</strong></li>
+            </ul>
+            <div className="tc-count"><strong>13실</strong> · 점유 32.5%</div>
           </div>
         </div>
         <p className="sp-note">※ 민간임대 6실 별도. 정확한 호별 정보는 상담 시 안내드립니다.</p>
@@ -406,6 +498,111 @@ export default function SeonyuClient() {
         </div>
       </section>
 
+      {/* ── 안전마진 / 시세분석 ── */}
+      <section className="sp-section sp-dark" id="market">
+        <h2 className="sp-title">안전마진 · 인근 시세</h2>
+        <p className="sp-subtitle">
+          인근 동일 평형 신축 오피스텔 <strong>매매 시세 6~9억원대</strong>
+        </p>
+
+        <div className="sp-margin-hero">
+          <div className="sp-margin-card sp-margin-hero-card">
+            <span className="mc-tag">📍 같은 건물</span>
+            <h3>선유노블레르 본동 매물</h3>
+            <p className="mc-area">오피스텔 · 64㎡ / 전용 49㎡ · 9층 2동 · 46세대</p>
+            <p className="mc-price">매매 <strong>6.5억 ~ 7.7억</strong></p>
+            <p className="mc-meta">풀옵션 쓰리룸 · 신축 컨디션 · 출처: 부동산포스</p>
+            <div className="mc-img">
+              <Image
+                src={`${BASE}/market/seonyu-listing.jpg`}
+                alt="선유도노블레르 본동 매물 시세 — 7억 7,000"
+                width={1200}
+                height={680}
+                style={{ width: "100%", height: "auto", borderRadius: 8 }}
+              />
+            </div>
+          </div>
+        </div>
+
+        <h3 className="sp-mh">인근 동일 평형 신축 오피스텔 비교</h3>
+        <div className="sp-margin-grid">
+          <div className="sp-margin-card">
+            <h4>한강더채움 (당산역)</h4>
+            <p className="mc-area">전용 45.5㎡ · 2022.11 준공</p>
+            <p className="mc-price">매매 <strong>8.9억</strong></p>
+            <Image
+              src={`${BASE}/market/hangang-dachaeum.jpg`}
+              alt="한강더채움 매매 8.9억"
+              width={1400}
+              height={560}
+              style={{ width: "100%", height: "auto", borderRadius: 6 }}
+            />
+          </div>
+          <div className="sp-margin-card">
+            <h4>목동더채움</h4>
+            <p className="mc-area">전용 49㎡ · 1동 14층</p>
+            <p className="mc-price">매매 <strong>7.5억</strong></p>
+            <Image
+              src={`${BASE}/market/mokdong-dachaeum.jpg`}
+              alt="목동더채움 매매 7.5억"
+              width={1400}
+              height={560}
+              style={{ width: "100%", height: "auto", borderRadius: 6 }}
+            />
+          </div>
+          <div className="sp-margin-card">
+            <h4>하이앤드63st (영등포)</h4>
+            <p className="mc-area">전용 39㎡ · 13층 신축</p>
+            <p className="mc-price">매매 <strong>7억</strong></p>
+            <Image
+              src={`${BASE}/market/highend-63.jpg`}
+              alt="하이앤드63st 매매 7억"
+              width={1400}
+              height={560}
+              style={{ width: "100%", height: "auto", borderRadius: 6 }}
+            />
+          </div>
+          <div className="sp-margin-card">
+            <h4>헬스케어스마이드 (마곡)</h4>
+            <p className="mc-area">전용 14평 · 5층</p>
+            <p className="mc-price">매매 <strong>7.4억</strong></p>
+            <Image
+              src={`${BASE}/market/healthcare-smyde.png`}
+              alt="헬스케어스마이드 매매 7.4억"
+              width={1200}
+              height={560}
+              style={{ width: "100%", height: "auto", borderRadius: 6 }}
+            />
+          </div>
+          <div className="sp-margin-card">
+            <h4>여의도 센트럴팰리스</h4>
+            <p className="mc-area">오피스텔 · 10층</p>
+            <p className="mc-price">매매 <strong>5.8억</strong></p>
+            <Image
+              src={`${BASE}/market/yeouido-central.png`}
+              alt="여의도 센트럴팰리스 매매 5.8억"
+              width={1200}
+              height={560}
+              style={{ width: "100%", height: "auto", borderRadius: 6 }}
+            />
+          </div>
+          <div className="sp-margin-card sp-margin-summary">
+            <span className="mc-tag">💡 안전마진</span>
+            <h4>분양가 안내</h4>
+            <p className="mc-area">
+              인근 동일 평형 신축 오피스텔 매매 시세는 6.5억 ~ 8.9억 사이로 형성되어 있습니다.
+              선유노블레르 분양가는 합리적 수준으로 책정되어 입주 시점부터 안전마진 확보가 가능합니다.
+            </p>
+            <p className="mc-cta">
+              👉 정확한 분양가는 <a href={`tel:${PHONE}`}>{PHONE}</a> 상담 시 안내
+            </p>
+          </div>
+        </div>
+        <p className="sp-note">
+          ※ 시세 자료는 네이버 부동산·부동산뱅크 등 공개 매물 기준이며 실거래가와 다를 수 있습니다.
+        </p>
+      </section>
+
       {/* ── 인근 입주기업 ── */}
       <section className="sp-section" id="companies">
         <h2 className="sp-title">인근 주요 기업</h2>
@@ -478,9 +675,14 @@ export default function SeonyuClient() {
 
       {/* ── 푸터 ── */}
       <footer className="sp-footer">
-        <p>스마일분양 | Jpex Studio | 대표: 윤지수 | 사업자등록번호: 560-45-01327</p>
-        <p>※ 본 홍보물은 소비자의 이해를 돕기 위한 것으로 실제와 다를 수 있으며,</p>
-        <p>개발계획·치수·이미지·내용 등은 향후 변경될 수 있으니 참고자료로 활용하시기 바랍니다.</p>
+        <div className="sp-footer-dev">
+          <span><strong>시행</strong> 노블레르 (사업자 531-15-01583)</span>
+          <span><strong>업무대행</strong> (주)태성개발 (사업자 542-81-01235)</span>
+          <span><strong>사업지</strong> 서울특별시 영등포구 양평동6가 2-1번지</span>
+        </div>
+        <p>마케팅 대행: 스마일분양 | Jpex Studio | 대표 윤지수 | 사업자 560-45-01327 | 문의 {PHONE}</p>
+        <p>※ 본 홈페이지 및 홍보물에 사용된 CG·그래픽·이미지컷·치수·표기 사항 등은 소비자의 이해를 돕기 위한 것으로 실제와 다를 수 있으며,</p>
+        <p>개발계획·시공 사정에 따라 변경될 수 있으니 참고자료로만 활용하시기 바랍니다. 자세한 사항은 분양 공고문을 확인하시기 바랍니다.</p>
         <p>&copy; 2026 선유노블레르. All rights reserved.</p>
       </footer>
 
