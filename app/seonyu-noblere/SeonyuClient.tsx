@@ -45,7 +45,7 @@ const ISO_PLANS = [
 
 /* ── 갤러리 ── */
 const GALLERY = [
-  { src: `${BASE}/interior/living-07.jpg`, label: "Living 01 · 거실 채광" },
+  { src: `${BASE}/interior/living-room.jpg`, label: "Living 01 · 거실 채광" },
   { src: `${BASE}/interior/living-01.jpg`, label: "Living 02 · 거실 전경" },
   { src: `${BASE}/interior/kitchen-04.jpg`, label: "Kitchen 01 · 아일랜드" },
   { src: `${BASE}/interior/kitchen-01.jpg`, label: "Kitchen 02 · L자 그레이톤" },
