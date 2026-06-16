@@ -714,17 +714,10 @@ export default function SeonyuClient() {
               width={1400} height={560} style={{ width: "100%", height: "auto" }} />
           </div>
           <div className="sp-margin-card">
-            <h4>하이앤드63st</h4>
-            <p className="mc-area">전용 39㎡ · 13층 신축 · 영등포</p>
-            <p className="mc-price">매매 <strong>7억</strong></p>
-            <Image src={`${BASE}/market/highend-63.jpg`} alt="하이앤드63st 매매 7억"
-              width={1400} height={560} style={{ width: "100%", height: "auto" }} />
-          </div>
-          <div className="sp-margin-card">
-            <h4>헬스케어스마이드</h4>
-            <p className="mc-area">전용 14평 · 5층 · 마곡</p>
-            <p className="mc-price">매매 <strong>7.4억</strong></p>
-            <Image src={`${BASE}/market/healthcare-smyde.png`} alt="헬스케어스마이드 매매 7.4억"
+            <h4>엘스페이스여의도</h4>
+            <p className="mc-area">전용 14평 · 5층 · 여의도</p>
+            <p className="mc-price">매매 <strong>9억대</strong></p>
+            <Image src={`${BASE}/market/healthcare-smyde.png`} alt="엘스페이스여의도 매매 9억대"
               width={1200} height={560} style={{ width: "100%", height: "auto" }} />
           </div>
           <div className="sp-margin-card sp-margin-summary">
