@@ -165,6 +165,15 @@ const Icon = {
       <circle cx="7.5" cy="6.5" r="0.6"/>
     </svg>
   ),
+  Dryer: () => (
+    <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <rect x="4" y="3" width="16" height="18" rx="1"/>
+      <circle cx="12" cy="14" r="4"/>
+      <path d="M10 14a2 2 0 0 1 4 0"/>
+      <circle cx="7.5" cy="6.5" r="0.6"/>
+      <circle cx="16.5" cy="6.5" r="0.6"/>
+    </svg>
+  ),
   Induction: () => (
     <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <rect x="3" y="6" width="18" height="13" rx="1"/>
@@ -261,11 +270,11 @@ const POINTS = [
 const OPTIONS = [
   { name: "냉장고", sub: "빌트인 매립형", Ico: Icon.Fridge },
   { name: "드럼세탁기", sub: "빌트인 세탁기", Ico: Icon.Washer },
+  { name: "건조기", sub: "빌트인 건조기", Ico: Icon.Dryer },
   { name: "인덕션", sub: "빌트인 3구", Ico: Icon.Induction },
   { name: "후드", sub: "빌트인 슬림", Ico: Icon.Hood },
   { name: "광파오븐", sub: "빌트인 매립형", Ico: Icon.Oven },
   { name: "식기세척기", sub: "빌트인 매립형", Ico: Icon.Dish },
-  { name: "정수기", sub: "빌트인 직수형", Ico: Icon.Water2 },
   { name: "에어컨", sub: "천장 매립형", Ico: Icon.Aircon },
   { name: "전열교환기", sub: "24시간 환기", Ico: Icon.Vent },
   { name: "시스템장", sub: "현관·침실", Ico: Icon.Cabinet },
