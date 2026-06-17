@@ -45,16 +45,18 @@ const ISO_PLANS = [
 
 /* ── 갤러리 ── */
 const GALLERY = [
-  { src: `${BASE}/interior/living-room.jpg`, label: "Living 01 · 거실 채광" },
-  { src: `${BASE}/interior/living-01.jpg`, label: "Living 02 · 거실 전경" },
-  { src: `${BASE}/interior/kitchen-04.jpg`, label: "Kitchen 01 · 아일랜드" },
-  { src: `${BASE}/interior/kitchen-01.jpg`, label: "Kitchen 02 · L자 그레이톤" },
-  { src: `${BASE}/interior/kitchen-06.jpg`, label: "Kitchen 03 · 인덕션" },
-  { src: `${BASE}/interior/bedroom-01.jpg`, label: "Bedroom 01 · 드레스룸" },
-  { src: `${BASE}/interior/bedroom-room.jpg`, label: "Bedroom 02 · 안방" },
-  { src: `${BASE}/interior/bathroom-03.jpg`, label: "Bathroom 01 · 레인샤워" },
-  { src: `${BASE}/interior/bathroom-01.jpg`, label: "Bathroom 02 · 건식 분리" },
-  { src: `${BASE}/interior/closet-01.jpg`, label: "Entry · 현관 수납" },
+  { src: `${BASE}/interior/v2/living-01.jpg`, label: "Living 01 · 거실" },
+  { src: `${BASE}/interior/v2/living-02.jpg`, label: "Living 02 · 거실" },
+  { src: `${BASE}/interior/v2/living-03.jpg`, label: "Living 03 · 거실" },
+  { src: `${BASE}/interior/v2/kitchen-01.jpg`, label: "Kitchen 01 · 부엌" },
+  { src: `${BASE}/interior/v2/kitchen-02.jpg`, label: "Kitchen 02 · 부엌" },
+  { src: `${BASE}/interior/v2/kitchen-03.jpg`, label: "Kitchen 03 · 부엌" },
+  { src: `${BASE}/interior/v2/bedroom-01.jpg`, label: "Bedroom 01 · 방" },
+  { src: `${BASE}/interior/v2/bedroom-02.jpg`, label: "Bedroom 02 · 방" },
+  { src: `${BASE}/interior/v2/bedroom-03.jpg`, label: "Bedroom 03 · 방" },
+  { src: `${BASE}/interior/v2/bathroom.jpg`, label: "Bathroom · 화장실" },
+  { src: `${BASE}/interior/v2/entry.jpg`, label: "Entry · 현관" },
+  { src: `${BASE}/interior/v2/model.jpg`, label: "Model House · 모델하우스" },
 ];
 
 /* ── 인근 기업 ── */
@@ -261,9 +263,9 @@ const Icon = {
 
 const POINTS = [
   { num: "01", title: "선유도역 도보 5분", desc: "9호선 초역세권 · 당산역·여의도역 3·5분 환승", Ico: Icon.Subway },
-  { num: "02", title: "한강·공원 생활권", desc: "양화한강공원 · 선유도공원 · 안양천 도보 15분", Ico: Icon.Water },
+  { num: "02", title: "한강·공원 생활권", desc: "양화한강공원 · 선유도공원 · 안양천 도보 5분대", Ico: Icon.Water },
   { num: "03", title: "빌트인 풀옵션 제공", desc: "가전·시스템장 무상 · 입주 즉시 생활 가능", Ico: Icon.Cabinet },
-  { num: "04", title: "안전마진 분양가", desc: "인근 시세 7억 안팎 대비 합리적 분양가", Ico: Icon.Shield },
+  { num: "04", title: "억대 안전마진 확보된 분양가", desc: "인근 시세 9억 안팎 대비 합리적 분양가", Ico: Icon.Shield },
   { num: "05", title: "1,200개 인근 사업체", desc: "종사자 9,000명 · 임대 수요 확실한 직주근접", Ico: Icon.Bldg },
 ];
 
@@ -282,11 +284,11 @@ const OPTIONS = [
 
 const LOC = [
   { ko: "지하철", en: "Subway", text: "9호선 선유도역 도보 5분 · 2호선 당산역 환승 3분 · 5호선 여의도역 환승 5분", Ico: Icon.Subway },
-  { ko: "도로", en: "Road", text: "올림픽대로 · 서부간선도로 · 경인고속도로 직결 (강남·김포·용산·가산 30분)", Ico: Icon.Car },
-  { ko: "한강·공원", en: "River & Park", text: "양화한강공원 · 선유도공원 · 안양천 산책로 도보 15분", Ico: Icon.Water },
+  { ko: "도로", en: "Road", text: "올림픽대로 · 서부간선도로 · 경인고속도로 직결 (강남·김포·용산·가산 20분 이내)", Ico: Icon.Car },
+  { ko: "한강·공원", en: "River & Park", text: "양화한강공원 · 선유도공원 · 안양천 산책로 도보 5분대", Ico: Icon.Water },
   { ko: "의료", en: "Medical", text: "이대목동병원 · 한림대 한강성심병원 · 카톨릭대 여의도성심병원", Ico: Icon.Hospital },
   { ko: "쇼핑", en: "Shopping", text: "현대백화점 · 더현대 · 코스트코 · 롯데마트 · 킴스클럽", Ico: Icon.Shop },
-  { ko: "교육", en: "Education", text: "선유초/중/고 · 당산초 · 한가람고 · 한강미디어고", Ico: Icon.School },
+  { ko: "교육", en: "Education", text: "선유초/중/고 · 당산초 · 한가람고 · 한강미디어고 (학군 우수)", Ico: Icon.School },
 ];
 
 export default function SeonyuClient() {
@@ -601,7 +603,7 @@ export default function SeonyuClient() {
       {/* ── 평면도 ── */}
       <section className="sp-section" id="plans">
         <span className="sp-eyebrow">Floor Plan · 평면 안내</span>
-        <h2 className="sp-title">투룸+거실+주방, <strong>쓰리룸 구성</strong></h2>
+        <h2 className="sp-title"><strong>3룸+거실+주방</strong> 구성</h2>
         <div className="sp-rule" />
         <p className="sp-subtitle">2D 평면 + 3D 등각투상으로 공간을 확인하세요</p>
 
@@ -701,10 +703,10 @@ export default function SeonyuClient() {
       {/* ── 안전마진 ── */}
       <section className="sp-section sp-dark" id="market">
         <span className="sp-eyebrow">Market Analysis · 시세 비교</span>
-        <h2 className="sp-title">인근 신축 시세<br /><strong>7억대 ~ 9억대</strong></h2>
+        <h2 className="sp-title">인근 3룸 시세<br /><strong>7억대 ~ 9억대</strong></h2>
         <div className="sp-rule" />
         <p className="sp-subtitle">
-          인근 동일 평형 신축 오피스텔 시세 비교 — 안전마진의 근거
+          인근 신축 3룸 오피스텔 시세 비교 — 안전마진의 근거
         </p>
 
         <div className="sp-margin-grid">
@@ -733,8 +735,8 @@ export default function SeonyuClient() {
             <span className="mc-tag">Margin · 안전마진</span>
             <h4>분양가 안내</h4>
             <p className="mc-area">
-              인근 동일 평형 신축 오피스텔 시세는 <strong>7억대 ~ 9억대</strong> 사이로 형성되어 있습니다.
-              선유노블레르 분양가는 합리적 수준으로 책정되어 입주 시점부터 안전마진 확보가 가능합니다.
+              신축 3룸 오피스텔 시세는 <strong>7억대 ~ 9억대</strong> 사이로 형성되어 있습니다.<br />
+              선유노블레르 분양가는 합리적 수준으로 책정되어 <strong>입주 시점부터 억대 안전마진</strong> 확보가 가능합니다.
             </p>
             <p className="mc-cta">
               정확한 분양가는 <a href={`tel:${PHONE}`}>{PHONE}</a>
